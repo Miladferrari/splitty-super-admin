@@ -1,0 +1,650 @@
+{
+  "sidebar": {
+    "company": "Splitty B.V.",
+    "subtitle": "Super Admin Panel",
+    "collapse": "Inklappen",
+    "menu": {
+      "dashboard": "Dashboard",
+      "restaurants": "Restaurants",
+      "allRestaurants": "Alle Restaurants",
+      "posConnections": "POS Connecties",
+      "payouts": "Uitbetalingen",
+      "allSplittys": "Alle Splitty's",
+      "testOrder": "Test Bestelling",
+      "splittyTeam": "Splitty Team",
+      "support": "Support",
+      "knowledgeBase": "Kennisbank",
+      "settings": "Instellingen"
+    },
+    "notifications": "Notificaties",
+    "language": {
+      "english": "English",
+      "dutch": "Nederlands"
+    },
+    "user": {
+      "role": "CEO & Founder",
+      "accountSettings": "Account Instellingen",
+      "logout": "Uitloggen",
+      "myProfile": "Mijn Profiel"
+    }
+  },
+  "common": {
+    "search": "Zoeken",
+    "filter": "Filteren",
+    "export": "Exporteren",
+    "import": "Importeren",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "delete": "Verwijderen",
+    "edit": "Bewerken",
+    "view": "Bekijken",
+    "close": "Sluiten",
+    "confirm": "Bevestigen",
+    "back": "Terug",
+    "next": "Volgende",
+    "previous": "Vorige",
+    "loading": "Laden...",
+    "error": "Fout",
+    "success": "Geslaagd",
+    "warning": "Waarschuwing",
+    "info": "Info",
+    "yes": "Ja",
+    "no": "Nee",
+    "all": "Alle",
+    "none": "Geen",
+    "select": "Selecteer",
+    "selected": "Geselecteerd",
+    "status": "Status",
+    "actions": "Acties",
+    "name": "Naam",
+    "email": "E-mail",
+    "phone": "Telefoon",
+    "address": "Adres",
+    "city": "Stad",
+    "country": "Land",
+    "date": "Datum",
+    "time": "Tijd",
+    "amount": "Bedrag",
+    "total": "Totaal",
+    "subtotal": "Subtotaal",
+    "tax": "BTW",
+    "discount": "Korting",
+    "payment": "Betaling",
+    "active": "Actief",
+    "inactive": "Inactief",
+    "pending": "In behandeling",
+    "completed": "Voltooid",
+    "failed": "Mislukt",
+    "new": "Nieuw",
+    "department": "Afdeling",
+    "hours": "uur",
+    "days": "dagen",
+    "ago": "geleden",
+    "refresh": "Vernieuwen",
+    "export": "Exporteren",
+    "order": "Bestelling"
+  },
+  "restaurants": {
+    "title": "Restaurant Partners",
+    "subtitle": "Beheer al je restaurant partners en hun prestaties",
+    "newRestaurant": "Nieuw Restaurant",
+    "stats": {
+      "totalPartners": "TOTAAL PARTNERS",
+      "setupRequired": "SETUP VEREIST",
+      "archived": "GEARCHIVEERD"
+    },
+    "tabs": {
+      "all": "Alle restaurants",
+      "onboarding": "In onboarding",
+      "deleted": "Gearchiveerd"
+    },
+    "search": "Zoek restaurants, locaties...",
+    "filterByLocation": "Filter op locatie",
+    "table": {
+      "restaurant": "Restaurant",
+      "location": "Locatie",
+      "status": "Status",
+      "transactions": "Transacties",
+      "rating": "Beoordeling",
+      "actions": "Acties"
+    },
+    "status": {
+      "active": "Actief",
+      "onboarding": "Onboarding",
+      "inactive": "Inactief",
+      "deleted": "Verwijderd"
+    },
+    "onboardingProgress": "Onboarding Voortgang",
+    "steps": {
+      "businessInfo": "Bedrijfsinfo",
+      "posIntegration": "POS Integratie",
+      "payments": "Betalingen",
+      "complete": "Voltooid"
+    },
+    "deleteModal": {
+      "title": "Permanent verwijderen",
+      "warning": "Je staat op het punt om permanent te verwijderen",
+      "cautionTitle": "⚠️ Let op: Deze actie kan niet ongedaan worden gemaakt",
+      "cautionText": "Als je dit restaurant nu verwijdert:",
+      "consequences": [
+        "Alle restaurantgegevens worden permanent verwijderd",
+        "Alle transactiegeschiedenis gaat verloren",
+        "Alle gebruikersaccounts worden verwijderd",
+        "Deze actie kan niet teruggedraaid worden"
+      ],
+      "confirmLabel": "Type de naam van het restaurant om te bevestigen:",
+      "confirmPlaceholder": "Vul de restaurantnaam in",
+      "confirmButton": "Permanent verwijderen",
+      "cancelButton": "Annuleren"
+    },
+    "actions": {
+      "view": "Bekijken",
+      "edit": "Bewerken",
+      "delete": "Verwijderen",
+      "restore": "Herstellen",
+      "continueOnboarding": "Ga verder met onboarding"
+    }
+  },
+  "users": {
+    "title": "Splitty Team",
+    "subtitle": "Beheer teamleden en hun rechten",
+    "newUser": "Teamlid Toevoegen",
+    "stats": {
+      "totalUsers": "TOTAAL GEBRUIKERS",
+      "activeUsers": "ACTIEVE GEBRUIKERS",
+      "adminUsers": "BEHEERDERS"
+    },
+    "search": "Zoek teamleden...",
+    "table": {
+      "name": "Naam",
+      "email": "E-mail",
+      "role": "Rol",
+      "status": "Status",
+      "lastLogin": "Laatst Ingelogd",
+      "actions": "Acties"
+    },
+    "roles": {
+      "ceo": "CEO & Founder",
+      "admin": "Beheerder",
+      "accountManager": "Account Manager",
+      "support": "Support",
+      "developer": "Ontwikkelaar"
+    },
+    "status": {
+      "active": "Actief",
+      "inactive": "Inactief",
+      "pending": "In behandeling"
+    },
+    "foundResults": "gebruikers gevonden",
+    "noResults": "Geen gebruikers gevonden",
+    "adjustFilters": "Probeer je zoekfilters aan te passen",
+    "stats": {
+      "totalUsers": "TOTAAL GEBRUIKERS",
+      "activeUsers": "ACTIEVE GEBRUIKERS",
+      "adminUsers": "BEHEERDERS",
+      "supportTeam": "SUPPORT TEAM"
+    }
+  },
+  "orders": {
+    "title": "Alle Splitty's",
+    "subtitle": "Bekijk en beheer alle gesplitste betalingstransacties",
+    "stats": {
+      "totalOrders": "TOTAAL BESTELLINGEN",
+      "todayOrders": "VANDAAG BESTELLINGEN",
+      "totalVolume": "TOTAAL VOLUME"
+    },
+    "search": "Zoek bestellingen...",
+    "filters": {
+      "all": "Alle Bestellingen",
+      "today": "Vandaag",
+      "week": "Deze Week",
+      "month": "Deze Maand"
+    },
+    "table": {
+      "orderId": "Bestelling ID",
+      "restaurant": "Restaurant",
+      "table": "Tafel",
+      "amount": "Bedrag",
+      "guests": "Gasten",
+      "status": "Status",
+      "date": "Datum",
+      "actions": "Acties"
+    },
+    "status": {
+      "completed": "Voltooid",
+      "pending": "In behandeling",
+      "partial": "Gedeeltelijk", 
+      "cancelled": "Geannuleerd"
+    },
+    "stats": {
+      "totalOrders": "TOTAAL BESTELLINGEN",
+      "todayOrders": "VANDAAG BESTELLINGEN", 
+      "totalVolume": "TOTAAL VOLUME",
+      "activeOrders": "ACTIEVE BESTELLINGEN",
+      "transactionRevenue": "TRANSACTIE OMZET"
+    },
+    "filters": {
+      "all": "Alle Bestellingen",
+      "active": "Actief",
+      "completed": "Voltooid",
+      "allRestaurants": "Alle Restaurants"
+    },
+    "foundResults": "Splitty transacties gevonden",
+    "noResults": "Geen Splitty transacties gevonden",
+    "adjustFilters": "Probeer je filters aan te passen of selecteer een ander restaurant"
+  },
+  "payments": {
+    "title": "Betalingen",
+    "subtitle": "Volg alle betalingstransacties",
+    "payouts": {
+      "title": "Uitbetalingen",
+      "subtitle": "Beheer restaurant uitbetalingen en afrekeningen",
+      "stats": {
+        "totalPayouts": "TOTAAL UITBETALINGEN",
+        "paidOut": "UITBETAALD",
+        "processing": "IN BEHANDELING",
+        "restaurants": "RESTAURANTS"
+      },
+      "searchPlaceholder": "Zoek op uitbetaling ID of restaurant...",
+      "filters": {
+        "allStatuses": "Alle Statussen"
+      },
+      "status": {
+        "paid": "Uitbetaald",
+        "pending": "In Behandeling"
+      },
+      "amount": "Bedrag",
+      "period": "Periode",
+      "orders": "Bestellingen",
+      "bankAccount": "Bankrekening",
+      "created": "Aangemaakt",
+      "expected": "Verwacht",
+      "details": "Details",
+      "noResults": "Geen uitbetalingen gevonden die voldoen aan je criteria."
+    }
+  },
+  "pos": {
+    "title": "POS Connecties",
+    "subtitle": "Beheer Point of Sale integraties",
+    "stats": {
+      "connected": "VERBONDEN",
+      "pending": "SETUP BENODIGD",
+      "issues": "MET PROBLEMEN",
+      "totalRestaurants": "TOTAAL RESTAURANTS",
+      "active": "ACTIEF",
+      "notConnected": "NIET VERBONDEN"
+    },
+    "providers": {
+      "lightspeed": "Lightspeed",
+      "square": "Square",
+      "clover": "Clover",
+      "toast": "Toast",
+      "other": "Anders"
+    },
+    "refreshing": "Vernieuwen...",
+    "refreshStatus": "Ververs Status",
+    "attentionRequired": "Aandacht vereist",
+    "configure": "Configureer",
+    "details": "Details",
+    "restaurantStatus": "Restaurant POS Status",
+    "status": {
+      "active": "Actief",
+      "inactive": "Inactief",
+      "notConnected": "Niet verbonden"
+    },
+    "notifications": {
+      "connectionLost": "POS Verbinding Verloren",
+      "systemNotReachable": "POS systeem is niet bereikbaar",
+      "inactive": "POS Inactief",
+      "systemInactive": "POS systeem is inactief",
+      "notConfigured": "POS Niet Geconfigureerd",
+      "integrationSetup": "POS integratie moet nog worden ingesteld"
+    },
+    "noActiveRestaurants": "Geen actieve restaurants",
+    "addFirstRestaurant": "Begin met het toevoegen van je eerste restaurant partner.",
+    "addRestaurant": "Voeg Restaurant Toe"
+  },
+  "settings": {
+    "title": "Instellingen",
+    "subtitle": "Beheer je accountinstellingen en voorkeuren",
+    "tabs": {
+      "general": "Algemeen",
+      "profile": "Profiel",
+      "notifications": "Notificaties",
+      "security": "Beveiliging",
+      "billing": "Facturering",
+      "integrations": "Integraties"
+    },
+    "general": {
+      "title": "Algemene Instellingen",
+      "language": "Taal",
+      "timezone": "Tijdzone",
+      "currency": "Valuta",
+      "dateFormat": "Datumformaat"
+    },
+    "profile": {
+      "title": "Profiel Instellingen",
+      "personalInfo": "Persoonlijke Informatie",
+      "changePassword": "Wachtwoord Wijzigen",
+      "twoFactor": "Twee-Factor Authenticatie",
+      "profilePhoto": "Profielfoto",
+      "removePhoto": "Verwijder profielfoto",
+      "clickToUpload": "Klik om te uploaden",
+      "orDragHere": "of sleep hierheen",
+      "fileFormats": "PNG, JPG, GIF • Max 5MB",
+      "firstName": "Voornaam",
+      "lastName": "Achternaam",
+      "role": "Functie",
+      "bio": "Bio",
+      "bioPlaceholder": "Vertel iets over jezelf...",
+      "invalidFileType": "Alleen PNG, JPG en GIF bestanden zijn toegestaan",
+      "fileTooLarge": "Bestand is te groot. Maximaal 5MB toegestaan."
+    },
+    "notifications": {
+      "title": "Notificatie Voorkeuren",
+      "emailNotifications": "E-mail Notificaties",
+      "pushNotifications": "Push Notificaties",
+      "smsNotifications": "SMS Notificaties"
+    },
+    "security": {
+      "title": "Beveiligingsinstellingen",
+      "incorrectPassword": "Huidig wachtwoord is onjuist",
+      "passwordMismatch": "Nieuwe wachtwoorden komen niet overeen"
+    },
+    "billing": {
+      "title": "Betaalmethoden"
+    },
+    "integrations": {
+      "title": "Integraties & Webhooks"
+    },
+    "legal": {
+      "title": "Juridisch",
+      "description": "Documenten & compliance"
+    },
+    "changesSaved": "Wijzigingen opgeslagen!",
+    "saved": "Opgeslagen",
+    "saveChanges": "Wijzigingen Opslaan"
+  },
+  "support": {
+    "title": "Support",
+    "subtitle": "Chat met restaurants en behandel support tickets",
+    "tabs": {
+      "activeChats": "Actieve Chats",
+      "tickets": "Support Tickets",
+      "knowledge": "Kennisbank"
+    },
+    "searchRestaurants": "Zoek restaurants...",
+    "newMessages": "nieuwe berichten",
+    "restaurants": "restaurants",
+    "noConversations": "Geen support gesprekken",
+    "conversation": "Support gesprek",
+    "restaurant": "Restaurant",
+    "support": "Support",
+    "messageInput": "Type je bericht...",
+    "sendMessage": "Verstuur",
+    "time": {
+      "now": "Nu",
+      "minAgo": "min geleden",
+      "hoursAgo": "uur geleden",
+      "daysAgo": "dagen geleden"
+    },
+    "status": {
+      "active": "Actief"
+    }
+  },
+  "knowledgeBase": {
+    "title": "Kennisbank",
+    "subtitle": "Documentatie en bronnen voor het team",
+    "search": "Zoek artikelen...",
+    "categories": {
+      "gettingStarted": "Aan de Slag",
+      "restaurants": "Restaurant Onboarding",
+      "payments": "Betalingen",
+      "support": "Support",
+      "integrations": "Integraties",
+      "troubleshooting": "Probleemoplossing",
+      "posSystems": "POS Systemen",
+      "supportProcedures": "Support Procedures",
+      "faqTips": "FAQ & Tips"
+    },
+    "articles": {
+      "welcome": "Welkom bij Splitty",
+      "firstRestaurant": "Je Eerste Restaurant",
+      "teamRoles": "Team Rollen & Permissies",
+      "onboardGuide": "Complete Onboarding Guide",
+      "personnelSetup": "Personeel Toevoegen",
+      "stripeSetup": "Stripe Connect Setup",
+      "posIntegration": "POS Integratie",
+      "untillSetup": "Untill API Setup",
+      "lightspeedSetup": "Lightspeed Integratie",
+      "posTroubleshooting": "POS Troubleshooting",
+      "paymentFlow": "Payment Flow Uitleg",
+      "stripeDashboard": "Stripe Dashboard Guide",
+      "refunds": "Refunds & Chargebacks",
+      "ticketSystem": "Ticket Systeem",
+      "escalation": "Escalatie Procedures",
+      "commonIssues": "Veelvoorkomende Issues",
+      "restaurantFaq": "Restaurant FAQ",
+      "technicalFaq": "Technische FAQ",
+      "bestPractices": "Best Practices"
+    },
+    "quickStats": {
+      "title": "Quick Stats",
+      "totalArticles": "Totale Artikelen",
+      "categories": "Categorieën",
+      "lastUpdate": "Laatste Update",
+      "today": "Vandaag"
+    },
+    "readingTime": "10 min leestijd",
+    "lastUpdated": "Laatst bijgewerkt: Vandaag",
+    "wasUseful": "Was dit artikel nuttig?",
+    "yes": "Ja",
+    "no": "Nee",
+    "relatedArticles": "Gerelateerde Artikelen",
+    "readMore": "Lees meer over dit onderwerp"
+  },
+  "testOrder": {
+    "title": "Test Bestelling",
+    "subtitle": "Maak een test bestelling voor debugging en testen",
+    "form": {
+      "selectRestaurant": "Selecteer Restaurant",
+      "tableNumber": "Tafelnummer",
+      "guestCount": "Aantal Gasten",
+      "orderAmount": "Bestelbedrag",
+      "createOrder": "Maak Test Bestelling",
+      "chooseRestaurant": "Kies een restaurant...",
+      "tableNumberPlaceholder": "bijv. 12, A3, Terras-5"
+    },
+    "menu": {
+      "starters": "Voorgerechten",
+      "mains": "Hoofdgerechten",
+      "desserts": "Desserts",
+      "drinks": "Dranken"
+    },
+    "actions": {
+      "add": "Toevoegen",
+      "clearCart": "Leeg maken"
+    },
+    "cart": {
+      "title": "Winkelwagen",
+      "items": "items",
+      "selectItems": "Selecteer items uit het menu",
+      "perItem": "per stuk"
+    },
+    "orderSummary": {
+      "subtotal": "Subtotaal",
+      "serviceFee": "Service fee (3%)",
+      "total": "Totaal"
+    },
+    "validation": {
+      "fillAllFields": "Selecteer een restaurant, voer een tafelnummer in en voeg items toe aan de winkelwagen",
+      "orderSent": "Testbestelling succesvol verstuurd!",
+      "selectRestaurant": "Selecteer eerst een restaurant",
+      "enterTableNumber": "Voer een tafelnummer in"
+    },
+    "testModeActive": "Test Modus Actief",
+    "testModeInfo": {
+      "title": "Test Modus Info",
+      "description": "Deze bestelling wordt alleen gesimuleerd. Er worden geen echte transacties uitgevoerd."
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Hier zijn de inzichten van vandaag",
+    "greeting": {
+      "morning": "Goedemorgen",
+      "afternoon": "Goedemiddag",
+      "evening": "Goedenavond"
+    },
+    "filters": {
+      "allStores": "Alle vestigingen",
+      "allRestaurants": "Alle Restaurants",
+      "today": "Vandaag",
+      "yesterday": "Gisteren",
+      "last7days": "Afgelopen 7 dagen",
+      "last30days": "Afgelopen 30 dagen",
+      "last90days": "Afgelopen 90 dagen",
+      "last365days": "Afgelopen 365 dagen",
+      "lastWeek": "Afgelopen week",
+      "lastMonth": "Afgelopen maand",
+      "lastQuarter": "Afgelopen kwartaal",
+      "lastYear": "Afgelopen jaar",
+      "weekToDate": "Week tot nu",
+      "monthToDate": "Maand tot nu",
+      "quarterToDate": "Kwartaal tot nu",
+      "yearToDate": "Jaar tot nu",
+      "thisMonth": "Deze maand",
+      "previousMonth": "Vorige maand",
+      "custom": "Aangepast",
+      "compareWithPrevious": "Vergelijk met vorige periode",
+      "compare": "Vergelijk",
+      "from": "Van",
+      "to": "Tot",
+      "cancel": "Annuleren",
+      "apply": "Toepassen"
+    },
+    "stats": {
+      "splittyRevenue": {
+        "title": "Splitty Omzet",
+        "description": "Totale inkomsten vandaag"
+      },
+      "processedPayments": {
+        "title": "Verwerkte Betalingen",
+        "description": "Totaal transactievolume"
+      },
+      "totalTransactions": {
+        "title": "Aantal Transacties",
+        "description": "Totaal aantal betalingen"
+      },
+      "averageAmount": {
+        "title": "Gemiddeld Bedrag",
+        "description": "Per transactie"
+      },
+      "activeRestaurants": {
+        "title": "Actieve Restaurants",
+        "description": "Live op Splitty"
+      },
+      "tableSize": {
+        "title": "Tafelgrootte",
+        "description": "Gemiddeld per tafel",
+        "unit": "personen"
+      }
+    },
+    "analytics": {
+      "title": "Analytics",
+      "views": {
+        "total": "Totaal",
+        "restaurant": "Restaurant",
+        "region": "Regio"
+      },
+      "metrics": {
+        "stripeCosts": "Stripe Kosten",
+        "netProfit": "Nettowinst",
+        "margin": "marge",
+        "perTransaction": "per transactie",
+        "ofRevenue": "van omzet",
+        "ofVolume": "van volume"
+      },
+      "regions": {
+        "northHolland": "Noord-Holland",
+        "southHolland": "Zuid-Holland",
+        "utrecht": "Utrecht"
+      }
+    },
+    "sections": {
+      "financialOverview": {
+        "title": "Financieel Overzicht",
+        "stripeCosts": "Stripe Kosten",
+        "netProfit": "Nettowinst",
+        "profit": "Winst",
+        "loss": "Verlies",
+        "perTransaction": "per transactie",
+        "transactionCosts": "Transactiekosten alle betaalmethoden"
+      },
+      "openQuotations": {
+        "title": "Open Offertes",
+        "viewAll": "Bekijk alles",
+        "status": {
+          "urgent": "Urgent",
+          "pending": "In behandeling"
+        },
+        "time": {
+          "hoursAgo": "uur geleden",
+          "dayAgo": "dag geleden"
+        }
+      },
+      "bestPerforming": {
+        "title": "Best Presterende Restaurants",
+        "subtitle": "Op basis van omzet",
+        "liveRankings": "Live Rankings",
+        "exportCSV": "Exporteer CSV",
+        "inRevenue": "in omzet",
+        "columns": {
+          "restaurant": "Restaurant",
+          "revenue": "Omzet",
+          "transactions": "Transacties",
+          "rating": "Beoordeling"
+        },
+        "splittyFee": "Splitty Kosten"
+      },
+      "partners": {
+        "title": "Partners & Integraties",
+        "types": {
+          "paymentProvider": "Betaalprovider",
+          "posIntegration": "POS Integratie"
+        },
+        "status": {
+          "active": "Actief",
+          "pending": "In behandeling"
+        }
+      }
+    },
+    "chart": {
+      "title": "Analytics Dashboard",
+      "allMetrics": "Alle Statistieken",
+      "perHour": "Per uur",
+      "perDay": "Per dag",
+      "metrics": {
+        "all": "Alle statistieken",
+        "revenue": "Omzet",
+        "payments": "Betalingen",
+        "tips": "Fooien"
+      },
+      "labels": {
+        "revenue": "Splitty Omzet",
+        "payments": "Verwerkte Betalingen",
+        "transactions": "Totaal Transacties",
+        "averageAmount": "Gemiddeld Bedrag",
+        "tableSize": "Gem. Tafelgrootte"
+      },
+      "noData": "Geen data beschikbaar"
+    },
+    "quickActions": {
+      "title": "Snelle Acties",
+      "addRestaurant": "Restaurant Toevoegen",
+      "viewReports": "Rapporten Bekijken",
+      "manageUsers": "Gebruikers Beheren",
+      "settings": "Instellingen"
+    }
+  }
+}

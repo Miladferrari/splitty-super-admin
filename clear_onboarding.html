@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clear Onboarding Data</title>
+</head>
+<body>
+    <script>
+        // Clear all onboarding data from localStorage
+        const keys = Object.keys(localStorage);
+        let cleared = 0;
+        
+        keys.forEach(key => {
+            if (key.startsWith('onboarding_')) {
+                localStorage.removeItem(key);
+                cleared++;
+                console.log('Cleared:', key);
+            }
+        });
+        
+        alert(`Cleared ${cleared} onboarding entries! The welcome screen will now show for all restaurants.`);
+    </script>
+    <h1>Onboarding data cleared!</h1>
+    <p>Please go back to the Splitty admin panel and try the onboarding again.</p>
+</body>
+</html>
