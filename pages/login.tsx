@@ -4,6 +4,8 @@ import type { NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useUsers } from '../contexts/UsersContext'
+import { useTranslation } from '../contexts/TranslationContext'
+import LoadingScreen from '../components/LoadingScreen'
 import {
   EnvelopeIcon,
   LockClosedIcon,
@@ -21,20 +23,18 @@ interface Language {
 const Login: NextPage = () => {
   const router = useRouter()
   const { authenticateUser } = useUsers()
+  const { t, language, setLanguage } = useTranslation()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [rememberMe, setRememberMe] = useState<boolean>(false)
   const [error, setError] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
-  const [language, setLanguage] = useState<string>('nl')
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState<boolean>(false)
 
   const languages: Language[] = [
     { code: 'nl', name: 'Nederlands' },
     { code: 'en', name: 'English' },
-    { code: 'de', name: 'Deutsch' },
-    { code: 'fr', name: 'Français' },
   ]
 
   useEffect(() => {
@@ -85,9 +85,13 @@ const Login: NextPage = () => {
         router.push('/dashboard')
       }, 1000)
     } else {
-      setError('Ongeldige e-mail of wachtwoord')
+      setError(t('login.invalidCredentials'))
       setLoading(false)
     }
+  }
+
+  if (loading) {
+    return <LoadingScreen />
   }
 
   return (
@@ -110,7 +114,7 @@ const Login: NextPage = () => {
                   <button
                     key={lang.code}
                     onClick={() => {
-                      setLanguage(lang.code)
+                      setLanguage(lang.code as 'nl' | 'en')
                       setLanguageDropdownOpen(false)
                     }}
                     className={`w-full text-left px-4 py-2 text-sm transition ${
@@ -141,8 +145,8 @@ const Login: NextPage = () => {
 
             {/* Welcome Text */}
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">Welkom terug!</h2>
-              <p className="text-gray-600">Log in op je Splitty Super Admin account</p>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">{t('login.welcomeBack')}</h2>
+              <p className="text-gray-600">{t('login.subtitle')}</p>
             </div>
 
             {/* Error Message */}
@@ -157,7 +161,7 @@ const Login: NextPage = () => {
               {/* Email Input */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  E-mailadres
+                  {t('login.email')}
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -169,7 +173,7 @@ const Login: NextPage = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
-                    placeholder="je@email.nl"
+                    placeholder={t('login.emailPlaceholder')}
                     required
                   />
                 </div>
@@ -178,7 +182,7 @@ const Login: NextPage = () => {
               {/* Password Input */}
               <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                  Wachtwoord
+                  {t('login.password')}
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -190,7 +194,7 @@ const Login: NextPage = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full pl-10 pr-12 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
-                    placeholder="••••••••"
+                    placeholder={t('login.passwordPlaceholder')}
                     required
                   />
                   <button
@@ -216,10 +220,10 @@ const Login: NextPage = () => {
                     onChange={(e) => setRememberMe(e.target.checked)}
                     className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                   />
-                  <span className="ml-2 text-sm text-gray-600">Onthoud mij</span>
+                  <span className="ml-2 text-sm text-gray-600">{t('login.rememberMe')}</span>
                 </label>
                 <Link href="/forgot-password" className="text-sm text-green-600 hover:text-green-700 transition font-medium">
-                  Wachtwoord vergeten?
+                  {t('login.forgotPassword')}
                 </Link>
               </div>
 
@@ -235,26 +239,26 @@ const Login: NextPage = () => {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    Inloggen...
+                    {t('login.signingIn')}
                   </>
                 ) : (
-                  'Inloggen'
+                  t('login.signIn')
                 )}
               </button>
             </form>
 
             {/* Sign Up Link */}
             <p className="mt-8 text-center text-sm text-gray-600">
-              Nog geen account?{' '}
+              {t('login.noAccount')}{' '}
               <Link href="/signup" className="text-green-600 hover:text-green-700 transition font-medium">
-                Neem contact op
+                {t('login.contactUs')}
               </Link>
             </p>
 
             {/* Footer */}
             <div className="mt-12 text-center">
               <p className="text-xs text-gray-500">
-                &copy; 2025 Splitty B.V. Alle rechten voorbehouden.
+                {t('login.copyright')}
               </p>
             </div>
           </div>

@@ -1583,6 +1583,22 @@
       "description": "Juridische documenten en privacy-instellingen"
     }
   },
+  "login": {
+    "welcomeBack": "Welkom terug!",
+    "subtitle": "Log in op je Splitty Super Admin account",
+    "email": "E-mailadres",
+    "emailPlaceholder": "je@email.nl",
+    "password": "Wachtwoord",
+    "passwordPlaceholder": "••••••••",
+    "rememberMe": "Onthoud mij",
+    "forgotPassword": "Wachtwoord vergeten?",
+    "signIn": "Inloggen",
+    "signingIn": "Inloggen...",
+    "noAccount": "Nog geen account?",
+    "contactUs": "Neem contact op",
+    "invalidCredentials": "Ongeldige e-mail of wachtwoord",
+    "copyright": "© 2025 Splitty B.V. Alle rechten voorbehouden."
+  },
   "team": {
     "new": {
       "backToTeam": "Terug naar team overzicht",

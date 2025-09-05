@@ -149,3 +149,33 @@
   animation: pulse-border 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+/* Loading screen animations */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes progress {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 70%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-progress {
+  animation: progress 2.5s ease-in-out infinite;
+}
+

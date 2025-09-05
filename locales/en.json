@@ -1583,6 +1583,22 @@
       "description": "Legal documents and privacy settings"
     }
   },
+  "login": {
+    "welcomeBack": "Welcome back!",
+    "subtitle": "Log in to your Splitty Super Admin account",
+    "email": "Email address",
+    "emailPlaceholder": "you@email.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "signIn": "Sign In",
+    "signingIn": "Signing in...",
+    "noAccount": "Don't have an account?",
+    "contactUs": "Contact us",
+    "invalidCredentials": "Invalid email or password",
+    "copyright": "© 2025 Splitty B.V. All rights reserved."
+  },
   "team": {
     "new": {
       "backToTeam": "Back to team overview",
