@@ -866,7 +866,7 @@ const RestaurantDetail: NextPage = () => {
                         Neem contact op met support als je vragen hebt over het onboarding proces.
                       </p>
                       <Link
-                        href="/support"
+                        href="/settings"
                         className="text-xs text-[#2BE89A] hover:text-[#4FFFB0] font-medium"
                       >
                         Contact Support →

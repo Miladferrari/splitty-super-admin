@@ -6,19 +6,15 @@ import { RestaurantsProvider } from '../contexts/RestaurantsContext'
 import { ThemeProvider } from '../contexts/ThemeContext'
 import { TranslationProvider } from '../contexts/TranslationContext'
 import ErrorBoundary from '../components/ErrorBoundary'
-import LoadingScreen from '../components/LoadingScreen'
-import { useRouteLoading } from '../hooks/useRouteLoading'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const isLoading = useRouteLoading()
-
   return (
     <ErrorBoundary>
       <TranslationProvider>
         <ThemeProvider>
           <RestaurantsProvider>
             <UsersProvider>
-              {isLoading ? <LoadingScreen /> : <Component {...pageProps} />}
+              <Component {...pageProps} />
             </UsersProvider>
           </RestaurantsProvider>
         </ThemeProvider>

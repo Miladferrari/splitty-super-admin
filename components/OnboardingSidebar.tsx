@@ -77,7 +77,7 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
   children 
 }) => {
   const router = useRouter()
-  const { t } = useTranslation('common')
+  const { t } = useTranslation()
   const { deleteRestaurant } = useRestaurants()
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false)
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false)
@@ -359,7 +359,7 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
                       {t('restaurants.onboarding.sidebar.guide.description')}
                     </p>
                     <Link
-                      href="/knowledge-base#restaurant-onboarding"
+                      href="/restaurants"
                       className="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black text-xs font-medium rounded-lg hover:opacity-90 transition-all group"
                     >
                       {t('restaurants.onboarding.sidebar.guide.viewGuide')}

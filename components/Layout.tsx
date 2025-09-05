@@ -111,13 +111,26 @@ const Layout: React.FC<LayoutProps> = ({ children }): React.ReactElement => {
   const [userMenuOpen, setUserMenuOpen] = useState<boolean>(false)
   const [languageMenuOpen, setLanguageMenuOpen] = useState<boolean>(false)
   const [expandedMenus, setExpandedMenus] = useState<ExpandedMenus>(() => {
-    // Initialize with Restaurants menu expanded if on any of its pages
-    const initialExpanded: ExpandedMenus = {}
-    const restaurantPaths = ['/restaurants', '/pos', '/payments/payouts']
-    if (typeof window !== 'undefined' && restaurantPaths.includes(window.location.pathname)) {
-      initialExpanded['Restaurants'] = true
+    // First try to load from localStorage
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('expanded-menus')
+      if (saved) {
+        try {
+          return JSON.parse(saved)
+        } catch (e) {
+          // If parsing fails, continue with default logic
+        }
+      }
+      
+      // Fallback: Initialize with Restaurants menu expanded if on any of its pages
+      const initialExpanded: ExpandedMenus = {}
+      const restaurantPaths = ['/restaurants', '/pos', '/payments/payouts']
+      if (restaurantPaths.includes(window.location.pathname)) {
+        initialExpanded['Restaurants'] = true
+      }
+      return initialExpanded
     }
-    return initialExpanded
+    return {}
   })
   
   // Navigation configuration - memoized to prevent recreation on language change
@@ -230,20 +243,50 @@ const Layout: React.FC<LayoutProps> = ({ children }): React.ReactElement => {
     }
   }, []) // Empty dependency array - only run once on mount
 
-  // Only auto-expand submenus when we're on a submenu page AND sidebar is already open
+  // Initialize expanded menus based on current page
   useEffect(() => {
-    // Only run this when navigating to pages, not when sidebar state changes
-    if (navigation && navigation.length > 0) {
+    if (navigation && navigation.length > 0 && !sidebarCollapsed) {
+      const initialExpanded: { [key: string]: boolean } = {};
+      
       navigation.forEach(item => {
-        // Only check if we're on a submenu page
+        // Check if we're currently on any of the submenu pages
         const isOnSubmenuPage = item.submenu && item.submenu?.some(sub => router.pathname === sub.href)
         
-        if (isOnSubmenuPage && !sidebarCollapsed) {
-          setExpandedMenus(prev => ({ ...prev, [item.href]: true }))
+        if (isOnSubmenuPage) {
+          initialExpanded[item.href] = true;
         }
       })
+      
+      // Set initial state
+      if (Object.keys(initialExpanded).length > 0) {
+        setExpandedMenus(prev => ({ ...prev, ...initialExpanded }))
+      }
     }
-  }, [router.pathname, navigation, sidebarCollapsed]) // Only depend on route changes, not sidebar state
+  }, []) // Only run on mount
+  
+  // Keep expanded state when navigating between submenu items
+  useEffect(() => {
+    if (navigation && navigation.length > 0 && !sidebarCollapsed) {
+      let shouldUpdate = false
+      const updates: ExpandedMenus = { ...expandedMenus }
+      
+      navigation.forEach(item => {
+        const isOnSubmenuPage = item.submenu && item.submenu?.some(sub => router.pathname === sub.href)
+        
+        // If we're on a submenu page and the menu isn't expanded, expand it
+        if (isOnSubmenuPage && !expandedMenus[item.href]) {
+          updates[item.href] = true
+          shouldUpdate = true
+        }
+      })
+      
+      if (shouldUpdate) {
+        setExpandedMenus(updates)
+        // Save to localStorage for persistence
+        localStorage.setItem('expanded-menus', JSON.stringify(updates))
+      }
+    }
+  }, [router.pathname]) // React to route changes but don't reset existing expanded menus
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -271,10 +314,15 @@ const Layout: React.FC<LayoutProps> = ({ children }): React.ReactElement => {
   }
 
   const toggleSubmenu = (itemHref: string): void => {
-    setExpandedMenus(prev => ({
-      ...prev,
-      [itemHref]: !prev[itemHref]
-    }))
+    setExpandedMenus(prev => {
+      const newState = {
+        ...prev,
+        [itemHref]: !prev[itemHref]
+      }
+      // Save to localStorage for persistence
+      localStorage.setItem('expanded-menus', JSON.stringify(newState))
+      return newState
+    })
   }
 
   const handleLogout = (): void => {

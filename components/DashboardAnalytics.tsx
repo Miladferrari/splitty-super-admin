@@ -1,5 +1,5 @@
-import React, { Suspense } from 'react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import React from 'react'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { ChartBarIcon } from '@heroicons/react/24/outline'
 
 interface ChartDataPoint {
@@ -94,12 +94,12 @@ const DashboardAnalytics: React.FC<DashboardAnalyticsProps> = ({ chartData, sele
               padding: '10px',
               boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)'
             }}
-            formatter={(value, name) => {
+            formatter={(value: any, name: any) => {
               const formattedName = name === 'splittyOmzet' ? 'Splitty Omzet' : 
                                    name === 'verwerkteBetalingen' ? 'Verwerkte Betalingen' : 
                                    name === 'aantalTransacties' ? 'Aantal Transacties' :
                                    'Gemiddeld Bedrag'
-              if (name === 'splittyOmzet' || name === 'verwerkteBetalingen' || name === 'gemiddeldBedrag') {
+              if (typeof name === 'string' && (name === 'splittyOmzet' || name === 'verwerkteBetalingen' || name === 'gemiddeldBedrag')) {
                 return [`€${value}`, formattedName]
               }
               return [value, formattedName]

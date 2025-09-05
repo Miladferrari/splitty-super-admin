@@ -57,26 +57,10 @@ export const LazyPayments = dynamic(
   }
 )
 
-export const LazyKnowledgeBase = dynamic(
-  () => import('../pages/knowledge-base'),
-  {
-    loading: () => <PageLoader message="Loading Knowledge Base..." />,
-    ssr: false
-  }
-)
-
 export const LazyUsers = dynamic(
   () => import('../pages/users'),
   {
     loading: () => <PageLoader message="Loading Users..." />,
-    ssr: false
-  }
-)
-
-export const LazySupport = dynamic(
-  () => import('../pages/support'),
-  {
-    loading: () => <PageLoader message="Loading Support..." />,
     ssr: false
   }
 )

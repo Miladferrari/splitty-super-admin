@@ -66,10 +66,25 @@ const Dashboard: NextPage = () => {
     if (!statsData || statsData.length === 0) return [];
     
     // Get actual values from stats
-    const splittyOmzet = parseFloat(statsData.find(s => s.id === 'splitty-omzet')?.value.replace('€', '').replace(/\./g, '').replace(',', '.') || '105.00');
-    const verwerkteBetalingen = parseFloat(statsData.find(s => s.id === 'verwerkte-betalingen')?.value.replace('€', '').replace(/\./g, '').replace(',', '.') || '6300.00');
-    const aantalTransacties = parseInt(statsData.find(s => s.id === 'aantal-transacties')?.value || '150');
-    const gemiddeldBedrag = parseFloat(statsData.find(s => s.id === 'gemiddeld-bedrag')?.value.replace('€', '').replace(',', '.') || '42.00');
+    const splittyOmzetItem = statsData.find((s: any) => s.id === 'splitty-omzet');
+    const splittyOmzet = splittyOmzetItem && typeof splittyOmzetItem.value === 'string' 
+      ? parseFloat(splittyOmzetItem.value.replace('€', '').replace(/\./g, '').replace(',', '.')) 
+      : 105.00;
+    
+    const verwerkteBetalingenItem = statsData.find((s: any) => s.id === 'verwerkte-betalingen');
+    const verwerkteBetalingen = verwerkteBetalingenItem && typeof verwerkteBetalingenItem.value === 'string'
+      ? parseFloat(verwerkteBetalingenItem.value.replace('€', '').replace(/\./g, '').replace(',', '.'))
+      : 6300.00;
+    
+    const aantalTransactiesItem = statsData.find((s: any) => s.id === 'aantal-transacties');
+    const aantalTransacties = aantalTransactiesItem && typeof aantalTransactiesItem.value === 'string'
+      ? parseInt(aantalTransactiesItem.value)
+      : 150;
+    
+    const gemiddeldBedragItem = statsData.find((s: any) => s.id === 'gemiddeld-bedrag');
+    const gemiddeldBedrag = gemiddeldBedragItem && typeof gemiddeldBedragItem.value === 'string'
+      ? parseFloat(gemiddeldBedragItem.value.replace('€', '').replace(',', '.'))
+      : 42.00;
     
     // Hourly pattern for restaurant business (peak at lunch and dinner)
     const hourlyPattern = {
@@ -244,8 +259,8 @@ const Dashboard: NextPage = () => {
 
   // Handle click outside to close date picker
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (datePickerRef.current && !datePickerRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (datePickerRef.current && !datePickerRef.current.contains(event.target as Node)) {
         setShowDatePicker(false)
         setTempDateFilter(null)
       }
@@ -262,8 +277,8 @@ const Dashboard: NextPage = () => {
 
   // Handle click outside to close restaurant dropdown
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (restaurantDropdownRef.current && !restaurantDropdownRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (restaurantDropdownRef.current && !restaurantDropdownRef.current.contains(event.target as Node)) {
         setShowRestaurantDropdown(false)
       }
     }
@@ -283,7 +298,7 @@ const Dashboard: NextPage = () => {
   // Filter restaurants based on selected store
   const filteredRestaurants = selectedStore === 'all' 
     ? activeRestaurants 
-    : activeRestaurants.filter(r => r.id === selectedStore)
+    : activeRestaurants.filter(r => r.id.toString() === selectedStore)
   
   // Generate data based on selected date range
   const generateDailyData = () => {
@@ -379,11 +394,11 @@ const Dashboard: NextPage = () => {
       const dailyTurnover = baseOrders * avgOrderValue
       
       // Format date based on range
-      let dateFormat = { month: 'short', day: 'numeric' }
+      let dateFormat: Intl.DateTimeFormatOptions = { month: 'short' as const, day: 'numeric' as const }
       if (days > 30) {
-        dateFormat = { month: 'short', day: 'numeric' }
+        dateFormat = { month: 'short' as const, day: 'numeric' as const }
       } else if (days > 90) {
-        dateFormat = { month: 'short' }
+        dateFormat = { month: 'short' as const }
       }
       
       data.push({
@@ -414,7 +429,14 @@ const Dashboard: NextPage = () => {
     return data.slice(-7) // Return last 7 days for daily view
   }
 
-  const [dailyData, setDailyData] = useState([])
+  interface DailyDataPoint {
+    date: string
+    fullDate?: Date
+    orders: number
+    turnover: number
+  }
+  
+  const [dailyData, setDailyData] = useState<DailyDataPoint[]>([])
   
   // Initialize data on client side to avoid hydration issues
   useEffect(() => {
@@ -526,7 +548,7 @@ const Dashboard: NextPage = () => {
   // Update chart data when stats or other values change
   useEffect(() => {
     if (stats && stats.length > 0 && dailyData.length > 0) {
-      setChartData(generateChartData(stats))
+      setChartData(generateChartData(stats as any))
     }
   }, [dateRange, selectedMetric, selectedStore, dailyData.length])
 
@@ -581,7 +603,7 @@ const Dashboard: NextPage = () => {
         }
       } else if (analyticsView === 'restaurant') {
         return {
-          title: selectedStore === 'all' ? `${t('dashboard.stats.splittyRevenue.title')} per Restaurant` : `${t('dashboard.chart.metrics.revenue')} ${activeRestaurants.find(r => r.id === selectedStore)?.name || ''}`,
+          title: selectedStore === 'all' ? `${t('dashboard.stats.splittyRevenue.title')} per Restaurant` : `${t('dashboard.chart.metrics.revenue')} ${activeRestaurants.find(r => r.id.toString() === selectedStore)?.name || ''}`,
           subtitle: selectedStore === 'all' ? t('dashboard.sections.bestPerforming.subtitle') : 'Restaurant specifiek',
           cards: selectedStore === 'all' 
             ? filteredRestaurants.slice(0, 3).map((r, i) => ({
@@ -674,7 +696,7 @@ const Dashboard: NextPage = () => {
   const analyticsData = getAnalyticsData()
 
   // Calendar helper functions
-  const generateCalendarDays = (date) => {
+  const generateCalendarDays = (date: Date) => {
     const year = date.getFullYear()
     const month = date.getMonth()
     const firstDay = new Date(year, month, 1)
@@ -696,18 +718,18 @@ const Dashboard: NextPage = () => {
     return days
   }
 
-  const isInCurrentMonth = (date, monthDate) => {
+  const isInCurrentMonth = (date: Date, monthDate: Date) => {
     return date.getMonth() === monthDate.getMonth() && date.getFullYear() === monthDate.getFullYear()
   }
 
-  const isToday = (date) => {
+  const isToday = (date: Date) => {
     const today = new Date()
     return date.getDate() === today.getDate() && 
            date.getMonth() === today.getMonth() && 
            date.getFullYear() === today.getFullYear()
   }
 
-  const isSelected = (date) => {
+  const isSelected = (date: Date) => {
     if (!selectedDateRange.start) return false
     
     // If only start date is selected
@@ -719,7 +741,7 @@ const Dashboard: NextPage = () => {
     return date >= selectedDateRange.start && date <= selectedDateRange.end
   }
 
-  const formatDateForInput = (date) => {
+  const formatDateForInput = (date: Date) => {
     if (!date) return ''
     // Create a new date and adjust for timezone to avoid off-by-one errors
     const d = new Date(date)
@@ -729,7 +751,7 @@ const Dashboard: NextPage = () => {
     return `${year}-${month}-${day}`
   }
 
-  const handleDateSelect = (date) => {
+  const handleDateSelect = (date: Date) => {
     if (!selectedDateRange.start || (selectedDateRange.start && selectedDateRange.end)) {
       // Start a new selection
       setSelectedDateRange({ start: date, end: null })

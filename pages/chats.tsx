@@ -6,8 +6,8 @@ const Chats: NextPage = () => {
   const router = useRouter()
 
   useEffect(() => {
-    // Redirect to support page
-    router.replace('/support')
+    // Redirect to dashboard page
+    router.replace('/dashboard')
   }, [])
 
   return null // Return nothing while redirecting
