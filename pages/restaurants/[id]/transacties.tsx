@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Layout from '../../../components/Layout'
 import { useRestaurants } from '../../../contexts/RestaurantsContext'
+import { useTranslation } from '../../../contexts/TranslationContext'
 import {
   ArrowLeftIcon,
   ClipboardDocumentListIcon,
@@ -28,6 +29,7 @@ const RestaurantOrders: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
   const { restaurants } = useRestaurants()
+  const { t, language } = useTranslation()
   const [searchTerm, setSearchTerm] = useState('')
   const [filterStatus, setFilterStatus] = useState('all')
   const [filterPayment, setFilterPayment] = useState('all')
@@ -192,11 +194,11 @@ const RestaurantOrders: NextPage = () => {
   const getStatusText = (status) => {
     switch (status) {
       case 'completed':
-        return 'Betaald'
+        return t('orders.status.paid')
       case 'in_progress':
-        return 'In Progress'
+        return t('orders.status.inProgress')
       case 'cancelled':
-        return 'Geannuleerd'
+        return t('orders.status.cancelled')
       default:
         return status
     }
@@ -245,10 +247,10 @@ const RestaurantOrders: NextPage = () => {
       <Layout>
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
-            <h2 className="text-2xl font-semibold text-gray-900">Restaurant not found</h2>
+            <h2 className="text-2xl font-semibold text-gray-900">{t('restaurants.notFound')}</h2>
             <Link href="/restaurants" className="mt-4 inline-flex items-center text-green-600 hover:text-green-700">
               <ArrowLeftIcon className="h-4 w-4 mr-2" />
-              Back to restaurants
+              {t('restaurants.backToList')}
             </Link>
           </div>
         </div>
@@ -273,7 +275,7 @@ const RestaurantOrders: NextPage = () => {
                 <li className="flex items-center">
                   <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" />
                   <Link href="/restaurants" className="ml-1 text-gray-500 hover:text-gray-900 transition-colors duration-200">
-                    Restaurants
+                    {t('sidebar.menu.restaurants')}
                   </Link>
                 </li>
                 <li className="flex items-center">
@@ -285,7 +287,7 @@ const RestaurantOrders: NextPage = () => {
                 <li className="flex items-center">
                   <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" />
                   <span className="ml-1 font-medium text-gray-900" aria-current="page">
-                    Splitty Transacties
+                    {t('orders.splittyTransactions')}
                   </span>
                 </li>
               </ol>
@@ -297,14 +299,14 @@ const RestaurantOrders: NextPage = () => {
               className="inline-flex items-center px-4 py-2 rounded-lg transition-all text-sm font-medium mb-6 group bg-gray-50 border border-gray-200 text-gray-600 hover:text-gray-700 hover:bg-gray-100 hover:border-green-300"
             >
               <ArrowLeftIcon className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-              Terug naar {restaurant.name}
+              {t('orders.backToRestaurant', { name: restaurant.name })}
             </Link>
             
             {/* Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
-                <h1 className="text-2xl font-semibold text-gray-900 mb-1">Splitty Transacties</h1>
-                <p className="text-gray-600">Bekijk alle bestellingen en betalingen voor {restaurant.name}</p>
+                <h1 className="text-2xl font-semibold text-gray-900 mb-1">{t('orders.splittyTransactions')}</h1>
+                <p className="text-gray-600">{t('orders.viewAllOrdersPayments', { name: restaurant.name })}</p>
               </div>
             </div>
 
@@ -312,29 +314,29 @@ const RestaurantOrders: NextPage = () => {
             <div className="grid grid-cols-3 gap-4">
               <div className="p-5 rounded-lg bg-white border border-gray-200">
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-xs text-gray-500">Totaal Betalingen</p>
+                  <p className="text-xs text-gray-500">{t('orders.stats.totalPayments')}</p>
                   <ClipboardDocumentListIcon className="h-5 w-5 text-gray-400" />
                 </div>
                 <p className="text-2xl font-semibold text-gray-900">{stats.total}</p>
-                <p className="text-xs text-gray-500 mt-1">{stats.completed} betaald</p>
+                <p className="text-xs text-gray-500 mt-1">{stats.completed} {t('orders.stats.paid')}</p>
               </div>
               
               <div className="p-5 rounded-lg bg-white border border-gray-200">
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-xs text-gray-500">Totaal Bedrag</p>
+                  <p className="text-xs text-gray-500">{t('orders.stats.totalAmount')}</p>
                   <CurrencyEuroIcon className="h-5 w-5 text-gray-400" />
                 </div>
                 <p className="text-2xl font-semibold text-gray-900">€{stats.totalAmount}</p>
-                <p className="text-xs text-gray-500 mt-1">Alle transacties</p>
+                <p className="text-xs text-gray-500 mt-1">{t('orders.stats.allTransactions')}</p>
               </div>
               
               <div className="p-5 rounded-lg bg-white border border-gray-200">
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-xs text-gray-500">Voltooid</p>
+                  <p className="text-xs text-gray-500">{t('orders.stats.completed')}</p>
                   <CheckCircleIcon className="h-5 w-5 text-green-500" />
                 </div>
                 <p className="text-2xl font-semibold text-green-600">€{stats.completedAmount}</p>
-                <p className="text-xs text-gray-500 mt-1">Succesvol betaald</p>
+                <p className="text-xs text-gray-500 mt-1">{t('orders.stats.successfullyPaid')}</p>
               </div>
             </div>
 
@@ -345,7 +347,7 @@ const RestaurantOrders: NextPage = () => {
                   <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500" />
                   <input
                     type="text"
-                    placeholder="Zoek order nummer of tafel..."
+                    placeholder={t('orders.searchPlaceholder')}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full pl-10 pr-4 py-2.5 rounded-lg border transition-colors bg-white border-gray-200 text-gray-900 placeholder-gray-400 focus:border-green-600 focus:outline-none"
@@ -359,10 +361,10 @@ const RestaurantOrders: NextPage = () => {
                   onChange={(e) => setDateRange(e.target.value)}
                   className="px-4 py-2.5 rounded-lg border transition-colors bg-white border-gray-200 text-gray-700 focus:outline-none"
                 >
-                  <option value="today">Vandaag</option>
-                  <option value="week">Deze Week</option>
-                  <option value="month">Deze Maand</option>
-                  <option value="all">Alle</option>
+                  <option value="today">{t('dashboard.filters.today')}</option>
+                  <option value="week">{t('orders.filters.thisWeek')}</option>
+                  <option value="month">{t('orders.filters.thisMonth')}</option>
+                  <option value="all">{t('common.all')}</option>
                 </select>
                 
                 <select
@@ -370,10 +372,10 @@ const RestaurantOrders: NextPage = () => {
                   onChange={(e) => setFilterStatus(e.target.value)}
                   className="px-4 py-2.5 rounded-lg border transition-colors bg-white border-gray-200 text-gray-700 focus:outline-none"
                 >
-                  <option value="all">Alle Status</option>
-                  <option value="completed">Betaald</option>
-                  <option value="in_progress">In Progress</option>
-                  <option value="cancelled">Geannuleerd</option>
+                  <option value="all">{t('orders.filters.allStatus')}</option>
+                  <option value="completed">{t('orders.status.paid')}</option>
+                  <option value="in_progress">{t('orders.status.inProgress')}</option>
+                  <option value="cancelled">{t('orders.status.cancelled')}</option>
                 </select>
                 
                 <select
@@ -381,11 +383,11 @@ const RestaurantOrders: NextPage = () => {
                   onChange={(e) => setFilterPayment(e.target.value)}
                   className="px-4 py-2.5 rounded-lg border transition-colors bg-white border-gray-200 text-gray-700 focus:outline-none"
                 >
-                  <option value="all">Alle Betalingen</option>
+                  <option value="all">{t('orders.filters.allPayments')}</option>
                   <option value="splitty">Splitty</option>
                   <option value="ideal">iDEAL</option>
-                  <option value="creditcard">Creditcard</option>
-                  <option value="cash">Contant</option>
+                  <option value="creditcard">{t('orders.filters.creditCard')}</option>
+                  <option value="cash">{t('orders.filters.cash')}</option>
                 </select>
               </div>
             </div>
@@ -397,25 +399,25 @@ const RestaurantOrders: NextPage = () => {
                   <thead className="bg-gray-50">
                     <tr>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Order
+                        {t('common.order')}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Tafel
+                        {t('orders.table.table')}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Status
+                        {t('common.status')}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Bedragen
+                        {t('orders.amounts')}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Betaalmethode
+                        {t('orders.paymentMethod')}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Tijd
+                        {t('common.time')}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Acties
+                        {t('common.actions')}
                       </th>
                     </tr>
                   </thead>
@@ -426,7 +428,7 @@ const RestaurantOrders: NextPage = () => {
                           <div className="text-sm font-medium text-gray-900">#{payment.orderId}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-gray-900">Tafel {payment.tableNumber}</div>
+                          <div className="text-sm font-medium text-gray-900">{t('orders.tableNumber', { number: payment.tableNumber })}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(payment.status)}`}>
@@ -453,14 +455,14 @@ const RestaurantOrders: NextPage = () => {
                               href={`/restaurants/${id}/orders/ORD-2025-${payment.orderId}`}
                               className="font-medium text-xs text-green-600 hover:text-green-700"
                             >
-                              Order
+                              {t('common.order')}
                             </Link>
                             <span className="text-gray-300 text-xs">|</span>
                             <Link 
                               href={`/restaurants/${id}/payments/${payment.id}`}
                               className="font-medium text-xs text-green-600 hover:text-green-700"
                             >
-                              Betaling
+                              {t('common.payment')}
                             </Link>
                           </div>
                         </td>
@@ -473,8 +475,8 @@ const RestaurantOrders: NextPage = () => {
               {paginatedOrders.length === 0 && (
                 <div className="text-center py-12">
                   <ClipboardDocumentListIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">Geen betalingen gevonden</h3>
-                  <p className="text-gray-600">Probeer je filters aan te passen</p>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">{t('orders.noPaymentsFound')}</h3>
+                  <p className="text-gray-600">{t('orders.tryAdjustingFilters')}</p>
                 </div>
               )}
               
@@ -482,7 +484,11 @@ const RestaurantOrders: NextPage = () => {
               {totalPages > 1 && (
                 <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
                   <div className="text-sm text-gray-700">
-                    Toont {startIndex + 1} tot {Math.min(startIndex + itemsPerPage, filteredOrders.length)} van {filteredOrders.length} betalingen
+                    {t('orders.pagination.showing', { 
+                      start: startIndex + 1, 
+                      end: Math.min(startIndex + itemsPerPage, filteredOrders.length), 
+                      total: filteredOrders.length 
+                    })}
                   </div>
                   <div className="flex gap-2">
                     <button
@@ -494,7 +500,7 @@ const RestaurantOrders: NextPage = () => {
                           : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'
                       }`}
                     >
-                      Vorige
+                      {t('common.previous')}
                     </button>
                     {[...Array(totalPages)].map((_, i) => (
                       <button
@@ -518,7 +524,7 @@ const RestaurantOrders: NextPage = () => {
                           : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'
                       }`}
                     >
-                      Volgende
+                      {t('common.next')}
                     </button>
                   </div>
                 </div>

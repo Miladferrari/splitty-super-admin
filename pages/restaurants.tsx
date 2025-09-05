@@ -455,25 +455,25 @@ const Restaurants: NextPage = () => {
                           <>
                             <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-red-50 text-red-700 border border-red-200">
                               <ArchiveBoxIcon className="h-3 w-3 mr-1" />
-                              Gearchiveerd
+                              {t('restaurants.status.archived')}
                             </span>
                             {!restaurant.isOnboarded && (
                               <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-yellow-50 text-yellow-700 border border-yellow-200">
-                                Onboarding Incompleet
+                                {t('restaurants.status.onboardingIncomplete')}
                               </span>
                             )}
                           </>
                         ) : !restaurant.isOnboarded ? (
                           <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-yellow-50 text-yellow-700 border border-yellow-200">
-                            Setup Vereist
+                            {t('restaurants.status.setupRequired')}
                           </span>
                         ) : restaurant.isActive ? (
                           <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-green-50 text-green-700 border border-green-200">
-                            Actief
+                            {t('restaurants.status.active')}
                           </span>
                         ) : (
                           <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-gray-50 text-gray-600 border border-gray-200">
-                            Inactief
+                            {t('restaurants.status.inactive')}
                           </span>
                         )}
                       </div>
@@ -491,7 +491,7 @@ const Restaurants: NextPage = () => {
                       <div className="grid grid-cols-3 gap-3">
                         <div>
                           <span className="block text-xs mb-1 text-[#9CA3AF]">
-                            Omzet
+                            {t('dashboard.sections.bestPerforming.columns.revenue')}
                           </span>
                           <span className="font-semibold text-sm text-[#111827]">
                             {restaurant.revenue}
@@ -499,7 +499,7 @@ const Restaurants: NextPage = () => {
                         </div>
                         <div>
                           <span className="block text-xs mb-1 text-[#9CA3AF]">
-                            Transacties
+                            {t('dashboard.sections.bestPerforming.columns.transactions')}
                           </span>
                           <span className="font-semibold text-sm text-[#111827]">
                             {restaurant.transactions}
@@ -507,7 +507,7 @@ const Restaurants: NextPage = () => {
                         </div>
                         <div>
                           <span className="block text-xs mb-1 text-[#9CA3AF]">
-                            Score
+                            {t('dashboard.sections.bestPerforming.columns.rating')}
                           </span>
                           <div className="flex items-center">
                             <StarSolidIcon className="h-4 w-4 text-yellow-400 mr-1" />
@@ -522,7 +522,7 @@ const Restaurants: NextPage = () => {
                     {!restaurant.isOnboarded && (
                       <div>
                         <span className="block text-xs mb-2 text-[#9CA3AF]">
-                          Onboarding voortgang
+                          {t('restaurants.onboardingProgress')}
                         </span>
                         <div className="flex items-center">
                           <div className="flex-1 bg-gray-200 rounded-full h-2 mr-3">
@@ -563,7 +563,7 @@ const Restaurants: NextPage = () => {
                           href={`/restaurants/${restaurant.id}`}
                           className="flex-1 inline-flex items-center justify-center px-3 py-2 text-sm font-medium rounded-lg transition-colors bg-gray-100 text-gray-700 hover:bg-gray-200"
                         >
-                          Bekijk Details
+                          {t('restaurants.profile.viewDetails')}
                         </Link>
                         <button
                           onClick={(e) => {
@@ -572,7 +572,7 @@ const Restaurants: NextPage = () => {
                           }}
                           className="flex-1 px-3 py-2 text-sm font-medium rounded-lg transition-colors bg-green-50 text-green-600 hover:bg-green-100"
                         >
-                          Herstellen
+                          {t('restaurants.actions.restore')}
                         </button>
                         <button
                           onClick={(e) => {
@@ -581,7 +581,7 @@ const Restaurants: NextPage = () => {
                           }}
                           className="flex-1 px-3 py-2 text-sm font-medium rounded-lg transition-colors bg-red-50 text-red-600 hover:bg-red-100"
                         >
-                          Verwijderen
+                          {t('restaurants.actions.deleteAction')}
                         </button>
                       </div>
                     ) : (
@@ -593,7 +593,7 @@ const Restaurants: NextPage = () => {
                             : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400'
                         }`}
                       >
-                        {!restaurant.isOnboarded ? 'Start Onboarding' : 'Bekijk Details'}
+                        {!restaurant.isOnboarded ? t('restaurants.actions.continueOnboarding') : t('restaurants.profile.viewDetails')}
                         <ChevronRightIcon className="ml-2 h-4 w-4" />
                       </Link>
                     )}
@@ -608,14 +608,14 @@ const Restaurants: NextPage = () => {
                 <BuildingStorefrontIcon className="mx-auto h-12 w-12 text-gray-400" />
                 <h3 className="mt-4 text-base font-medium text-[#111827]">
                   {statusFilter === 'deleted' 
-                    ? 'Geen gearchiveerde restaurants'
-                    : 'Geen restaurants gevonden'
+                    ? t('restaurants.emptyState.noArchived')
+                    : t('restaurants.emptyState.noFound')
                   }
                 </h3>
                 <p className="mt-2 text-sm text-[#6B7280]">
                   {statusFilter === 'deleted'
-                    ? 'Gearchiveerde restaurants verschijnen hier'
-                    : 'Begin met het toevoegen van je eerste restaurant partner.'
+                    ? t('restaurants.emptyState.archivedDescription')
+                    : t('restaurants.emptyState.foundDescription')
                   }
                 </p>
                 {statusFilter !== 'deleted' && (
@@ -624,7 +624,7 @@ const Restaurants: NextPage = () => {
                     className="mt-6 inline-flex items-center px-4 py-2.5 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600 transition-all"
                   >
                     <PlusIcon className="mr-2 h-5 w-5" />
-                    Voeg Restaurant Toe
+                    {t('restaurants.emptyState.addFirst')}
                   </Link>
                 )}
               </div>

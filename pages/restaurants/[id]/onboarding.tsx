@@ -5,6 +5,7 @@ import Layout from '../../../components/Layout'
 import OnboardingSidebar from '../../../components/OnboardingSidebar'
 import { useRestaurants } from '../../../contexts/RestaurantsContext'
 import { useUsers } from '../../../contexts/UsersContext'
+import { useTranslation } from '../../../contexts/TranslationContext'
 import { 
   BuildingStorefrontIcon,
   UserGroupIcon,
@@ -33,6 +34,7 @@ import {
 const RestaurantOnboarding: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
+  const { t } = useTranslation()
   const { getRestaurant, updateRestaurant, restoreRestaurant } = useRestaurants()
   const { updateRestaurantUsersFromOnboarding } = useUsers()
   const [restaurant, setRestaurant] = useState(null)
@@ -407,9 +409,9 @@ const RestaurantOnboarding: NextPage = () => {
               {/* Header */}
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Stap 1: Restaurant Team</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('restaurants.onboarding.steps.personnel.title')}</h3>
                   <p className="text-gray-600">
-                    Voeg minimaal één manager toe om door te kunnen gaan • {personnelData.length} gebruiker{personnelData.length !== 1 ? 's' : ''} toegevoegd
+                    {t('restaurants.onboarding.steps.personnel.subtitle')} • {t('restaurants.onboarding.steps.personnel.usersAdded', { count: personnelData.length })}
                   </p>
                 </div>
                 <UserGroupIcon className="h-12 w-12 text-gray-600 opacity-20" />
@@ -435,7 +437,7 @@ const RestaurantOnboarding: NextPage = () => {
                                   ? 'bg-green-100 text-green-500' 
                                   : 'bg-blue-100 text-blue-500'
                               }`}>
-                                {person.role === 'manager' ? 'Manager' : 'Personeel'}
+                                {person.role === 'manager' ? t('restaurants.onboarding.steps.personnel.form.manager') : t('restaurants.onboarding.steps.personnel.form.staff')}
                               </span>
                             </div>
                           </div>
@@ -456,7 +458,7 @@ const RestaurantOnboarding: NextPage = () => {
               {showPersonForm ? (
                 <div className="bg-gray-50 rounded-xl p-6 border border-green-200">
                   <div className="flex items-center justify-between mb-6">
-                    <h4 className="text-lg font-semibold text-gray-900">Nieuwe gebruiker toevoegen</h4>
+                    <h4 className="text-lg font-semibold text-gray-900">{t('restaurants.onboarding.steps.personnel.addNewUserForm')}</h4>
                     <button
                       onClick={() => {
                         setShowPersonForm(false);
@@ -484,29 +486,29 @@ const RestaurantOnboarding: NextPage = () => {
                   <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-600 mb-2">Voornaam</label>
+                        <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.onboarding.steps.personnel.form.firstName')}</label>
                         <input
                           type="text"
                           value={newPerson.firstName}
                           onChange={(e) => setNewPerson({...newPerson, firstName: e.target.value})}
                           className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                          placeholder="Jan"
+                          placeholder={t('restaurants.onboarding.steps.personnel.form.firstNamePlaceholder')}
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-600 mb-2">Achternaam</label>
+                        <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.onboarding.steps.personnel.form.lastName')}</label>
                         <input
                           type="text"
                           value={newPerson.lastName}
                           onChange={(e) => setNewPerson({...newPerson, lastName: e.target.value})}
                           className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                          placeholder="Jansen"
+                          placeholder={t('restaurants.onboarding.steps.personnel.form.lastNamePlaceholder')}
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-600 mb-2">Email</label>
+                      <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.onboarding.steps.personnel.form.email')}</label>
                       <input
                         type="email"
                         value={newPerson.email}
@@ -517,7 +519,7 @@ const RestaurantOnboarding: NextPage = () => {
                         className={`w-full px-4 py-3 bg-white border rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:border-transparent ${
                           emailError ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 focus:ring-green-500'
                         }`}
-                        placeholder="jan@restaurant.nl"
+                        placeholder={t('restaurants.onboarding.steps.personnel.form.emailPlaceholder')}
                       />
                       {emailError && (
                         <p className="mt-1 text-sm text-red-600">{emailError}</p>
@@ -525,7 +527,7 @@ const RestaurantOnboarding: NextPage = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-600 mb-2">Telefoon (optioneel)</label>
+                      <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.onboarding.steps.personnel.form.phone')}</label>
                       <input
                         type="tel"
                         value={newPerson.phone}
@@ -536,7 +538,7 @@ const RestaurantOnboarding: NextPage = () => {
                         className={`w-full px-4 py-3 bg-white border rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:border-transparent ${
                           phoneError ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 focus:ring-green-500'
                         }`}
-                        placeholder="+31 6 12345678"
+                        placeholder={t('restaurants.onboarding.steps.personnel.form.phonePlaceholder')}
                       />
                       {phoneError && (
                         <p className="mt-1 text-sm text-red-600">{phoneError}</p>
@@ -544,7 +546,7 @@ const RestaurantOnboarding: NextPage = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-600 mb-2">Wachtwoord</label>
+                      <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.onboarding.steps.personnel.form.password')}</label>
                       <div className="relative">
                         <input
                           type={showPassword ? "text" : "password"}
@@ -556,7 +558,7 @@ const RestaurantOnboarding: NextPage = () => {
                           className={`w-full px-4 py-3 bg-white border rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:border-transparent pr-12 ${
                             passwordError ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 focus:ring-green-500'
                           }`}
-                          placeholder="Minimaal 8 karakters"
+                          placeholder={t('restaurants.onboarding.steps.personnel.form.passwordPlaceholder')}
                         />
                         <button
                           type="button"
@@ -572,7 +574,7 @@ const RestaurantOnboarding: NextPage = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-600 mb-2">Bevestig Wachtwoord</label>
+                      <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.onboarding.steps.personnel.form.confirmPassword')}</label>
                       <div className="relative">
                         <input
                           type={showPasswordConfirm ? "text" : "password"}
@@ -584,7 +586,7 @@ const RestaurantOnboarding: NextPage = () => {
                           className={`w-full px-4 py-3 bg-white border rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:border-transparent pr-12 ${
                             passwordError ? 'border-red-500 focus:ring-red-500' : 'border-gray-200 focus:ring-green-500'
                           }`}
-                          placeholder="Herhaal wachtwoord"
+                          placeholder={t('restaurants.onboarding.steps.personnel.form.confirmPasswordPlaceholder')}
                         />
                         <button
                           type="button"
@@ -597,7 +599,7 @@ const RestaurantOnboarding: NextPage = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-600 mb-3">Rol</label>
+                      <label className="block text-sm font-medium text-gray-600 mb-3">{t('restaurants.onboarding.steps.personnel.form.roleLabel')}</label>
                       <div className="grid grid-cols-2 gap-3">
                         <button
                           type="button"
@@ -609,8 +611,8 @@ const RestaurantOnboarding: NextPage = () => {
                           }`}
                         >
                           <UserGroupIcon className="h-6 w-6 mx-auto mb-2" />
-                          <p className="font-medium">Personeel</p>
-                          <p className="text-xs mt-1 opacity-75">Basis toegang</p>
+                          <p className="font-medium">{t('restaurants.onboarding.steps.personnel.form.staff')}</p>
+                          <p className="text-xs mt-1 opacity-75">{t('restaurants.onboarding.steps.personnel.form.basicAccess')}</p>
                         </button>
                         <button
                           type="button"
@@ -622,8 +624,8 @@ const RestaurantOnboarding: NextPage = () => {
                           }`}
                         >
                           <ShieldCheckIcon className="h-6 w-6 mx-auto mb-2" />
-                          <p className="font-medium">Manager</p>
-                          <p className="text-xs mt-1 opacity-75">Volledige toegang</p>
+                          <p className="font-medium">{t('restaurants.onboarding.steps.personnel.form.manager')}</p>
+                          <p className="text-xs mt-1 opacity-75">{t('restaurants.onboarding.steps.personnel.form.fullAccess')}</p>
                         </button>
                       </div>
                     </div>
@@ -633,7 +635,7 @@ const RestaurantOnboarding: NextPage = () => {
                       disabled={!newPerson.firstName || !newPerson.lastName || !newPerson.email || !newPerson.password || !newPerson.passwordConfirm}
                       className="w-full px-6 py-3 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black font-semibold rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Gebruiker Toevoegen
+                      {t('restaurants.onboarding.steps.personnel.form.addUser')}
                     </button>
                   </div>
                 </div>
@@ -643,15 +645,14 @@ const RestaurantOnboarding: NextPage = () => {
                   className="w-full px-6 py-4 bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl text-gray-600 hover:border-green-300 hover:bg-gray-50 transition-all group"
                 >
                   <UserGroupIcon className="h-8 w-8 mx-auto mb-2 group-hover:text-green-500 transition" />
-                  <p className="font-medium group-hover:text-gray-900 transition">Nieuwe gebruiker toevoegen</p>
+                  <p className="font-medium group-hover:text-gray-900 transition">{t('restaurants.onboarding.steps.personnel.addNewUser')}</p>
                 </button>
               )}
 
               {/* Info Box */}
               <div className="mt-8 bg-gray-50 rounded-lg p-4 border border-gray-200">
                 <p className="text-sm text-gray-600">
-                  <span className="text-green-500 font-medium">Tip:</span> Voeg minimaal één manager toe. 
-                  Je kunt later altijd meer gebruikers toevoegen via het gebruikersbeheer.
+                  <span className="text-green-500 font-medium">{t('restaurants.onboarding.steps.personnel.tip')}</span> {t('restaurants.onboarding.steps.personnel.tipMessage')}
                 </p>
               </div>
             </div>
@@ -665,9 +666,9 @@ const RestaurantOnboarding: NextPage = () => {
             <div className="bg-white rounded-xl p-8 border border-gray-200">
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Stap 2: Stripe Connect</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('restaurants.onboarding.steps.stripe.title')}</h3>
                   <p className="text-gray-600">
-                    Configureer betalingsverwerking voor het restaurant {stripeData.connected && '• ✓ Gekoppeld'}
+                    {t('restaurants.onboarding.steps.stripe.subtitle')} {stripeData.connected && `• ✓ ${t('restaurants.onboarding.steps.stripe.connected')}`}
                   </p>
                 </div>
                 <CreditCardIcon className="h-12 w-12 text-gray-600 opacity-20" />
@@ -679,7 +680,7 @@ const RestaurantOnboarding: NextPage = () => {
                     {/* Restaurant Info - Disabled */}
                     <div className="opacity-50 cursor-not-allowed">
                       <label className="block text-sm font-medium text-gray-600 mb-2">
-                        Restaurant
+                        {t('restaurants.onboarding.steps.stripe.restaurant')}
                       </label>
                       <div className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900">
                         {restaurant?.name}
@@ -688,24 +689,23 @@ const RestaurantOnboarding: NextPage = () => {
 
                     {/* Stripe Connect Info */}
                     <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                      <h4 className="text-base font-medium text-gray-900 mb-4">Stripe Connect Integratie</h4>
+                      <h4 className="text-base font-medium text-gray-900 mb-4">{t('restaurants.onboarding.steps.stripe.integration.title')}</h4>
                       <p className="text-sm text-gray-600 mb-6">
-                        Stripe Connect stelt het restaurant in staat om veilig betalingen te ontvangen. 
-                        Het restaurant beheert zijn eigen Stripe account en ontvangt uitbetalingen direct.
+                        {t('restaurants.onboarding.steps.stripe.integration.description')}
                       </p>
                       
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <div className="text-center">
                           <ShieldCheckIcon className="h-8 w-8 text-gray-600 mx-auto mb-2" />
-                          <p className="text-xs text-gray-600">PCI Compliant</p>
+                          <p className="text-xs text-gray-600">{t('restaurants.onboarding.steps.stripe.integration.features.pciCompliant')}</p>
                         </div>
                         <div className="text-center">
                           <ClockIcon className="h-8 w-8 text-gray-600 mx-auto mb-2" />
-                          <p className="text-xs text-gray-600">Dagelijkse uitbetaling</p>
+                          <p className="text-xs text-gray-600">{t('restaurants.onboarding.steps.stripe.integration.features.dailyPayout')}</p>
                         </div>
                         <div className="text-center">
                           <SparklesIcon className="h-8 w-8 text-gray-600 mx-auto mb-2" />
-                          <p className="text-xs text-gray-600">Real-time inzicht</p>
+                          <p className="text-xs text-gray-600">{t('restaurants.onboarding.steps.stripe.integration.features.realTimeInsight')}</p>
                         </div>
                       </div>
                     </div>
@@ -722,7 +722,7 @@ const RestaurantOnboarding: NextPage = () => {
                       <svg className="w-20 h-6 mr-3" viewBox="0 0 60 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fillRule="evenodd" clipRule="evenodd" d="M59.64 14.28C59.64 8.46 56.37 5.43 51.54 5.43C46.68 5.43 43.08 8.49 43.08 14.34C43.08 21.27 47.61 23.7 52.74 23.7C55.26 23.7 57.18 23.13 58.59 22.26V18.42C57.18 19.2 55.5 19.65 53.28 19.65C51.24 19.65 49.44 18.96 49.05 16.26H59.55C59.55 15.99 59.64 14.91 59.64 14.28ZM49.02 12.72C49.02 10.11 50.61 9.21 51.51 9.21C52.38 9.21 53.88 10.11 53.88 12.72H49.02ZM40.68 14.28C40.68 8.52 37.77 5.43 33.15 5.43C28.53 5.43 25.32 8.52 25.32 14.28C25.32 20.04 28.53 23.13 33.15 23.13C37.77 23.13 40.68 20.04 40.68 14.28ZM34.65 14.28C34.65 10.5 33.72 9.48 33.15 9.48C32.58 9.48 31.65 10.5 31.65 14.28C31.65 18.06 32.58 19.08 33.15 19.08C33.72 19.08 34.65 18.06 34.65 14.28ZM23.4 11.61C23.4 9.75 22.56 5.7 16.56 5.7C14.07 5.7 12.15 6.45 10.83 7.41L12.24 10.86C13.38 10.05 14.88 9.48 16.23 9.48C17.58 9.48 17.7 10.38 17.7 10.89V11.16C12.84 11.16 9.36 12.87 9.36 17.07C9.36 20.4 11.73 23.13 15.12 23.13C17.01 23.13 18.24 22.32 19.02 21.21H19.14C19.14 21.21 19.83 24.42 24.84 22.77C23.82 21.3 23.4 18.78 23.4 16.59V11.61ZM17.91 16.56C17.91 16.89 17.88 17.25 17.79 17.58C17.58 18.39 16.89 19.26 15.75 19.26C14.88 19.26 14.31 18.66 14.31 17.46C14.31 15.51 16.17 14.94 17.91 14.94V16.56ZM7.68 2.31L0 22.77H6.18L9.15 14.16L10.74 9.21H10.86L11.73 14.16L13.2 22.77H19.71L18.42 2.31H7.68Z" fill="currentColor"/>
                       </svg>
-                      <span className="text-base">Verbind met Stripe</span>
+                      <span className="text-base">{t('restaurants.onboarding.steps.stripe.integration.connectButton')}</span>
                       <ArrowRightIcon className="h-5 w-5 ml-2" />
                     </button>
                   </>
@@ -732,17 +732,17 @@ const RestaurantOnboarding: NextPage = () => {
                     <div className="bg-gray-50 rounded-lg p-6 border border-green-200">
                       <div className="flex items-center mb-4">
                         <CheckCircleIcon className="h-6 w-6 text-green-500 mr-3" />
-                        <h4 className="text-base font-medium text-gray-900">Stripe Connect Actief</h4>
+                        <h4 className="text-base font-medium text-gray-900">{t('restaurants.onboarding.steps.stripe.success.title')}</h4>
                       </div>
                       <div className="space-y-3">
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-gray-600">Account ID</span>
+                          <span className="text-sm text-gray-600">{t('restaurants.onboarding.steps.stripe.success.accountId')}</span>
                           <span className="text-sm text-gray-900 font-mono">{stripeData.accountId || 'acct_demo_123456'}</span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-gray-600">Status</span>
+                          <span className="text-sm text-gray-600">{t('restaurants.onboarding.steps.stripe.success.status')}</span>
                           <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-500">
-                            Geverifieerd
+                            {t('restaurants.onboarding.steps.stripe.success.active')}
                           </span>
                         </div>
                         <div className="flex justify-between items-center">
@@ -771,9 +771,9 @@ const RestaurantOnboarding: NextPage = () => {
             <div className="bg-white rounded-xl p-8 border border-gray-200">
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Stap 3: POS Systeem Koppeling</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('restaurants.onboarding.steps.pos.title')}</h3>
                   <p className="text-gray-600">
-                    Configureer het kassasysteem van {restaurant?.name} voor automatische synchronisatie
+                    {t('restaurants.onboarding.steps.pos.subtitle', { restaurantName: restaurant?.name })}
                   </p>
                 </div>
                 <WifiIcon className="h-12 w-12 text-gray-600 opacity-20" />
@@ -783,7 +783,7 @@ const RestaurantOnboarding: NextPage = () => {
                 {/* Restaurant Selection - Disabled in onboarding as we already know the restaurant */}
                 <div className="opacity-50 cursor-not-allowed">
                   <label className="block text-sm font-medium text-gray-600 mb-2">
-                    Restaurant <span className="text-red-500">*</span>
+                    {t('restaurants.onboarding.steps.pos.restaurant')} <span className="text-red-500">*</span>
                   </label>
                   <div className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg">
                     <span className="text-gray-900 font-medium">{restaurant?.name}</span>
@@ -798,7 +798,7 @@ const RestaurantOnboarding: NextPage = () => {
                 {/* POS Type */}
                 <div>
                   <label className="block text-sm font-medium text-gray-600 mb-2">
-                    POS Systeem <span className="text-red-500">*</span>
+                    {t('restaurants.onboarding.steps.pos.posSystem')} <span className="text-red-500">*</span>
                   </label>
                   <select
                     value={posData.posType}
@@ -806,7 +806,7 @@ const RestaurantOnboarding: NextPage = () => {
                     className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     required
                   >
-                    <option value="">Selecteer het POS systeem van het restaurant</option>
+                    <option value="">{t('restaurants.onboarding.steps.pos.selectPos')}</option>
                     <option value="untill">Untill</option>
                     <option value="lightspeed">Lightspeed</option>
                     <option value="epos">EPOS Now</option>
@@ -818,28 +818,28 @@ const RestaurantOnboarding: NextPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-600 mb-2">
-                      POS Gebruikersnaam <span className="text-red-500">*</span>
+                      {t('restaurants.onboarding.steps.pos.posUsername')} <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
                       value={posData.username}
                       onChange={(e) => setPosData({...posData, username: e.target.value})}
                       className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                      placeholder="POS account gebruikersnaam"
+                      placeholder={t('restaurants.onboarding.steps.pos.posUsernamePlaceholder')}
                       required
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-600 mb-2">
-                      POS Wachtwoord <span className="text-red-500">*</span>
+                      {t('restaurants.onboarding.steps.pos.posPassword')} <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="password"
                       value={posData.password}
                       onChange={(e) => setPosData({...posData, password: e.target.value})}
                       className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                      placeholder="POS account wachtwoord"
+                      placeholder={t('restaurants.onboarding.steps.pos.posPasswordPlaceholder')}
                       required
                     />
                   </div>
@@ -848,11 +848,11 @@ const RestaurantOnboarding: NextPage = () => {
                 {/* Base URL */}
                 <div>
                   <label className="block text-sm font-medium text-gray-600 mb-2">
-                    API URL <span className="text-red-500">*</span>
+                    {t('restaurants.onboarding.steps.pos.apiUrl')} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
-                    placeholder="https://restaurant-pos-server.com"
+                    placeholder={t('restaurants.onboarding.steps.pos.apiUrlPlaceholder')}
                     value={posData.baseUrl}
                     onChange={(e) => setPosData({...posData, baseUrl: e.target.value})}
                     className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
@@ -863,17 +863,17 @@ const RestaurantOnboarding: NextPage = () => {
                 {/* Environment */}
                 <div>
                   <label className="block text-sm font-medium text-gray-600 mb-2">
-                    Omgeving
+                    {t('restaurants.onboarding.steps.pos.environment')}
                   </label>
                   <select
                     value={posData.environment}
                     onChange={(e) => setPosData({...posData, environment: e.target.value})}
                     className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                   >
-                    <option value="production">Productie</option>
-                    <option value="staging">Staging</option>
-                    <option value="development">Development</option>
-                    <option value="test">Test</option>
+                    <option value="production">{t('restaurants.onboarding.steps.pos.production')}</option>
+                    <option value="staging">{t('restaurants.onboarding.steps.pos.staging')}</option>
+                    <option value="development">{t('restaurants.onboarding.steps.pos.development')}</option>
+                    <option value="test">{t('restaurants.onboarding.steps.pos.test')}</option>
                   </select>
                 </div>
 
@@ -890,9 +890,9 @@ const RestaurantOnboarding: NextPage = () => {
                   </div>
                   <div className="ml-3">
                     <label htmlFor="is-active" className="text-sm font-medium text-gray-900">
-                      Activeren
+                      {t('restaurants.onboarding.steps.pos.activate')}
                     </label>
-                    <p className="text-sm text-gray-600">Schakel deze POS integratie in voor {restaurant?.name}</p>
+                    <p className="text-sm text-gray-600">{t('restaurants.onboarding.steps.pos.activateDescription', { restaurantName: restaurant?.name })}</p>
                   </div>
                 </div>
 
@@ -926,7 +926,7 @@ const RestaurantOnboarding: NextPage = () => {
                   }}
                   className="w-full px-6 py-3 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black font-semibold rounded-lg hover:opacity-90 transition-all shadow-lg"
                 >
-                  Verbinding Testen
+                  {t('restaurants.onboarding.steps.pos.testConnection')}
                 </button>
               </div>
             </div>
@@ -940,9 +940,9 @@ const RestaurantOnboarding: NextPage = () => {
             <div className="bg-white rounded-xl p-8 border border-gray-200">
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Stap 4: QR houders</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('restaurants.onboarding.steps.qrHolders.title')}</h3>
                   <p className="text-gray-600">
-                    Configureer QR stands en tafelindeling voor {restaurant?.name}
+                    {t('restaurants.onboarding.steps.qrHolders.subtitle', { restaurantName: restaurant?.name })}
                   </p>
                 </div>
                 <QrCodeIcon className="h-12 w-12 text-gray-600 opacity-20" />
@@ -952,7 +952,7 @@ const RestaurantOnboarding: NextPage = () => {
                 {/* QR Stand Design Selection */}
                 <div>
                   <label className="block text-sm font-medium text-gray-600 mb-4">
-                    Selecteer QR Stand Design
+                    {t('restaurants.onboarding.steps.qrHolders.selectDesign')}
                   </label>
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                     {[
@@ -988,12 +988,12 @@ const RestaurantOnboarding: NextPage = () => {
                 {/* Table Count by Section */}
                 <div>
                   <label className="block text-sm font-medium text-gray-600 mb-4">
-                    Aantal Tafels per Sectie
+                    {t('restaurants.onboarding.steps.qrHolders.tablesPerSection')}
                   </label>
                   <div className="grid grid-cols-2 gap-4 mb-4">
                     {/* Bar */}
                     <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-2">Bar</label>
+                      <label className="block text-xs font-medium text-gray-600 mb-2">{t('restaurants.onboarding.steps.qrHolders.sections.bar')}</label>
                       <input
                         type="number"
                         value={qrStandData.tableSections?.bar || ''}
@@ -1010,7 +1010,7 @@ const RestaurantOnboarding: NextPage = () => {
                     </div>
                     {/* Binnen */}
                     <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-2">Binnen</label>
+                      <label className="block text-xs font-medium text-gray-600 mb-2">{t('restaurants.onboarding.steps.qrHolders.sections.inside')}</label>
                       <input
                         type="number"
                         value={qrStandData.tableSections?.binnen || ''}
@@ -1027,7 +1027,7 @@ const RestaurantOnboarding: NextPage = () => {
                     </div>
                     {/* Terras */}
                     <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-2">Terras</label>
+                      <label className="block text-xs font-medium text-gray-600 mb-2">{t('restaurants.onboarding.steps.qrHolders.sections.terrace')}</label>
                       <input
                         type="number"
                         value={qrStandData.tableSections?.terras || ''}
@@ -1044,7 +1044,7 @@ const RestaurantOnboarding: NextPage = () => {
                     </div>
                     {/* Lounge */}
                     <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-2">Lounge</label>
+                      <label className="block text-xs font-medium text-gray-600 mb-2">{t('restaurants.onboarding.steps.qrHolders.sections.lounge')}</label>
                       <input
                         type="number"
                         value={qrStandData.tableSections?.lounge || ''}
@@ -1064,13 +1064,13 @@ const RestaurantOnboarding: NextPage = () => {
                   {/* Total Calculator */}
                   <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-600">Totaal aantal tafels</span>
+                      <span className="text-sm font-medium text-gray-600">{t('restaurants.onboarding.steps.qrHolders.totalTables')}</span>
                       <span className="text-xl font-bold text-green-500">
                         {qrStandData.tableCount || '0'}
                       </span>
                     </div>
                     <p className="text-xs text-gray-600 mt-2">
-                      Automatisch berekend op basis van alle secties
+                      {t('restaurants.onboarding.steps.qrHolders.totalTablesDesc')}
                     </p>
                   </div>
                 </div>
@@ -1078,7 +1078,7 @@ const RestaurantOnboarding: NextPage = () => {
                 {/* Floor Plan Upload */}
                 <div>
                   <label className="block text-sm font-medium text-gray-600 mb-4">
-                    Plattegrond Upload (Optioneel)
+                    {t('restaurants.onboarding.steps.qrHolders.floorPlan.title')}
                   </label>
                   
                   {/* Display uploaded files */}
@@ -1126,9 +1126,9 @@ const RestaurantOnboarding: NextPage = () => {
                         </div>
                       </div>
                       <div>
-                        <p className="text-gray-900 font-medium mb-2">Sleep bestanden hier of klik om te uploaden</p>
+                        <p className="text-gray-900 font-medium mb-2">{t('restaurants.onboarding.steps.qrHolders.floorPlan.uploadText')}</p>
                         <p className="text-sm text-gray-600">
-                          PNG, JPG, PDF - Max 5MB per bestand - Meerdere bestanden toegestaan
+                          {t('restaurants.onboarding.steps.qrHolders.floorPlan.fileTypes')}
                         </p>
                       </div>
                       <input
@@ -1147,7 +1147,7 @@ const RestaurantOnboarding: NextPage = () => {
                     </div>
                   </div>
                   <p className="text-xs text-gray-600 mt-2">
-                    Upload plattegronden, foto's of documenten van het restaurant (meerdere bestanden mogelijk)
+                    {t('restaurants.onboarding.steps.qrHolders.floorPlan.description')}
                   </p>
                 </div>
 
@@ -1224,9 +1224,9 @@ const RestaurantOnboarding: NextPage = () => {
             <div className="bg-white rounded-xl p-8 border border-gray-200">
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Stap 5: Google Reviews</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('restaurants.onboarding.steps.googleReviews.title')}</h3>
                   <p className="text-gray-600">
-                    Configureer Google Reviews link voor {restaurant?.name}
+                    {t('restaurants.onboarding.steps.googleReviews.subtitle', { restaurantName: restaurant?.name })}
                   </p>
                 </div>
                 <StarIcon className="h-12 w-12 text-gray-600 opacity-20" />
@@ -1236,7 +1236,7 @@ const RestaurantOnboarding: NextPage = () => {
                 {/* Restaurant Info - Disabled */}
                 <div>
                   <label className="block text-sm font-medium text-gray-600 mb-2">
-                    Restaurant
+                    {t('restaurants.onboarding.steps.googleReviews.restaurant')}
                   </label>
                   <div className="relative">
                     <div className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg pr-12">
@@ -1257,7 +1257,7 @@ const RestaurantOnboarding: NextPage = () => {
                         setTimeout(() => setShowCopiedMessage(false), 2000);
                       }}
                       className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600 hover:text-gray-900 transition"
-                      title="Kopieer restaurant informatie"
+                      title={t('restaurants.onboarding.steps.googleReviews.copyInfo')}
                     >
                       {showCopiedMessage ? (
                         <span className="text-xs text-green-500 font-medium mr-2">Gekopieerd!</span>
@@ -1271,21 +1271,21 @@ const RestaurantOnboarding: NextPage = () => {
 
                 {/* Instructions with Steps */}
                 <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                  <h4 className="text-base font-medium text-gray-900 mb-4">Google Review link instellen voor {restaurant?.name}</h4>
+                  <h4 className="text-base font-medium text-gray-900 mb-4">{t('restaurants.onboarding.steps.googleReviews.setupTitle', { restaurantName: restaurant?.name })}</h4>
                   
                   {/* Step 1 */}
                   <div className="mb-6">
                     <div className="flex items-start mb-3">
                       <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-500 text-black text-sm font-bold mr-3 flex-shrink-0">1</span>
                       <div className="flex-1">
-                        <p className="text-sm text-gray-900 font-medium mb-2">Zoek {restaurant?.name} op Google</p>
+                        <p className="text-sm text-gray-900 font-medium mb-2">{t('restaurants.onboarding.steps.googleReviews.step1', { restaurantName: restaurant?.name })}</p>
                         <a 
                           href="https://developers.google.com/maps/documentation/places/web-service/place-id"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black text-sm font-medium rounded-lg hover:opacity-90 transition"
                         >
-                          Open Google Place ID Finder
+                          {t('restaurants.onboarding.steps.googleReviews.openFinder')}
                           <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                           </svg>
@@ -1299,8 +1299,8 @@ const RestaurantOnboarding: NextPage = () => {
                     <div className="flex items-start">
                       <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-500 text-black text-sm font-bold mr-3 flex-shrink-0">2</span>
                       <div className="flex-1">
-                        <p className="text-sm text-gray-900 font-medium mb-1">Zoek onder "Find the ID of a particular place"</p>
-                        <p className="text-xs text-gray-600">Typ "{restaurant?.name}" en selecteer het juiste resultaat</p>
+                        <p className="text-sm text-gray-900 font-medium mb-1">{t('restaurants.onboarding.steps.googleReviews.step2')}</p>
+                        <p className="text-xs text-gray-600">{t('restaurants.onboarding.steps.googleReviews.step2Desc', { restaurantName: restaurant?.name })}</p>
                       </div>
                     </div>
                   </div>
@@ -1310,8 +1310,8 @@ const RestaurantOnboarding: NextPage = () => {
                     <div className="flex items-start">
                       <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-500 text-black text-sm font-bold mr-3 flex-shrink-0">3</span>
                       <div className="flex-1">
-                        <p className="text-sm text-gray-900 font-medium mb-1">Kopieer de Place ID</p>
-                        <p className="text-xs text-gray-600">Deze verschijnt onder de kaart (bijv: ChIJN1t_tDeuEmsRU...)</p>
+                        <p className="text-sm text-gray-900 font-medium mb-1">{t('restaurants.onboarding.steps.googleReviews.step3')}</p>
+                        <p className="text-xs text-gray-600">{t('restaurants.onboarding.steps.googleReviews.step3Desc')}</p>
                       </div>
                     </div>
                   </div>
@@ -1321,8 +1321,8 @@ const RestaurantOnboarding: NextPage = () => {
                     <div className="flex items-start">
                       <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-500 text-black text-sm font-bold mr-3 flex-shrink-0">4</span>
                       <div className="flex-1">
-                        <p className="text-sm text-gray-900 font-medium mb-1">Plak de Place ID hieronder</p>
-                        <p className="text-xs text-gray-600">Vervang alleen "PLACE_ID" met de gekopieerde ID van {restaurant?.name}</p>
+                        <p className="text-sm text-gray-900 font-medium mb-1">{t('restaurants.onboarding.steps.googleReviews.step4')}</p>
+                        <p className="text-xs text-gray-600">{t('restaurants.onboarding.steps.googleReviews.step4Desc', { restaurantName: restaurant?.name })}</p>
                       </div>
                     </div>
                   </div>
@@ -1331,7 +1331,7 @@ const RestaurantOnboarding: NextPage = () => {
                 {/* Google Review Link Input */}
                 <div>
                   <label className="block text-sm font-medium text-gray-600 mb-2">
-                    Google Review Link
+                    {t('restaurants.onboarding.steps.googleReviews.reviewLink')}
                   </label>
                   <div className="flex items-center bg-white border border-gray-200 rounded-lg focus-within:ring-2 focus-within:ring-[#2BE89A] focus-within:border-transparent">
                     <span className="text-gray-600 font-mono text-sm pl-4 pr-0 whitespace-nowrap">
@@ -1349,12 +1349,12 @@ const RestaurantOnboarding: NextPage = () => {
                           isConfigured: placeId.length > 0
                         });
                       }}
-                      placeholder="PLACE_ID"
+                      placeholder={t('restaurants.onboarding.steps.googleReviews.placeIdPlaceholder')}
                       className="flex-1 bg-transparent py-3 pr-4 pl-0 text-gray-900 font-mono text-sm placeholder-gray-400 focus:outline-none"
                     />
                   </div>
                   <p className="text-xs text-gray-600 mt-2">
-                    Het restaurant kan dit later altijd wijzigen
+                    {t('restaurants.onboarding.steps.googleReviews.canChangeLabel')}
                   </p>
                 </div>
 
@@ -1425,11 +1425,10 @@ const RestaurantOnboarding: NextPage = () => {
                     <RocketLaunchIcon className="h-8 w-8 lg:h-9 lg:w-9 xl:h-10 xl:w-10 text-black" />
                   </div>
                   <h1 className="text-3xl lg:text-3xl xl:text-4xl font-bold text-gray-900 mb-3 lg:mb-3 xl:mb-4">
-                    Welkom bij Splitty Onboarding!
+                    {t('restaurants.onboarding.welcome.title')}
                   </h1>
                   <p className="text-lg lg:text-lg xl:text-xl text-gray-600 mb-0 max-w-3xl mx-auto">
-                    Laten we <span className="text-green-500 font-semibold">{restaurant?.name}</span> klaar maken 
-                    voor de toekomst van restaurant betalingen
+                    {t('restaurants.onboarding.welcome.subtitle', { restaurantName: restaurant?.name })}
                   </p>
                 </div>
               </div>
@@ -1438,41 +1437,41 @@ const RestaurantOnboarding: NextPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-10">
                   <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-green-300 transition-all group">
                     <UserGroupIcon className="h-10 w-10 text-green-500 mb-4 group-hover:scale-110 transition-transform" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Personeel</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('restaurants.onboarding.welcome.features.personnel.title')}</h3>
                     <p className="text-sm text-gray-600">
-                      Configureer toegang voor het restaurant team
+                      {t('restaurants.onboarding.welcome.features.personnel.description')}
                     </p>
                   </div>
                   
                   <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-green-400 transition-all group">
                     <CreditCardIcon className="h-10 w-10 text-green-400 mb-4 group-hover:scale-110 transition-transform" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Betalingen</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('restaurants.onboarding.welcome.features.payments.title')}</h3>
                     <p className="text-sm text-gray-600">
-                      Stel Stripe in voor het restaurant
+                      {t('restaurants.onboarding.welcome.features.payments.description')}
                     </p>
                   </div>
                   
                   <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-gray-400 transition-all group">
                     <WifiIcon className="h-10 w-10 text-gray-600 mb-4 group-hover:text-gray-900 transition-all" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">POS Systeem</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('restaurants.onboarding.welcome.features.posSystem.title')}</h3>
                     <p className="text-sm text-gray-600">
-                      Koppel het kassasysteem
+                      {t('restaurants.onboarding.welcome.features.posSystem.description')}
                     </p>
                   </div>
                   
                   <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-yellow-400 transition-all group">
                     <StarIcon className="h-10 w-10 text-yellow-500 mb-4 group-hover:scale-110 transition-transform" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Reviews</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('restaurants.onboarding.welcome.features.reviews.title')}</h3>
                     <p className="text-sm text-gray-600">
-                      Configureer klantfeedback
+                      {t('restaurants.onboarding.welcome.features.reviews.description')}
                     </p>
                   </div>
                   
                   <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-green-300 transition-all group">
                     <QrCodeIcon className="h-10 w-10 text-green-500 mb-4 group-hover:scale-110 transition-transform" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">QR Stands</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('restaurants.onboarding.welcome.features.qrStands.title')}</h3>
                     <p className="text-sm text-gray-600">
-                      Tafel QR codes en indeling
+                      {t('restaurants.onboarding.welcome.features.qrStands.description')}
                     </p>
                   </div>
                 </div>
@@ -1480,18 +1479,18 @@ const RestaurantOnboarding: NextPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                   <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
                     <ClockIcon className="h-6 w-6 text-green-500 mx-auto mb-2" />
-                    <p className="text-sm text-gray-900 font-medium">10-15 minuten</p>
-                    <p className="text-xs text-gray-600">Geschatte tijd</p>
+                    <p className="text-sm text-gray-900 font-medium">{t('restaurants.onboarding.welcome.info.estimatedTime')}</p>
+                    <p className="text-xs text-gray-600">{t('restaurants.onboarding.welcome.info.estimatedTimeDesc')}</p>
                   </div>
                   <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-center">
                     <ShieldCheckIcon className="h-6 w-6 text-gray-900 mx-auto mb-2" />
-                    <p className="text-sm text-gray-900 font-medium">Automatisch opgeslagen</p>
-                    <p className="text-xs text-gray-600">Ga later verder</p>
+                    <p className="text-sm text-gray-900 font-medium">{t('restaurants.onboarding.welcome.info.autoSaved')}</p>
+                    <p className="text-xs text-gray-600">{t('restaurants.onboarding.welcome.info.autoSavedDesc')}</p>
                   </div>
                   <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-center">
                     <SparklesIcon className="h-6 w-6 text-gray-900 mx-auto mb-2" />
-                    <p className="text-sm text-gray-900 font-medium">Direct actief</p>
-                    <p className="text-xs text-gray-600">Na voltooiing</p>
+                    <p className="text-sm text-gray-900 font-medium">{t('restaurants.onboarding.welcome.info.instantActive')}</p>
+                    <p className="text-xs text-gray-600">{t('restaurants.onboarding.welcome.info.instantActiveDesc')}</p>
                   </div>
                 </div>
               </div>
@@ -1503,7 +1502,7 @@ const RestaurantOnboarding: NextPage = () => {
                   className="w-full px-8 py-5 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black font-bold rounded-xl hover:opacity-90 transition-all text-lg group disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <span className="flex items-center justify-center">
-                    Laten we beginnen
+                    {t('restaurants.onboarding.welcome.startButton')}
                     <ArrowRightIcon className="h-6 w-6 ml-3 group-hover:translate-x-2 transition-transform" />
                   </span>
                 </button>
@@ -1537,12 +1536,12 @@ const RestaurantOnboarding: NextPage = () => {
                   >
                     {currentStep === 5 ? (
                       <>
-                        Onboarding Afronden
+                        {t('restaurants.onboarding.steps.navigation.complete')}
                         <CheckCircleIcon className="h-5 w-5 ml-2 inline group-hover:scale-110 transition-transform" />
                       </>
                     ) : (
                       <>
-                        Volgende Stap
+                        {t('restaurants.onboarding.steps.navigation.next')}
                         <ChevronRightIcon className="h-5 w-5 ml-2 inline group-hover:translate-x-1 transition-transform" />
                       </>
                     )}

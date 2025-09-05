@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Layout from '../components/Layout'
 import Breadcrumb from '../components/Breadcrumb'
+import { useTranslation } from '../contexts/TranslationContext'
 import {
   MagnifyingGlassIcon,
   FunnelIcon,
@@ -17,6 +18,7 @@ import {
 } from '@heroicons/react/24/outline'
 
 const Payments: NextPage = () => {
+  const { t } = useTranslation()
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
   const [dateRange, setDateRange] = useState('last30days')
@@ -266,16 +268,16 @@ const Payments: NextPage = () => {
         <div className="px-4 sm:px-6 lg:px-8 py-8">
           <div className="space-y-6">
             {/* Breadcrumb */}
-            <Breadcrumb items={[{ label: 'Betalingen' }]} />
+            <Breadcrumb items={[{ label: t('payments.breadcrumb') }]} />
 
             {/* Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
                 <h1 className="text-2xl font-semibold text-[#111827] mb-1">
-                  Betalingen
+                  {t('payments.title')}
                 </h1>
                 <p className="text-[#6B7280]">
-                  Beheer alle betalingstransacties
+                  {t('payments.subtitle')}
                 </p>
               </div>
               <div className="flex gap-3">
@@ -284,7 +286,7 @@ const Payments: NextPage = () => {
                   className="inline-flex items-center px-4 py-2.5 rounded-lg transition-all duration-200 border border-gray-200 text-[#6B7280] bg-white hover:bg-gray-50 shadow-sm"
                 >
                   <BanknotesIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" />
-                  Bekijk Uitbetalingen
+                  {t('payments.viewPayouts')}
                 </Link>
                 <button
                   type="button"
@@ -292,7 +294,7 @@ const Payments: NextPage = () => {
                   className="inline-flex items-center px-4 py-2.5 rounded-lg transition-all duration-200 border border-gray-200 text-[#6B7280] bg-white hover:bg-gray-50 shadow-sm"
                 >
                   <ArrowDownTrayIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" />
-                  Exporteer
+                  {t('payments.export')}
                 </button>
               </div>
             </div>
@@ -306,7 +308,7 @@ const Payments: NextPage = () => {
                   </div>
                   <div className="ml-4">
                     <p className="text-xs font-medium uppercase tracking-wider text-[#6B7280]">
-                      TOTAAL BETALINGEN
+                      {t('payments.stats.totalPayments')}
                     </p>
                     <p className="text-2xl font-bold mt-2 text-[#111827]">
                       {filteredPayments.length}
@@ -321,7 +323,7 @@ const Payments: NextPage = () => {
                   </div>
                   <div className="ml-4">
                     <p className="text-xs font-medium uppercase tracking-wider text-[#6B7280]">
-                      GESLAAGD
+                      {t('payments.stats.succeeded')}
                     </p>
                     <p className="text-2xl font-bold mt-2 text-[#111827]">
                       {filteredPayments.filter(p => p.status === 'succeeded').length}
@@ -336,7 +338,7 @@ const Payments: NextPage = () => {
                   </div>
                   <div className="ml-4">
                     <p className="text-xs font-medium uppercase tracking-wider text-[#6B7280]">
-                      TOTAAL BEDRAG
+                      {t('payments.stats.totalAmount')}
                     </p>
                     <p className="text-2xl font-bold mt-2 text-[#111827]">
                       {formatCurrency(totalAmount)}
@@ -351,7 +353,7 @@ const Payments: NextPage = () => {
                   </div>
                   <div className="ml-4">
                     <p className="text-xs font-medium uppercase tracking-wider text-[#6B7280]">
-                      MISLUKT
+                      {t('payments.stats.failed')}
                     </p>
                     <p className="text-2xl font-bold mt-2 text-[#111827]">
                       {filteredPayments.filter(p => p.status === 'failed').length}
@@ -383,7 +385,7 @@ const Payments: NextPage = () => {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="block w-full pl-12 pr-4 py-2.5 rounded-lg border focus:outline-none focus:ring-2 transition bg-[#F9FAFB] border-gray-200 text-[#111827] placeholder-gray-500 focus:ring-green-500 focus:border-transparent hover:border-gray-300"
-                      placeholder="Zoek op betaling ID, bestelling ID, of restaurant..."
+                      placeholder={t('payments.searchPlaceholder')}
                     />
                   </div>
                 </div>
@@ -395,10 +397,10 @@ const Payments: NextPage = () => {
                     onChange={(e) => setStatusFilter(e.target.value)}
                     className="block w-full px-4 py-2.5 rounded-lg border focus:outline-none focus:ring-2 cursor-pointer transition bg-[#F9FAFB] border-gray-200 text-[#111827] focus:ring-green-500 focus:border-transparent hover:border-gray-300"
                   >
-                    <option value="all">Alle Statussen</option>
-                    <option value="succeeded">Geslaagd</option>
+                    <option value="all">{t('payments.filters.allStatuses')}</option>
+                    <option value="succeeded">{t('payments.filters.succeeded')}</option>
                     <option value="pending">In Behandeling</option>
-                    <option value="failed">Mislukt</option>
+                    <option value="failed">{t('payments.filters.failed')}</option>
                   </select>
                   <select
                     id="dateRange"
@@ -407,10 +409,10 @@ const Payments: NextPage = () => {
                     onChange={(e) => setDateRange(e.target.value)}
                     className="block w-full px-4 py-2.5 rounded-lg border focus:outline-none focus:ring-2 cursor-pointer transition bg-[#F9FAFB] border-gray-200 text-[#111827] focus:ring-green-500 focus:border-transparent hover:border-gray-300"
                   >
-                    <option value="today">Vandaag</option>
-                    <option value="last7days">Afgelopen 7 Dagen</option>
-                    <option value="last30days">Afgelopen 30 Dagen</option>
-                    <option value="all">Alle Tijd</option>
+                    <option value="today">{t('payments.dateFilters.today')}</option>
+                    <option value="last7days">{t('payments.dateFilters.last7days')}</option>
+                    <option value="last30days">{t('payments.dateFilters.last30days')}</option>
+                    <option value="all">{t('payments.dateFilters.allTime')}</option>
                   </select>
                 </div>
               </div>
@@ -422,28 +424,28 @@ const Payments: NextPage = () => {
                 <thead className="bg-gray-50">
                   <tr>
                     <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                      Betaling ID
+                      {t('payments.table.paymentId')}
                     </th>
                     <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                      Bestelling
+                      {t('payments.table.order')}
                     </th>
                     <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                      Restaurant
+                      {t('payments.table.restaurant')}
                     </th>
                     <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                      Bedrag
+                      {t('payments.table.amount')}
                     </th>
                     <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                      Methode
+                      {t('payments.table.method')}
                     </th>
                     <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                      Status
+                      {t('payments.table.status')}
                     </th>
                     <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                      Datum
+                      {t('payments.table.date')}
                     </th>
                     <th scope="col" className="relative px-6 py-4">
-                      <span className="sr-only">Bekijk</span>
+                      <span className="sr-only">{t('payments.table.view')}</span>
                     </th>
                   </tr>
                 </thead>
@@ -476,9 +478,9 @@ const Payments: NextPage = () => {
                         <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium ${getStatusColor(payment.status)}`}>
                           {getStatusIcon(payment.status)}
                           <span className="ml-1 capitalize">
-                            {payment.status === 'succeeded' ? 'Geslaagd' : 
-                             payment.status === 'failed' ? 'Mislukt' : 
-                             'In Behandeling'}
+                            {payment.status === 'succeeded' ? t('payments.filters.succeeded') : 
+                             payment.status === 'failed' ? t('payments.filters.failed') : 
+                             t('payments.filters.pending')}
                           </span>
                         </span>
                       </td>
@@ -490,7 +492,7 @@ const Payments: NextPage = () => {
                           href={`/payments/${payment.id}`}
                           className="transition-colors text-green-600 hover:text-green-700"
                         >
-                          Bekijk
+                          {t('payments.table.view')}
                         </Link>
                       </td>
                     </tr>
@@ -502,7 +504,7 @@ const Payments: NextPage = () => {
               <div className="px-6 py-4 border-t bg-gray-50 border-gray-200">
                 <div className="flex items-center justify-between">
                   <div className="text-sm text-gray-600">
-                    Toont <span className="font-medium text-gray-900">{filteredPayments.length}</span> betalingen
+                    {t('payments.tableFooter.showing', { count: filteredPayments.length })}
                   </div>
                 </div>
               </div>
@@ -513,7 +515,7 @@ const Payments: NextPage = () => {
               <div className="text-center py-16 rounded-xl bg-white shadow-sm">
                 <CreditCardIcon className="mx-auto h-12 w-12 text-gray-400" />
                 <p className="mt-4 text-gray-600">
-                  Geen betalingen gevonden die voldoen aan je criteria.
+                  {t('payments.emptyState.message')}
                 </p>
               </div>
             )}

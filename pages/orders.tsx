@@ -196,7 +196,7 @@ const Orders: NextPage = () => {
                     <ClockIcon className="h-6 w-6 text-blue-600" />
                   </div>
                   <div className="ml-4">
-                    <p className="text-xs font-medium uppercase tracking-wider text-[#6B7280]">{t('orders.stats.activeOrders')}</p>
+                    <p className="text-xs font-medium uppercase tracking-wider text-[#6B7280]">{t('orders.extra.activeOrders')}</p>
                     <p className="text-2xl font-bold mt-2 text-[#111827]">{activeCount}</p>
                   </div>
                 </div>
@@ -229,7 +229,7 @@ const Orders: NextPage = () => {
                     <CurrencyEuroIcon className="h-6 w-6 text-yellow-600" />
                   </div>
                   <div className="ml-4">
-                    <p className="text-xs font-medium uppercase tracking-wider text-[#6B7280]">{t('orders.stats.transactionRevenue')}</p>
+                    <p className="text-xs font-medium uppercase tracking-wider text-[#6B7280]">{t('orders.extra.transactionRevenue')}</p>
                     <p className="text-2xl font-bold mt-2 text-[#111827]">{formatCurrency(todayTransactionRevenue)}</p>
                   </div>
                 </div>

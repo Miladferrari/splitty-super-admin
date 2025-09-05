@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Layout from '../../components/Layout'
 import Breadcrumb from '../../components/Breadcrumb'
 import { useRestaurants } from '../../contexts/RestaurantsContext'
+import { useTranslation } from '../../contexts/TranslationContext'
 import React from 'react'
 import {
   ArrowLeftIcon,
@@ -20,6 +21,7 @@ import { CheckIcon as CheckIconSolid } from '@heroicons/react/24/solid'
 
 const NewRestaurant: NextPage = () => {
   const router = useRouter()
+  const { t } = useTranslation()
   const { addRestaurant } = useRestaurants()
   const [currentStep, setCurrentStep] = useState(1)
   const [showMediaError, setShowMediaError] = useState(false)
@@ -46,20 +48,20 @@ const NewRestaurant: NextPage = () => {
   const steps = [
     {
       number: 1,
-      title: 'Basisinformatie',
-      description: 'Voer restaurantgegevens en locatie in',
+      title: t('restaurants.new.steps.businessInfo'),
+      description: t('restaurants.new.businessInfo.title'),
       icon: BuildingStorefrontIcon,
     },
     {
       number: 2,
-      title: 'Contact & Kosten',
-      description: 'Stel contactinformatie en betaalopties in',
+      title: t('restaurants.new.contactAndFees.title'),
+      description: t('restaurants.new.contactAndFees.description'),
       icon: PhoneIcon,
     },
     {
       number: 3,
-      title: 'Media & Branding',
-      description: 'Upload logo en banner afbeeldingen',
+      title: t('restaurants.new.mediaAndBranding.title'),
+      description: t('restaurants.new.mediaAndBranding.description'),
       icon: PhotoIcon,
     },
   ]
@@ -82,13 +84,13 @@ const NewRestaurant: NextPage = () => {
       // Validate file type
       const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif']
       if (!validTypes.includes(file.type)) {
-        alert('Alleen PNG, JPG en GIF bestanden zijn toegestaan')
+        alert(t('restaurants.new.mediaAndBranding.onlyPngJpgAllowed'))
         return
       }
       
       // Validate file size (10MB)
       if (file.size > 10 * 1024 * 1024) {
-        alert('Bestand moet kleiner zijn dan 10MB')
+        alert(t('restaurants.new.mediaAndBranding.fileTooLarge'))
         return
       }
       
@@ -257,12 +259,12 @@ const NewRestaurant: NextPage = () => {
     <div className="space-y-6">
       <div className="flex items-center space-x-3 mb-6">
         <BuildingStorefrontIcon className={`h-6 w-6 ${false ? 'text-[#2BE89A]' : 'text-green-500'}`} />
-        <h2 className={`text-xl font-semibold ${false ? 'text-white' : 'text-[#111827]'}`}>Basisinformatie</h2>
+        <h2 className={`text-xl font-semibold ${false ? 'text-white' : 'text-[#111827]'}`}>{t('restaurants.new.form.basicInfoTitle')}</h2>
       </div>
       <div className="grid grid-cols-1 gap-5">
         <div>
           <label htmlFor="name" className={`block text-sm font-medium mb-2 ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>
-            Restaurant Naam <span className="text-red-500">*</span>
+            {t('restaurants.new.form.restaurantNameLabel')} <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
@@ -274,7 +276,7 @@ const NewRestaurant: NextPage = () => {
                 ? 'bg-[#0A0B0F] border border-[#2a2d3a] text-white placeholder-[#BBBECC]/50 focus:ring-[#2BE89A]'
                 : 'bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-green-500 hover:border-gray-300'
             }`}
-            placeholder="Bijv. Restaurant De Gouden Lepel"
+            placeholder={t('restaurants.new.form.restaurantNamePlaceholder')}
             value={formData.name}
             onChange={handleInputChange}
           />
@@ -282,7 +284,7 @@ const NewRestaurant: NextPage = () => {
 
         <div>
           <label htmlFor="address" className={`block text-sm font-medium mb-2 ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>
-            Adres <span className="text-red-500">*</span>
+            {t('restaurants.new.businessInfo.address')} <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
@@ -294,7 +296,7 @@ const NewRestaurant: NextPage = () => {
                 ? 'bg-[#0A0B0F] border border-[#2a2d3a] text-white placeholder-[#BBBECC]/50 focus:ring-[#2BE89A]'
                 : 'bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-green-500 hover:border-gray-300'
             }`}
-            placeholder="Straatnaam 123"
+            placeholder={t('restaurants.new.form.addressPlaceholder')}
             value={formData.address}
             onChange={handleInputChange}
           />
@@ -303,7 +305,7 @@ const NewRestaurant: NextPage = () => {
         <div className="grid grid-cols-3 gap-4">
           <div>
             <label htmlFor="city" className={`block text-sm font-medium mb-2 ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>
-              Stad <span className="text-red-500">*</span>
+              {t('restaurants.new.form.cityLabel')} <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -315,7 +317,7 @@ const NewRestaurant: NextPage = () => {
                 ? 'bg-[#0A0B0F] border border-[#2a2d3a] text-white placeholder-[#BBBECC]/50 focus:ring-[#2BE89A]'
                 : 'bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-green-500 hover:border-gray-300'
             }`}
-              placeholder="Amsterdam"
+              placeholder={t('restaurants.new.form.cityPlaceholder')}
               value={formData.city}
               onChange={handleInputChange}
             />
@@ -323,7 +325,7 @@ const NewRestaurant: NextPage = () => {
 
           <div>
             <label htmlFor="postal_code" className={`block text-sm font-medium mb-2 ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>
-              Postcode <span className="text-red-500">*</span>
+              {t('restaurants.new.form.postalCodeLabel')} <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -335,7 +337,7 @@ const NewRestaurant: NextPage = () => {
                 ? 'bg-[#0A0B0F] border border-[#2a2d3a] text-white placeholder-[#BBBECC]/50 focus:ring-[#2BE89A]'
                 : 'bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-green-500 hover:border-gray-300'
             }`}
-              placeholder="1234 AB"
+              placeholder={t('restaurants.new.form.postalCodePlaceholder')}
               value={formData.postal_code}
               onChange={handleInputChange}
             />
@@ -343,7 +345,7 @@ const NewRestaurant: NextPage = () => {
 
           <div>
             <label htmlFor="country" className={`block text-sm font-medium mb-2 ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>
-              Land <span className="text-red-500">*</span>
+              {t('restaurants.new.form.countryLabel')} <span className="text-red-500">*</span>
             </label>
             <select
               name="country"
@@ -357,10 +359,10 @@ const NewRestaurant: NextPage = () => {
               value={formData.country}
               onChange={handleInputChange}
             >
-              <option value="Netherlands">Nederland</option>
-              <option value="Belgium">België</option>
-              <option value="Germany">Duitsland</option>
-              <option value="France">Frankrijk</option>
+              <option value="Netherlands">{t('restaurants.new.form.countries.netherlands')}</option>
+              <option value="Belgium">{t('restaurants.new.form.countries.belgium')}</option>
+              <option value="Germany">{t('restaurants.new.form.countries.germany')}</option>
+              <option value="France">{t('restaurants.new.form.countries.france')}</option>
             </select>
           </div>
         </div>
@@ -373,12 +375,12 @@ const NewRestaurant: NextPage = () => {
       <div>
         <div className="flex items-center space-x-3 mb-6">
           <EnvelopeIcon className={`h-6 w-6 ${false ? 'text-[#2BE89A]' : 'text-green-500'}`} />
-          <h2 className={`text-xl font-semibold ${false ? 'text-white' : 'text-[#111827]'}`}>Contactinformatie</h2>
+          <h2 className={`text-xl font-semibold ${false ? 'text-white' : 'text-[#111827]'}`}>{t('restaurants.new.contactAndFees.contactInfo.title')}</h2>
         </div>
         <div className="grid grid-cols-1 gap-5">
           <div>
             <label htmlFor="contact_email" className={`block text-sm font-medium mb-2 ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>
-              Contact Email <span className="text-red-500">*</span>
+              {t('restaurants.new.contactAndFees.contactInfo.contactEmail')} <span className="text-red-500">*</span>
             </label>
             <input
               type="email"
@@ -399,7 +401,7 @@ const NewRestaurant: NextPage = () => {
           <div>
             <label htmlFor="contact_phone" className={`block text-sm font-medium mb-2 ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>
               <PhoneIcon className="inline h-4 w-4 mr-1" />
-              Contact Telefoon
+              {t('restaurants.new.contactAndFees.contactInfo.contactPhone')}
             </label>
             <input
               type="tel"
@@ -410,7 +412,7 @@ const NewRestaurant: NextPage = () => {
                 ? 'bg-[#0A0B0F] border border-[#2a2d3a] text-white placeholder-[#BBBECC]/50 focus:ring-[#2BE89A]'
                 : 'bg-white border border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-green-500 hover:border-gray-300'
             }`}
-              placeholder="+31 6 12345678"
+              placeholder={t('restaurants.new.contactAndFees.contactInfo.phonePlaceholder')}
               value={formData.contact_phone}
               onChange={handleInputChange}
             />
@@ -421,12 +423,12 @@ const NewRestaurant: NextPage = () => {
       <div className={`border-t pt-6 ${false ? 'border-[#2a2d3a]' : 'border-gray-200'}`}>
         <div className="flex items-center space-x-3 mb-6">
           <CurrencyEuroIcon className={`h-6 w-6 ${false ? 'text-[#2BE89A]' : 'text-green-500'}`} />
-          <h2 className={`text-xl font-semibold ${false ? 'text-white' : 'text-[#111827]'}`}>Service Kosten</h2>
+          <h2 className={`text-xl font-semibold ${false ? 'text-white' : 'text-[#111827]'}`}>{t('restaurants.new.contactAndFees.serviceFees.title')}</h2>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label htmlFor="service_fee_type" className={`block text-sm font-medium mb-2 ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>
-              Kosten Type
+              {t('restaurants.new.contactAndFees.serviceFees.feeType')}
             </label>
             <select
               name="service_fee_type"
@@ -439,14 +441,14 @@ const NewRestaurant: NextPage = () => {
               value={formData.service_fee_type}
               onChange={handleInputChange}
             >
-              <option value="flat">Vast Bedrag</option>
-              <option value="percentage">Percentage</option>
+              <option value="flat">{t('restaurants.new.contactAndFees.serviceFees.flatFee')}</option>
+              <option value="percentage">{t('restaurants.new.contactAndFees.serviceFees.percentageFee')}</option>
             </select>
           </div>
 
           <div>
             <label htmlFor="service_fee_amount" className={`block text-sm font-medium mb-2 ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>
-              Kosten Bedrag {formData.service_fee_type === 'flat' ? '(€)' : '(%)'}
+              {t('restaurants.new.contactAndFees.serviceFees.feeAmount')} {formData.service_fee_type === 'flat' ? '(€)' : '(%)'}
             </label>
             <input
               type="number"
@@ -474,7 +476,7 @@ const NewRestaurant: NextPage = () => {
       <div>
         <div className="flex items-center space-x-3 mb-6">
           <PhotoIcon className={`h-6 w-6 ${false ? 'text-[#2BE89A]' : 'text-green-500'}`} />
-          <h2 className={`text-xl font-semibold ${false ? 'text-white' : 'text-[#111827]'}`}>Media & Branding</h2>
+          <h2 className={`text-xl font-semibold ${false ? 'text-white' : 'text-[#111827]'}`}>{t('restaurants.new.mediaAndBranding.title')}</h2>
         </div>
         
         <div className="space-y-4">
@@ -485,7 +487,7 @@ const NewRestaurant: NextPage = () => {
                 <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                 </svg>
-                Beide afbeeldingen zijn verplicht om een restaurant toe te voegen
+                {t('restaurants.new.mediaAndBranding.requiredImagesError')}
               </p>
             </div>
           )}
@@ -493,7 +495,7 @@ const NewRestaurant: NextPage = () => {
           {/* Logo Upload */}
           <div>
             <label className={`block text-sm font-medium mb-2 ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>
-              Restaurant Logo <span className="text-red-500">*</span>
+              {t('restaurants.new.mediaAndBranding.logoLabel')} <span className="text-red-500">*</span>
             </label>
             {formData.logoPreview ? (
               <div className="relative">
@@ -547,7 +549,7 @@ const NewRestaurant: NextPage = () => {
                         false ? 'text-[#2BE89A] hover:text-[#4FFFB0]' : 'text-green-600 hover:text-green-500'
                       }`}
                     >
-                      <span>Upload bestand</span>
+                      <span>{t('restaurants.new.mediaAndBranding.uploadFile')}</span>
                       <input 
                         id="logo-upload" 
                         name="logo-upload" 
@@ -557,9 +559,9 @@ const NewRestaurant: NextPage = () => {
                         className="sr-only" 
                       />
                     </label>
-                    <p className="pl-1">of sleep en laat vallen</p>
+                    <p className="pl-1">{t('restaurants.new.mediaAndBranding.dragAndDrop')}</p>
                   </div>
-                  <p className={`text-xs mt-1 ${false ? 'text-[#BBBECC]/70' : 'text-gray-500'}`}>PNG, JPG tot 10MB</p>
+                  <p className={`text-xs mt-1 ${false ? 'text-[#BBBECC]/70' : 'text-gray-500'}`}>{t('restaurants.new.mediaAndBranding.fileFormats')}</p>
                 </div>
               </div>
             )}
@@ -568,7 +570,7 @@ const NewRestaurant: NextPage = () => {
           {/* Banner Upload */}
           <div>
             <label className={`block text-sm font-medium mb-2 ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>
-              Restaurant Banner <span className="text-red-500">*</span>
+              {t('restaurants.new.mediaAndBranding.bannerLabel')} <span className="text-red-500">*</span>
             </label>
             {formData.bannerPreview ? (
               <div className="relative">
@@ -622,7 +624,7 @@ const NewRestaurant: NextPage = () => {
                         false ? 'text-[#2BE89A] hover:text-[#4FFFB0]' : 'text-green-600 hover:text-green-500'
                       }`}
                     >
-                      <span>Upload bestand</span>
+                      <span>{t('restaurants.new.mediaAndBranding.uploadFile')}</span>
                       <input 
                         id="banner-upload" 
                         name="banner-upload" 
@@ -632,9 +634,9 @@ const NewRestaurant: NextPage = () => {
                         className="sr-only" 
                       />
                     </label>
-                    <p className="pl-1">of sleep en laat vallen</p>
+                    <p className="pl-1">{t('restaurants.new.mediaAndBranding.dragAndDrop')}</p>
                   </div>
-                  <p className={`text-xs mt-1 ${false ? 'text-[#BBBECC]/70' : 'text-gray-500'}`}>PNG, JPG tot 10MB</p>
+                  <p className={`text-xs mt-1 ${false ? 'text-[#BBBECC]/70' : 'text-gray-500'}`}>{t('restaurants.new.mediaAndBranding.fileFormats')}</p>
                 </div>
               </div>
             )}
@@ -656,12 +658,11 @@ const NewRestaurant: NextPage = () => {
           <div>
             <p className={`font-medium mb-1 ${
               false ? 'text-green-400' : 'text-green-700'
-            }`}>Wat gebeurt er hierna?</p>
+            }`}>{t('restaurants.new.mediaAndBranding.nextStepsTitle')}</p>
             <p className={`text-sm ${
               false ? 'text-[#BBBECC]' : 'text-gray-600'
             }`}>
-              Na het aanmaken van het restaurant word je direct naar de onboarding pagina gestuurd. 
-              Daar kun je personeel toevoegen, Stripe koppelen en het POS systeem configureren.
+              {t('restaurants.new.success.message')}
             </p>
           </div>
         </div>
@@ -678,7 +679,7 @@ const NewRestaurant: NextPage = () => {
             <Breadcrumb
               items={[
                 { name: 'Restaurants', href: '/restaurants' },
-                { name: 'Nieuw Restaurant' },
+                { name: t('restaurants.addNewRestaurant') },
               ]}
             />
 
@@ -692,7 +693,7 @@ const NewRestaurant: NextPage = () => {
               }`}
             >
               <ArrowLeftIcon className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-              Terug naar Restaurants
+              {t('restaurants.backToList')}
             </Link>
 
             <div className="max-w-3xl mx-auto">
@@ -708,12 +709,12 @@ const NewRestaurant: NextPage = () => {
                   <h1 className={`text-2xl font-bold text-center mb-3 ${
                     false ? 'text-white' : 'text-[#111827]'
                   }`}>
-                    Nieuw Restaurant Toevoegen
+                    {t('restaurants.new.title')}
                   </h1>
                   <p className={`text-center mb-8 text-base ${
                     false ? 'text-[#BBBECC]' : 'text-[#6B7280]'
                   }`}>
-                    Vul de gegevens in om een restaurant toe te voegen
+                    {t('restaurants.new.form.subtitle')}
                   </p>
                   {renderStepIndicator()}
                 </div>
@@ -739,7 +740,7 @@ const NewRestaurant: NextPage = () => {
                       }`}
                     >
                       <ArrowLeftIcon className="-ml-1 mr-2 h-5 w-5" />
-                      Annuleren
+                      {t('restaurants.new.navigation.cancel')}
                     </Link>
                   ) : (
                     <button
@@ -752,7 +753,7 @@ const NewRestaurant: NextPage = () => {
                       }`}
                     >
                       <ArrowLeftIcon className="-ml-1 mr-2 h-5 w-5" />
-                      Vorige
+                      {t('restaurants.new.navigation.previous')}
                     </button>
                   )}
 
@@ -767,7 +768,7 @@ const NewRestaurant: NextPage = () => {
                           : 'border-gray-300 text-gray-700 bg-white hover:bg-gray-50'
                       }`}
                     >
-                      Volgende
+                      {t('restaurants.new.navigation.next')}
                       <ArrowRightIcon className="ml-2 -mr-1 h-5 w-5" />
                     </button>
                   ) : (
@@ -776,7 +777,7 @@ const NewRestaurant: NextPage = () => {
                       onClick={handleSubmit}
                       className="inline-flex items-center px-5 py-2.5 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600 transition-all duration-200 shadow-sm"
                     >
-                      Maak aan & Start Onboarding
+                      {t('restaurants.new.navigation.createAndStartOnboarding')}
                       <ArrowRightIcon className="ml-2 -mr-1 h-5 w-5" />
                     </button>
                   )}

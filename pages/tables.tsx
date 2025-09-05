@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Layout from '../components/Layout'
 import Breadcrumb from '../components/Breadcrumb'
 import { useRestaurants } from '../contexts/RestaurantsContext'
+import { useTranslation } from '../contexts/TranslationContext'
 import {
   MagnifyingGlassIcon,
   ArrowPathIcon,
@@ -17,6 +18,7 @@ import {
 } from '@heroicons/react/24/outline'
 
 const Tables: NextPage = () => {
+  const { t } = useTranslation()
   const [searchQuery, setSearchQuery] = useState('')
   const { restaurants } = useRestaurants()
 
@@ -275,16 +277,16 @@ const Tables: NextPage = () => {
         <div className="px-4 sm:px-6 lg:px-8 py-8">
           <div className="space-y-6">
             {/* Breadcrumb */}
-            <Breadcrumb items={[{ label: 'Actieve Tafels' }]} />
+            <Breadcrumb items={[{ label: t('tables.breadcrumb') }]} />
 
             {/* Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
                 <h1 className="text-2xl font-semibold text-[#111827] mb-1">
-                  Actieve Tafels
+                  {t('tables.title')}
                 </h1>
                 <p className="text-[#6B7280]">
-                  Overzicht van alle actieve tafels per restaurant
+                  {t('tables.subtitle')}
                 </p>
               </div>
               <button
@@ -293,7 +295,7 @@ const Tables: NextPage = () => {
                 className="inline-flex items-center px-4 py-2.5 rounded-lg transition-all border border-gray-200 text-[#6B7280] bg-white hover:bg-gray-50 shadow-sm"
               >
                 <ArrowPathIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" />
-                Ververs
+                {t('tables.refresh')}
               </button>
             </div>
 
@@ -310,7 +312,7 @@ const Tables: NextPage = () => {
                   <div className="ml-4">
                     <p className={`text-xs font-medium uppercase tracking-wider ${
                       'text-[#6B7280]'
-                    }`}>ACTIEVE TAFELS</p>
+                    }`}>{t('tables.stats.activeTables')}</p>
                     <p className={`text-2xl font-bold mt-2 ${
                       'text-[#111827]'
                     }`}>{activeTables.length}</p>
@@ -327,7 +329,7 @@ const Tables: NextPage = () => {
                   <div className="ml-4">
                     <p className={`text-xs font-medium uppercase tracking-wider ${
                       'text-[#6B7280]'
-                    }`}>TOTAAL GASTEN</p>
+                    }`}>{t('tables.stats.totalGuests')}</p>
                     <p className={`text-2xl font-bold mt-2 ${
                       'text-[#111827]'
                     }`}>
@@ -346,7 +348,7 @@ const Tables: NextPage = () => {
                   <div className="ml-4">
                     <p className={`text-xs font-medium uppercase tracking-wider ${
                       'text-[#6B7280]'
-                    }`}>TOTAAL BEDRAG</p>
+                    }`}>{t('tables.stats.totalAmount')}</p>
                     <p className={`text-2xl font-bold mt-2 ${
                       'text-[#111827]'
                     }`}>
@@ -365,7 +367,7 @@ const Tables: NextPage = () => {
                   <div className="ml-4">
                     <p className={`text-xs font-medium uppercase tracking-wider ${
                       'text-[#6B7280]'
-                    }`}>NOG TE BETALEN</p>
+                    }`}>{t('tables.stats.remaining')}</p>
                     <p className={`text-2xl font-bold mt-2 ${
                       'text-[#111827]'
                     }`}>
@@ -381,7 +383,7 @@ const Tables: NextPage = () => {
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1">
                   <label htmlFor="search" className="sr-only">
-                    Zoeken
+                    {t('tables.search')}
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -394,7 +396,7 @@ const Tables: NextPage = () => {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="block w-full pl-12 pr-4 py-2.5 rounded-lg border focus:outline-none focus:ring-2 transition bg-[#F9FAFB] border-gray-200 text-[#111827] placeholder-gray-500 focus:ring-green-500 focus:border-transparent hover:border-gray-300"
-                      placeholder="Zoek op restaurant, tafel nummer, of bestelling ID..."
+                      placeholder={t('tables.searchPlaceholder')}
                     />
                   </div>
                 </div>
@@ -417,14 +419,14 @@ const Tables: NextPage = () => {
                           }`}>{group.restaurant}</h2>
                           <p className={`text-sm ${
                             'text-[#6B7280]'
-                          }`}>{group.tables.length} actieve tafels</p>
+                          }`}>{t('tables.activeTablesCount', { count: group.tables.length })}</p>
                         </div>
                       </div>
                       <Link
                         href={`/restaurants/${group.restaurantId}`}
                         className="inline-flex items-center px-4 py-2 rounded-lg transition bg-gray-50 border border-gray-200 text-gray-700 hover:bg-gray-100"
                       >
-                        Restaurant Profiel
+                        {t('tables.restaurantProfile')}
                         <ArrowRightIcon className="ml-2 h-4 w-4" />
                       </Link>
                     </div>
@@ -443,7 +445,7 @@ const Tables: NextPage = () => {
                                 <h3 className={`text-lg font-bold ${
                                   'text-[#111827]'
                                 }`}>
-                                  Tafel {table.tableNumber}
+                                  {t('tables.table.table')} {table.tableNumber}
                                 </h3>
                                 <p className={`text-sm ${
                                   'text-[#6B7280]'
@@ -455,25 +457,25 @@ const Tables: NextPage = () => {
                                   table.amount
                                 )}`}
                               >
-                                {table.remaining === table.amount ? 'Onbetaald' : 'Gedeeltelijk'}
+                                {table.remaining === table.amount ? t('tables.status.unpaid') : t('tables.status.partial')}
                               </span>
                             </div>
 
                             <div className="space-y-3">
                               <div className="flex justify-between text-sm">
-                                <span className={'text-[#6B7280]'}>Bestelling #</span>
+                                <span className={'text-[#6B7280]'}>{t('tables.table.orderNumber')}</span>
                                 <span className={`font-medium ${'text-[#111827]'}`}>{table.orderId}</span>
                               </div>
                               <div className="flex justify-between text-sm">
-                                <span className={'text-[#6B7280]'}>Gasten</span>
+                                <span className={'text-[#6B7280]'}>{t('tables.table.guests')}</span>
                                 <span className={`font-medium ${'text-[#111827]'}`}>{table.guests}</span>
                               </div>
                               <div className="flex justify-between text-sm">
-                                <span className={'text-[#6B7280]'}>Bedrag</span>
+                                <span className={'text-[#6B7280]'}>{t('tables.table.amount')}</span>
                                 <span className={`font-medium ${'text-[#111827]'}`}>{formatCurrency(table.amount)}</span>
                               </div>
                               <div className="flex justify-between text-sm">
-                                <span className={'text-[#6B7280]'}>Resterend</span>
+                                <span className={'text-[#6B7280]'}>{t('tables.table.remaining')}</span>
                                 <span className={`font-medium ${
                                   'text-yellow-600'
                                 }`}>
@@ -481,7 +483,7 @@ const Tables: NextPage = () => {
                                 </span>
                               </div>
                               <div className="flex justify-between text-sm">
-                                <span className={'text-[#6B7280]'}>Duur</span>
+                                <span className={'text-[#6B7280]'}>{t('tables.table.duration')}</span>
                                 <span className={`font-medium flex items-center ${
                                   'text-[#111827]'
                                 }`}>
@@ -498,7 +500,7 @@ const Tables: NextPage = () => {
                                 href={`/orders/${table.orderId}`}
                                 className="w-full inline-flex justify-center items-center px-4 py-2.5 font-medium rounded-lg transition-all bg-green-600 text-white hover:bg-green-700 shadow-sm"
                               >
-                                Bekijk Bestelling
+                                {t('tables.table.viewOrder')}
                               </Link>
                             </div>
                           </div>
@@ -515,7 +517,7 @@ const Tables: NextPage = () => {
               <div className="text-center py-16 rounded-xl bg-white shadow-sm">
                 <TableCellsIcon className="mx-auto h-12 w-12 text-gray-400" />
                 <p className="mt-4 text-[#6B7280]">
-                  Geen actieve tafels gevonden die voldoen aan je criteria.
+                  {t('tables.emptyState.message')}
                 </p>
               </div>
             )}

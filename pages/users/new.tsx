@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Layout from '../../components/Layout'
 import { useUsers } from '../../contexts/UsersContext'
+import { useTranslation } from '../../contexts/TranslationContext'
 import {
   ArrowLeftIcon,
   UserPlusIcon,
@@ -19,6 +20,7 @@ import {
 const NewUser: NextPage = () => {
   const router = useRouter()
   const { addCompanyUser } = useUsers()
+  const { t } = useTranslation()
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -67,11 +69,11 @@ const NewUser: NextPage = () => {
 
   const getPasswordStrengthText = () => {
     switch (passwordStrength) {
-      case 0: return { text: 'Zeer zwak', color: 'bg-red-500' }
-      case 1: return { text: 'Zwak', color: 'bg-orange-500' }
-      case 2: return { text: 'Matig', color: 'bg-yellow-500' }
-      case 3: return { text: 'Sterk', color: 'bg-green-500' }
-      case 4: return { text: 'Zeer sterk', color: 'bg-[#2BE89A]' }
+      case 0: return { text: t('team.new.passwordStrengthLevels.veryWeak'), color: 'bg-red-500' }
+      case 1: return { text: t('team.new.passwordStrengthLevels.weak'), color: 'bg-orange-500' }
+      case 2: return { text: t('team.new.passwordStrengthLevels.fair'), color: 'bg-yellow-500' }
+      case 3: return { text: t('team.new.passwordStrengthLevels.strong'), color: 'bg-green-500' }
+      case 4: return { text: t('team.new.passwordStrengthLevels.veryStrong'), color: 'bg-[#2BE89A]' }
       default: return { text: '', color: '' }
     }
   }
@@ -80,7 +82,7 @@ const NewUser: NextPage = () => {
     e.preventDefault()
     
     if (formData.password !== confirmPassword) {
-      alert('Wachtwoorden komen niet overeen')
+      alert(t('team.new.passwordValidationError'))
       return
     }
     
@@ -126,7 +128,7 @@ const NewUser: NextPage = () => {
                 }`}
               >
                 <ArrowLeftIcon className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-                Terug naar team overzicht
+                {t('team.new.backToTeam')}
               </Link>
             </div>
 
@@ -152,7 +154,7 @@ const NewUser: NextPage = () => {
                   <h1 className={`text-xl font-semibold ml-3 ${
                     false ? 'text-white' : 'text-gray-900'
                   }`}>
-                    Nieuwe Medewerker Toevoegen
+                    {t('team.new.addNewEmployee')}
                   </h1>
                 </div>
               </div>
@@ -162,13 +164,13 @@ const NewUser: NextPage = () => {
                 <div className="space-y-4">
                   <h2 className={`text-lg font-semibold ${
                     false ? 'text-white' : 'text-gray-900'
-                  }`}>Persoonlijke Gegevens</h2>
+                  }`}>{t('team.new.personalInfo')}</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="first_name" className={`block text-sm font-medium mb-2 ${
                         false ? 'text-[#BBBECC]' : 'text-gray-700'
                       }`}>
-                        Voornaam
+                        {t('team.new.firstName')}
                       </label>
                       <input
                         type="text"
@@ -180,7 +182,7 @@ const NewUser: NextPage = () => {
                             ? 'bg-[#0A0B0F] border-[#2a2d3a] text-white placeholder-[#BBBECC] focus:ring-[#2BE89A] focus:border-transparent'
                             : 'bg-white border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-green-500 focus:border-transparent'
                         }`}
-                        placeholder="John"
+                        placeholder={t('team.new.placeholders.firstName')}
                         value={formData.first_name}
                         onChange={handleInputChange}
                       />
@@ -190,7 +192,7 @@ const NewUser: NextPage = () => {
                       <label htmlFor="last_name" className={`block text-sm font-medium mb-2 ${
                         false ? 'text-[#BBBECC]' : 'text-gray-700'
                       }`}>
-                        Achternaam
+                        {t('team.new.lastName')}
                       </label>
                       <input
                         type="text"
@@ -202,7 +204,7 @@ const NewUser: NextPage = () => {
                             ? 'bg-[#0A0B0F] border-[#2a2d3a] text-white placeholder-[#BBBECC] focus:ring-[#2BE89A] focus:border-transparent'
                             : 'bg-white border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-green-500 focus:border-transparent'
                         }`}
-                        placeholder="Doe"
+                        placeholder={t('team.new.placeholders.lastName')}
                         value={formData.last_name}
                         onChange={handleInputChange}
                       />
@@ -212,7 +214,7 @@ const NewUser: NextPage = () => {
                       <label htmlFor="email" className={`block text-sm font-medium mb-2 ${
                         false ? 'text-[#BBBECC]' : 'text-gray-700'
                       }`}>
-                        E-mailadres
+                        {t('team.new.email')}
                       </label>
                       <input
                         type="email"
@@ -224,7 +226,7 @@ const NewUser: NextPage = () => {
                             ? 'bg-[#0A0B0F] border-[#2a2d3a] text-white placeholder-[#BBBECC] focus:ring-[#2BE89A] focus:border-transparent'
                             : 'bg-white border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-green-500 focus:border-transparent'
                         }`}
-                        placeholder="john.doe@example.com"
+                        placeholder={t('team.new.placeholders.email')}
                         value={formData.email}
                         onChange={handleInputChange}
                       />
@@ -233,7 +235,7 @@ const NewUser: NextPage = () => {
                       <label htmlFor="phone" className={`block text-sm font-medium mb-2 ${
                         false ? 'text-[#BBBECC]' : 'text-gray-700'
                       }`}>
-                        Telefoonnummer
+                        {t('team.new.phone')}
                       </label>
                       <input
                         type="tel"
@@ -244,7 +246,7 @@ const NewUser: NextPage = () => {
                             ? 'bg-[#0A0B0F] border-[#2a2d3a] text-white placeholder-[#BBBECC] focus:ring-[#2BE89A] focus:border-transparent'
                             : 'bg-white border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-green-500 focus:border-transparent'
                         }`}
-                        placeholder="+31 6 12345678"
+                        placeholder={t('team.new.placeholders.phone')}
                         value={formData.phone}
                         onChange={handleInputChange}
                       />
@@ -260,14 +262,14 @@ const NewUser: NextPage = () => {
                     <LockClosedIcon className={`h-5 w-5 mr-2 ${
                       false ? 'text-[#BBBECC]' : 'text-gray-500'
                     }`} />
-                    Beveiliging
+                    {t('team.new.security')}
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="password" className={`block text-sm font-medium mb-2 ${
                         false ? 'text-[#BBBECC]' : 'text-gray-700'
                       }`}>
-                        Wachtwoord
+                        {t('team.new.password')}
                       </label>
                       <input
                         type="password"
@@ -280,7 +282,7 @@ const NewUser: NextPage = () => {
                             ? 'bg-[#0A0B0F] border-[#2a2d3a] text-white placeholder-[#BBBECC] focus:ring-[#2BE89A] focus:border-transparent'
                             : 'bg-white border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-green-500 focus:border-transparent'
                         }`}
-                        placeholder="••••••••"
+                        placeholder={t('team.new.placeholders.password')}
                         value={formData.password}
                         onChange={handleInputChange}
                       />
@@ -289,7 +291,7 @@ const NewUser: NextPage = () => {
                           <div className="flex items-center justify-between mb-1">
                             <span className={`text-xs ${
                               false ? 'text-[#BBBECC]' : 'text-gray-500'
-                            }`}>Wachtwoord sterkte</span>
+                            }`}>{t('team.new.passwordStrength')}</span>
                             <span className={`text-xs font-medium ${getPasswordStrengthText().color.replace('bg-', 'text-')}`}>
                               {getPasswordStrengthText().text}
                             </span>
@@ -310,7 +312,7 @@ const NewUser: NextPage = () => {
                       <label htmlFor="confirm_password" className={`block text-sm font-medium mb-2 ${
                         false ? 'text-[#BBBECC]' : 'text-gray-700'
                       }`}>
-                        Bevestig Wachtwoord
+                        {t('team.new.confirmPassword')}
                       </label>
                       <input
                         type="password"
@@ -321,7 +323,7 @@ const NewUser: NextPage = () => {
                             ? 'bg-[#0A0B0F] border-[#2a2d3a] text-white placeholder-[#BBBECC] focus:ring-[#2BE89A] focus:border-transparent'
                             : 'bg-white border-gray-200 text-gray-900 placeholder-gray-400 focus:ring-green-500 focus:border-transparent'
                         }`}
-                        placeholder="••••••••"
+                        placeholder={t('team.new.placeholders.password')}
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                       />
@@ -330,10 +332,10 @@ const NewUser: NextPage = () => {
                           {confirmPassword === formData.password ? (
                             <>
                               <CheckCircleIcon className="h-4 w-4 mr-1" />
-                              Wachtwoorden komen overeen
+                              {t('team.new.passwordsMatch')}
                             </>
                           ) : (
-                            'Wachtwoorden komen niet overeen'
+                            t('team.new.passwordsNoMatch')
                           )}
                         </p>
                       )}
@@ -345,20 +347,20 @@ const NewUser: NextPage = () => {
                 <div className="space-y-4">
                   <h2 className={`text-lg font-semibold ${
                     false ? 'text-white' : 'text-gray-900'
-                  }`}>Rol & Toegang</h2>
+                  }`}>{t('team.new.roleAccess')}</h2>
                   
                   {/* Role Selection */}
                   <div>
                     <label className={`block text-sm font-medium mb-3 ${
                       false ? 'text-[#BBBECC]' : 'text-gray-700'
-                    }`}>Selecteer Rol</label>
+                    }`}>{t('team.new.selectRole')}</label>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {[
-                        { value: 'ceo', label: 'CEO', desc: 'Volledige toegang tot alle functies', icon: ShieldCheckIcon },
-                        { value: 'admin', label: 'Administrator', desc: 'Systeem beheer en configuratie', icon: ShieldCheckIcon },
-                        { value: 'account_manager', label: 'Account Manager', desc: 'Restaurant relaties beheren', icon: UserGroupIcon },
-                        { value: 'support', label: 'Support', desc: 'Klantondersteuning', icon: UserIcon },
-                        { value: 'developer', label: 'Developer', desc: 'Technische ontwikkeling', icon: CodeBracketIcon },
+                        { value: 'ceo', label: t('team.new.roles.ceo.label'), desc: t('team.new.roles.ceo.description'), icon: ShieldCheckIcon },
+                        { value: 'admin', label: t('team.new.roles.admin.label'), desc: t('team.new.roles.admin.description'), icon: ShieldCheckIcon },
+                        { value: 'account_manager', label: t('team.new.roles.accountManager.label'), desc: t('team.new.roles.accountManager.description'), icon: UserGroupIcon },
+                        { value: 'support', label: t('team.new.roles.support.label'), desc: t('team.new.roles.support.description'), icon: UserIcon },
+                        { value: 'developer', label: t('team.new.roles.developer.label'), desc: t('team.new.roles.developer.description'), icon: CodeBracketIcon },
                       ].map((role) => (
                         <label
                           key={role.value}
@@ -412,7 +414,7 @@ const NewUser: NextPage = () => {
                     <label htmlFor="department" className={`block text-sm font-medium mb-2 ${
                       false ? 'text-[#BBBECC]' : 'text-gray-700'
                     }`}>
-                      Afdeling
+                      {t('team.new.department')}
                     </label>
                     <select
                       id="department"
@@ -426,7 +428,7 @@ const NewUser: NextPage = () => {
                       onChange={handleInputChange}
                       required
                     >
-                      <option value="">Selecteer een afdeling</option>
+                      <option value="">{t('team.new.selectDepartment')}</option>
                       {departments.map((dept) => (
                         <option key={dept} value={dept}>
                           {dept}
@@ -457,10 +459,10 @@ const NewUser: NextPage = () => {
                       <label htmlFor="is_active" className="ml-3">
                         <span className={`text-sm font-medium ${
                           false ? 'text-white' : 'text-gray-900'
-                        }`}>Actieve medewerker</span>
+                        }`}>{t('team.new.activeEmployee')}</span>
                         <p className={`text-xs ${
                           false ? 'text-[#BBBECC]' : 'text-gray-500'
-                        }`}>Inactieve medewerkers kunnen niet inloggen</p>
+                        }`}>{t('team.new.inactiveEmployeeNote')}</p>
                       </label>
                     </div>
                   </div>
@@ -478,7 +480,7 @@ const NewUser: NextPage = () => {
                         : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
                     }`}
                   >
-                    Annuleren
+                    {t('team.new.cancel')}
                   </Link>
                   <button
                     type="submit"
@@ -488,7 +490,7 @@ const NewUser: NextPage = () => {
                         : 'bg-green-600 text-white hover:bg-green-700'
                     }`}
                   >
-                    Medewerker Toevoegen
+                    {t('team.new.addEmployee')}
                   </button>
                 </div>
               </form>

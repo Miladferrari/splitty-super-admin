@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Layout from '../../../components/Layout'
 import Breadcrumb from '../../../components/Breadcrumb'
 import { useRestaurants } from '../../../contexts/RestaurantsContext'
+import { useTranslation } from '../../../contexts/TranslationContext'
 import {
   ArrowLeftIcon,
   BuildingStorefrontIcon,
@@ -18,6 +19,7 @@ import {
 const EditRestaurant: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
+  const { t } = useTranslation()
   const { getRestaurant, updateRestaurant } = useRestaurants()
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
@@ -104,15 +106,15 @@ const EditRestaurant: NextPage = () => {
   const validateForm = () => {
     const newErrors = {}
     
-    if (!formData.name.trim()) newErrors.name = 'Restaurant naam is verplicht'
-    if (!formData.email.trim()) newErrors.email = 'Email is verplicht'
+    if (!formData.name.trim()) newErrors.name = t('restaurants.edit.validation.nameRequired')
+    if (!formData.email.trim()) newErrors.email = t('restaurants.edit.validation.emailRequired')
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Ongeldig email adres'
+      newErrors.email = t('restaurants.edit.validation.invalidEmail')
     }
-    if (!formData.phone.trim()) newErrors.phone = 'Telefoonnummer is verplicht'
-    if (!formData.street.trim()) newErrors.street = 'Straat is verplicht'
-    if (!formData.postalCode.trim()) newErrors.postalCode = 'Postcode is verplicht'
-    if (!formData.city.trim()) newErrors.city = 'Stad is verplicht'
+    if (!formData.phone.trim()) newErrors.phone = t('restaurants.edit.validation.phoneRequired')
+    if (!formData.street.trim()) newErrors.street = t('restaurants.edit.validation.streetRequired')
+    if (!formData.postalCode.trim()) newErrors.postalCode = t('restaurants.edit.validation.postalCodeRequired')
+    if (!formData.city.trim()) newErrors.city = t('restaurants.edit.validation.cityRequired')
     
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -156,7 +158,7 @@ const EditRestaurant: NextPage = () => {
     return (
       <Layout>
         <div className={`min-h-screen ${false ? 'bg-[#0A0B0F]' : 'bg-[#F9FAFB]'} flex items-center justify-center`}>
-          <p className={false ? 'text-white' : 'text-[#111827]'}>Restaurant niet gevonden</p>
+          <p className={false ? 'text-white' : 'text-[#111827]'}>{t('restaurants.notFound')}</p>
         </div>
       </Layout>
     )
@@ -171,7 +173,7 @@ const EditRestaurant: NextPage = () => {
             <Breadcrumb items={[
               { label: 'Restaurants', href: '/restaurants' },
               { label: restaurant?.name || 'Restaurant', href: `/restaurants/${id}` },
-              { label: 'Bewerken' }
+              { label: t('restaurants.actions.edit') }
             ]} />
             
             {/* Back Button */}
@@ -184,15 +186,15 @@ const EditRestaurant: NextPage = () => {
               }`}
             >
               <ArrowLeftIcon className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-              Terug naar Restaurant Profiel
+              {t('restaurants.backToProfile')}
             </Link>
 
             {/* Header */}
             <div className="mb-8">
               <h1 className={`text-2xl font-semibold ${false ? 'text-white' : 'text-[#111827]'} mb-1`}>
-                Restaurant Bewerken
+                {t('restaurants.edit.title')}
               </h1>
-              <p className={false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}>Pas de restaurant gegevens aan</p>
+              <p className={false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}>{t('restaurants.edit.subtitle')}</p>
             </div>
 
             {/* Form */}
@@ -207,7 +209,7 @@ const EditRestaurant: NextPage = () => {
                   <BuildingStorefrontIcon className={`h-6 w-6 mr-2 ${
                     false ? 'text-[#2BE89A]' : 'text-green-500'
                   }`} />
-                  Basis Informatie
+                  {t('restaurants.edit.basicInfo')}
                 </h2>
                 
                 <div className="space-y-6">
@@ -215,7 +217,7 @@ const EditRestaurant: NextPage = () => {
                     <label htmlFor="name" className={`block text-sm font-medium mb-2 ${
                       false ? 'text-[#BBBECC]' : 'text-[#6B7280]'
                     }`}>
-                      Restaurant Naam <span className="text-red-500">*</span>
+                      {t('restaurants.edit.restaurantName')} <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -228,7 +230,7 @@ const EditRestaurant: NextPage = () => {
                           ? `bg-[#0A0B0F] border ${errors.name ? 'border-red-500' : 'border-[#2a2d3a]'} text-white placeholder-[#BBBECC] focus:ring-[#2BE89A]`
                           : `bg-white border ${errors.name ? 'border-red-500' : 'border-gray-200'} text-gray-900 placeholder-gray-500 focus:ring-green-500 hover:border-gray-300`
                       }`}
-                      placeholder="Bijv. Restaurant Amsterdam"
+                      placeholder={t('restaurants.edit.namePlaceholder')}
                     />
                     {errors.name && (
                       <p className="mt-2 text-sm text-red-500 flex items-center">
@@ -242,7 +244,7 @@ const EditRestaurant: NextPage = () => {
                     <label htmlFor="logo" className={`block text-sm font-medium mb-2 ${
                       false ? 'text-[#BBBECC]' : 'text-[#6B7280]'
                     }`}>
-                      Restaurant Logo
+                      {t('restaurants.edit.restaurantLogo')}
                     </label>
                     <div className="flex items-center space-x-6">
                       {formData.logoPreview && (
@@ -264,7 +266,7 @@ const EditRestaurant: NextPage = () => {
                               : 'bg-gray-50 border border-gray-200 text-gray-700 hover:bg-gray-100'
                           }`}>
                             <PhotoIcon className={`h-5 w-5 mr-2 ${false ? 'text-[#BBBECC]' : 'text-gray-500'}`} />
-                            {formData.logoPreview ? 'Logo Wijzigen' : 'Logo Uploaden'}
+                            {formData.logoPreview ? t('restaurants.edit.changeLogo') : t('restaurants.edit.uploadLogo')}
                           </div>
                           <input
                             type="file"
@@ -273,7 +275,7 @@ const EditRestaurant: NextPage = () => {
                             className="hidden"
                           />
                         </label>
-                        <p className={`text-xs mt-2 ${false ? 'text-[#9CA3B5]' : 'text-gray-500'}`}>PNG, JPG tot 5MB</p>
+                        <p className={`text-xs mt-2 ${false ? 'text-[#9CA3B5]' : 'text-gray-500'}`}>{t('restaurants.edit.imageRequirements')}</p>
                       </div>
                     </div>
                   </div>
@@ -282,7 +284,7 @@ const EditRestaurant: NextPage = () => {
                     <label htmlFor="banner" className={`block text-sm font-medium mb-2 ${
                       false ? 'text-[#BBBECC]' : 'text-[#6B7280]'
                     }`}>
-                      Restaurant Banner
+                      {t('restaurants.edit.restaurantBanner')}
                     </label>
                     <div className="space-y-4">
                       {formData.bannerPreview && (
@@ -303,7 +305,7 @@ const EditRestaurant: NextPage = () => {
                             : 'bg-gray-50 border border-gray-200 text-gray-700 hover:bg-gray-100'
                         }`}>
                           <PhotoIcon className={`h-5 w-5 mr-2 ${false ? 'text-[#BBBECC]' : 'text-gray-500'}`} />
-                          {formData.bannerPreview ? 'Banner Wijzigen' : 'Banner Uploaden'}
+                          {formData.bannerPreview ? t('restaurants.edit.changeBanner') : t('restaurants.edit.uploadBanner')}
                         </div>
                         <input
                           type="file"
@@ -312,7 +314,7 @@ const EditRestaurant: NextPage = () => {
                           className="hidden"
                         />
                       </label>
-                      <p className={`text-xs ${false ? 'text-[#9CA3B5]' : 'text-gray-500'}`}>Aanbevolen: 1920x400px, PNG of JPG tot 5MB</p>
+                      <p className={`text-xs ${false ? 'text-[#9CA3B5]' : 'text-gray-500'}`}>{t('restaurants.edit.bannerRequirements')}</p>
                     </div>
                   </div>
                 </div>
@@ -328,7 +330,7 @@ const EditRestaurant: NextPage = () => {
                   <EnvelopeIcon className={`h-6 w-6 mr-2 ${
                     false ? 'text-[#2BE89A]' : 'text-green-500'
                   }`} />
-                  Contact Informatie
+                  {t('restaurants.edit.contactInfo')}
                 </h2>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -336,7 +338,7 @@ const EditRestaurant: NextPage = () => {
                     <label htmlFor="email" className={`block text-sm font-medium mb-2 ${
                       false ? 'text-[#BBBECC]' : 'text-[#6B7280]'
                     }`}>
-                      Email <span className="text-red-500">*</span>
+                      {t('common.email')} <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -353,7 +355,7 @@ const EditRestaurant: NextPage = () => {
                             ? `bg-[#0A0B0F] border ${errors.email ? 'border-red-500' : 'border-[#2a2d3a]'} text-white placeholder-[#BBBECC] focus:ring-[#2BE89A]`
                             : `bg-white border ${errors.email ? 'border-red-500' : 'border-gray-200'} text-gray-900 placeholder-gray-500 focus:ring-green-500 hover:border-gray-300`
                         }`}
-                        placeholder="info@restaurant.nl"
+                        placeholder={t('restaurants.edit.emailPlaceholder')}
                       />
                     </div>
                     {errors.email && (
@@ -368,7 +370,7 @@ const EditRestaurant: NextPage = () => {
                     <label htmlFor="phone" className={`block text-sm font-medium mb-2 ${
                       false ? 'text-[#BBBECC]' : 'text-[#6B7280]'
                     }`}>
-                      Telefoon <span className="text-red-500">*</span>
+                      {t('common.phone')} <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -408,7 +410,7 @@ const EditRestaurant: NextPage = () => {
                   <MapPinIcon className={`h-6 w-6 mr-2 ${
                     false ? 'text-[#2BE89A]' : 'text-green-500'
                   }`} />
-                  Adres Informatie
+                  {t('restaurants.edit.addressInfo')}
                 </h2>
                 
                 <div className="space-y-6">
@@ -416,7 +418,7 @@ const EditRestaurant: NextPage = () => {
                     <label htmlFor="street" className={`block text-sm font-medium mb-2 ${
                       false ? 'text-[#BBBECC]' : 'text-[#6B7280]'
                     }`}>
-                      Straat & Huisnummer <span className="text-red-500">*</span>
+                      {t('restaurants.edit.streetAndNumber')} <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -444,7 +446,7 @@ const EditRestaurant: NextPage = () => {
                       <label htmlFor="postalCode" className={`block text-sm font-medium mb-2 ${
                         false ? 'text-[#BBBECC]' : 'text-[#6B7280]'
                       }`}>
-                        Postcode <span className="text-red-500">*</span>
+                        {t('restaurants.edit.postalCode')} <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
@@ -471,7 +473,7 @@ const EditRestaurant: NextPage = () => {
                       <label htmlFor="city" className={`block text-sm font-medium mb-2 ${
                         false ? 'text-[#BBBECC]' : 'text-[#6B7280]'
                       }`}>
-                        Stad <span className="text-red-500">*</span>
+                        {t('restaurants.edit.city')} <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
@@ -499,7 +501,7 @@ const EditRestaurant: NextPage = () => {
                     <label htmlFor="country" className={`block text-sm font-medium mb-2 ${
                       false ? 'text-[#BBBECC]' : 'text-[#6B7280]'
                     }`}>
-                      Land
+                      {t('restaurants.edit.country')}
                     </label>
                     <select
                       name="country"
@@ -512,10 +514,10 @@ const EditRestaurant: NextPage = () => {
                           : 'bg-white border border-gray-200 text-gray-900 focus:ring-green-500 hover:border-gray-300'
                       }`}
                     >
-                      <option value="Netherlands">Nederland</option>
-                      <option value="Belgium">België</option>
-                      <option value="Germany">Duitsland</option>
-                      <option value="France">Frankrijk</option>
+                      <option value="Netherlands">{t('restaurants.edit.countries.netherlands')}</option>
+                      <option value="Belgium">{t('restaurants.edit.countries.belgium')}</option>
+                      <option value="Germany">{t('restaurants.edit.countries.germany')}</option>
+                      <option value="France">{t('restaurants.edit.countries.france')}</option>
                     </select>
                   </div>
                 </div>
@@ -531,14 +533,14 @@ const EditRestaurant: NextPage = () => {
                       : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
                   }`}
                 >
-                  Annuleren
+                  {t('common.cancel')}
                 </Link>
                 <button
                   type="submit"
                   disabled={loading}
                   className="px-4 py-2.5 bg-gradient-to-r from-green-500 to-green-600 text-white font-medium rounded-lg hover:from-green-600 hover:to-green-700 transition-all shadow-sm disabled:opacity-50"
                 >
-                  {loading ? 'Opslaan...' : 'Wijzigingen Opslaan'}
+                  {loading ? t('restaurants.edit.saving') : t('restaurants.edit.saveChanges')}
                 </button>
               </div>
             </form>

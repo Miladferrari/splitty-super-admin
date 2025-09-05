@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactNode, MouseEvent, memo } from 'react'
+import { useState, useEffect, ReactNode, MouseEvent, memo, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -17,7 +17,6 @@ import {
   ChevronDownIcon,
   ArrowRightOnRectangleIcon,
   ChevronRightIcon,
-  ChatBubbleLeftRightIcon,
   BookOpenIcon,
   GlobeAltIcon,
   ArrowsRightLeftIcon,
@@ -122,8 +121,8 @@ const Layout: React.FC<LayoutProps> = ({ children }): React.ReactElement => {
     return initialExpanded
   })
   
-  // Navigation configuration - moved inside component to use translations
-  const allNavigation: NavigationItem[] = [
+  // Navigation configuration - memoized to prevent recreation on language change
+  const allNavigation: NavigationItem[] = useMemo(() => [
     { name: t('sidebar.menu.dashboard'), href: '/dashboard', icon: HomeIcon, roles: ['ceo', 'admin', 'account_manager', 'support', 'developer'] },
     { 
       name: t('sidebar.menu.restaurants'), 
@@ -139,10 +138,9 @@ const Layout: React.FC<LayoutProps> = ({ children }): React.ReactElement => {
     { name: t('sidebar.menu.allSplittys'), href: '/orders', icon: ArrowsRightLeftIcon, roles: ['ceo', 'admin', 'account_manager', 'support'] },
     { name: t('sidebar.menu.testOrder'), href: '/test-order', icon: BeakerIcon, roles: ['ceo', 'admin', 'developer'] },
     { name: t('sidebar.menu.splittyTeam'), href: '/users', icon: UsersIcon, roles: ['ceo', 'admin'] },
-    { name: t('sidebar.menu.support'), href: '/support', icon: ChatBubbleLeftRightIcon, roles: ['ceo', 'admin', 'support'] },
     { name: t('sidebar.menu.knowledgeBase'), href: '/knowledge-base', icon: BookOpenIcon, roles: ['ceo', 'admin', 'account_manager', 'support', 'developer'] },
     { name: t('sidebar.menu.settings'), href: '/settings', icon: Cog6ToothIcon, roles: ['ceo', 'admin', 'account_manager', 'support', 'developer'] },
-  ]
+  ], [language, t])
   const router = useRouter()
   
   // Initialize user data with default values
@@ -150,10 +148,29 @@ const Layout: React.FC<LayoutProps> = ({ children }): React.ReactElement => {
   const [userRole, setUserRole] = useState<UserRole>('ceo')
   const [userEmail, setUserEmail] = useState<string>('')
   const [userAvatar, setUserAvatar] = useState<string>('')
-  const [navigation, setNavigation] = useState<NavigationItem[]>(() => {
-    // Initialize with all navigation items for ceo role
-    return allNavigation
-  })
+  // Memoize filtered navigation based on user role
+  const navigation = useMemo(() => {
+    const roleToUse: UserRole = userRole || 'ceo'
+    const validRoles: UserRole[] = ['ceo', 'admin', 'account_manager', 'support', 'developer', 'staff']
+    
+    if (!validRoles.includes(roleToUse)) {
+      return allNavigation
+    }
+    
+    return allNavigation.filter(item => 
+      item.roles && item.roles.includes(roleToUse)
+    ).map(item => {
+      if (item.submenu) {
+        return {
+          ...item,
+          submenu: item.submenu?.filter(subItem => 
+            subItem.roles && subItem.roles.includes(roleToUse)
+          )
+        }
+      }
+      return item
+    })
+  }, [allNavigation, userRole])
   
   // Load user data from localStorage after mount
   useEffect(() => {
@@ -174,38 +191,6 @@ const Layout: React.FC<LayoutProps> = ({ children }): React.ReactElement => {
       setUserRole(storedUserRole || 'ceo')
       setUserEmail(storedUserEmail || '')
       setUserAvatar(storedUserAvatar || '')
-      
-      // Filter navigation based on user role
-      // If no valid role, show all navigation items (or use a default role)
-      const roleToUse: UserRole = storedUserRole || 'ceo' // Default to ceo role if no role is set
-      
-      // If role is not in the system, just show all navigation
-      const validRoles: UserRole[] = ['ceo', 'admin', 'account_manager', 'support', 'developer', 'staff']
-      if (!validRoles.includes(roleToUse)) {
-        setNavigation(allNavigation)
-      } else {
-        const filteredNavigation = allNavigation.filter(item => 
-          item.roles && item.roles.includes(roleToUse)
-        ).map(item => {
-          // Filter submenu items based on user role
-          if (item.submenu) {
-            return {
-              ...item,
-              submenu: item.submenu?.filter(subItem => 
-                subItem.roles && subItem.roles.includes(roleToUse)
-              )
-            }
-          }
-          return item
-        })
-        
-        // If no items after filtering, show all
-        if (filteredNavigation.length === 0) {
-          setNavigation(allNavigation)
-        } else {
-          setNavigation(filteredNavigation)
-        }
-      }
     }
     
     // Initial load
@@ -217,38 +202,8 @@ const Layout: React.FC<LayoutProps> = ({ children }): React.ReactElement => {
     return () => {
       window.removeEventListener('storage', loadUserData)
     }
-  }, [allNavigation])
+  }, [])
 
-  // Update navigation when language changes
-  useEffect(() => {
-    const roleToUse: UserRole = userRole || 'ceo'
-    const validRoles: UserRole[] = ['ceo', 'admin', 'account_manager', 'support', 'developer', 'staff']
-    
-    if (!validRoles.includes(roleToUse)) {
-      setNavigation(allNavigation)
-    } else {
-      const filteredNavigation = allNavigation.filter(item => 
-        item.roles && item.roles.includes(roleToUse)
-      ).map(item => {
-        if (item.submenu) {
-          return {
-            ...item,
-            submenu: item.submenu?.filter(subItem => 
-              subItem.roles && subItem.roles.includes(roleToUse)
-            )
-          }
-        }
-        return item
-      })
-      
-      if (filteredNavigation.length === 0) {
-        setNavigation(allNavigation)
-      } else {
-        setNavigation(filteredNavigation)
-      }
-    }
-  }, [language, allNavigation, userRole])
-  
   // Format role display
   const getRoleDisplay = (role: UserRole): string => {
     switch(role) {

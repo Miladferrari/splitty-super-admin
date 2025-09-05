@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Layout from '../../../../components/Layout';
 import mockDB from '../../../../utils/mockDatabase';
+import { useTranslation } from '../../../../contexts/TranslationContext';
 import { 
   ArrowLeftIcon,
   ArrowPathIcon,
@@ -22,6 +23,7 @@ import { CheckCircleIcon as CheckCircleIconSolid } from '@heroicons/react/24/sol
 const PaymentDetails: NextPage = () => {
   const router = useRouter();
   const { id, paymentId } = router.query;
+  const { t } = useTranslation();
   const [payment, setPayment] = useState(null);
 
   useEffect(() => {
@@ -79,7 +81,7 @@ const PaymentDetails: NextPage = () => {
           fee: '1.03',
           netAmount: '35.17',
           status: 'completed',
-          splitType: 'Betaal voor Items',
+          splitType: 'Pay for Items',
           stripePaymentId: 'pi_1075_splitty',
           stripeChargeId: 'ch_1075_splitty',
           posTransactionId: '30001075',
@@ -111,7 +113,7 @@ const PaymentDetails: NextPage = () => {
           fee: '0.61',
           netAmount: '19.73',
           status: 'in_progress',
-          splitType: 'Betaal voor Items',
+          splitType: 'Pay for Items',
           stripePaymentId: 'pi_1076_splitty',
           stripeChargeId: null,
           posTransactionId: '30001076',
@@ -175,7 +177,7 @@ const PaymentDetails: NextPage = () => {
           fee: '1.37',
           netAmount: '47.13',
           status: 'completed',
-          splitType: 'Betaal voor Items',
+          splitType: 'Pay for Items',
           stripePaymentId: 'pi_1078_splitty',
           stripeChargeId: 'ch_1078_splitty',
           posTransactionId: '30001078',
@@ -236,7 +238,7 @@ const PaymentDetails: NextPage = () => {
           fee: '1.15',
           netAmount: '38.10',
           status: 'completed',
-          splitType: 'Betaal voor Items',
+          splitType: 'Pay for Items',
           stripePaymentId: `pi_${paymentId}_demo`,
           stripeChargeId: `ch_${paymentId}_demo`,
           posTransactionId: `3000${paymentId.toString().padStart(7, '0')}`,
@@ -273,7 +275,7 @@ const PaymentDetails: NextPage = () => {
       return (
         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
           <CheckCircleIconSolid className="h-4 w-4 mr-1" />
-          Voltooid
+          {t('orders.status.completed')}
         </span>
       );
     } else if (status === 'pending') {
@@ -315,7 +317,7 @@ const PaymentDetails: NextPage = () => {
             className="inline-flex items-center px-4 py-2 rounded-lg transition-all text-sm font-medium group bg-gray-50 border border-gray-200 text-gray-600 hover:text-gray-700 hover:bg-gray-100 hover:border-green-300"
           >
             <ArrowLeftIcon className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-            Terug
+            {t('orders.details.backButton')}
           </button>
 
           {/* Header */}
@@ -327,7 +329,7 @@ const PaymentDetails: NextPage = () => {
                   {getStatusBadge(payment.status)}
                 </span>
               </h1>
-              <p className="text-[#6B7280]">Betaling details en transactie informatie</p>
+              <p className="text-[#6B7280]">{t('payments.details.subtitle')}</p>
             </div>
             <div className="flex gap-2">
               <button 
@@ -335,7 +337,7 @@ const PaymentDetails: NextPage = () => {
                 className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
               >
                 <ArrowPathIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" />
-                Vernieuwen
+                {t('payments.details.refresh')}
               </button>
             </div>
           </div>
@@ -344,8 +346,8 @@ const PaymentDetails: NextPage = () => {
           <div className="bg-white shadow rounded-lg overflow-hidden">
             <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
               <div>
-                <h3 className="text-lg leading-6 font-medium text-gray-900">Betaling Details</h3>
-                <p className="mt-1 text-sm text-gray-500">Aangemaakt op {formatDate(payment.createdAt)}</p>
+                <h3 className="text-lg leading-6 font-medium text-gray-900">{t('payments.details.paymentDetails')}</h3>
+                <p className="mt-1 text-sm text-gray-500">{t('orders.details.createdAt', { date: formatDate(payment.createdAt) })}</p>
               </div>
               <div className="flex items-center">
                 <span className="text-lg font-medium">{payment.restaurantName}</span>
@@ -354,7 +356,7 @@ const PaymentDetails: NextPage = () => {
             <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
               <dl className="sm:divide-y sm:divide-gray-200">
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Bestel ID</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('payments.details.orderId')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                     <Link href={`/restaurants/${id}/orders/${payment.orderId}`} className="text-green-600 hover:text-green-700">
                       #{payment.orderId}
@@ -362,22 +364,22 @@ const PaymentDetails: NextPage = () => {
                   </dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Restaurant</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('payments.details.restaurant')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                     {payment.restaurantName} (ID: {payment.restaurantId})
                   </dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Tafelnummer</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('payments.details.tableNumber')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    Tafel #{payment.metadata.tableNumber}
+                    {t('orders.tableNumber', { number: payment.metadata.tableNumber })}
                   </dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Split Modus</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('payments.details.splitMode')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                     <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">
-                      {payment.splitType}
+                      {payment.splitType === 'Pay for Items' ? t('payments.details.payForItems') : payment.splitType}
                     </span>
                   </dd>
                 </div>
@@ -386,7 +388,7 @@ const PaymentDetails: NextPage = () => {
                   <dd className="mt-1 sm:mt-0 sm:col-span-2">
                     {getStatusBadge(payment.status)}
                     {payment.completedAt && (
-                      <p className="text-sm text-gray-500 mt-1">Voltooid op {formatDate(payment.completedAt)}</p>
+                      <p className="text-sm text-gray-500 mt-1">{t('orders.details.completedOn', { date: formatDate(payment.completedAt) })}</p>
                     )}
                   </dd>
                 </div>
@@ -397,24 +399,24 @@ const PaymentDetails: NextPage = () => {
           {/* Customer Information */}
           <div className="bg-white shadow rounded-lg overflow-hidden">
             <div className="px-4 py-5 sm:px-6">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Klant Informatie</h3>
+              <h3 className="text-lg leading-6 font-medium text-gray-900">{t('payments.details.customerInfo')}</h3>
             </div>
             <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
               <dl className="sm:divide-y sm:divide-gray-200">
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Naam</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('payments.details.name')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{payment.customer.name}</dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Email</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('payments.details.email')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    {payment.customer.email || 'Niet opgegeven'}
+                    {payment.customer.email || t('payments.details.notProvided')}
                   </dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Telefoon</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('payments.details.phone')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    {payment.customer.phone || 'Niet opgegeven'}
+                    {payment.customer.phone || t('payments.details.notProvided')}
                   </dd>
                 </div>
               </dl>
@@ -424,12 +426,12 @@ const PaymentDetails: NextPage = () => {
           {/* Payment Information */}
           <div className="bg-white shadow rounded-lg overflow-hidden">
             <div className="px-4 py-5 sm:px-6">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Betaling Informatie</h3>
+              <h3 className="text-lg leading-6 font-medium text-gray-900">{t('payments.details.paymentInfo')}</h3>
             </div>
             <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
               <dl className="sm:divide-y sm:divide-gray-200">
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Betaalmethode</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('payments.details.paymentMethod')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 capitalize">
                     {payment.method}
                     {payment.cardDetails && (
@@ -440,27 +442,27 @@ const PaymentDetails: NextPage = () => {
                   </dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Bedrag</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('payments.details.amount')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-medium">
                     €{payment.amount}
                   </dd>
                 </div>
                 {payment.tip && (
                   <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt className="text-sm font-medium text-gray-500">Fooi</dt>
+                    <dt className="text-sm font-medium text-gray-500">{t('payments.details.tip')}</dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                       €{payment.tip}
                     </dd>
                   </div>
                 )}
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Verwerkingskosten</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('payments.details.processingFees')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                     €{payment.fee}
                   </dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Netto Bedrag</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('payments.details.netAmount')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-medium text-green-600">
                     €{payment.netAmount}
                   </dd>
@@ -472,36 +474,36 @@ const PaymentDetails: NextPage = () => {
           {/* Technical Details */}
           <div className="bg-white shadow rounded-lg overflow-hidden">
             <div className="px-4 py-5 sm:px-6">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Technische Details</h3>
+              <h3 className="text-lg leading-6 font-medium text-gray-900">{t('payments.details.technicalDetails')}</h3>
             </div>
             <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
               <dl className="sm:divide-y sm:divide-gray-200">
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Stripe Betaling ID</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('payments.details.stripePaymentId')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-mono text-xs">
                     {payment.stripePaymentId}
                   </dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Stripe Kosten ID</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('payments.details.stripeChargeId')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-mono text-xs">
                     {payment.stripeChargeId}
                   </dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">POS Transactie ID</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('payments.details.posTransactionId')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                     {payment.metadata.posTransactionId}
                   </dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Betaalde Items</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('payments.details.paidItems')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                     {payment.metadata.itemsPaid.join(', ')}
                   </dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">IP Adres</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('payments.details.ipAddress')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-mono text-xs">
                     {payment.metadata.ipAddress}
                   </dd>

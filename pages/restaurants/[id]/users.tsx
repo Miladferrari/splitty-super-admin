@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Layout from '../../../components/Layout'
 import { useUsers } from '../../../contexts/UsersContext'
+import { useTranslation } from '../../../contexts/TranslationContext'
 import {
   ArrowLeftIcon,
   MagnifyingGlassIcon,
@@ -28,6 +29,7 @@ import { BuildingOfficeIcon as BuildingOfficeIconSolid, UserIcon as UserIconSoli
 const RestaurantStaffManagement: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
+  const { t } = useTranslation()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedRole, setSelectedRole] = useState('all')
   const [showAddModal, setShowAddModal] = useState(false)
@@ -99,15 +101,15 @@ const RestaurantStaffManagement: NextPage = () => {
 
   const rolePermissions = {
     admin: [
-      { icon: ShieldCheckIcon, permission: 'Volledige toegang tot restaurant instellingen' },
-      { icon: UserGroupIcon, permission: 'Personeel beheren en rollen toewijzen' },
-      { icon: ChartBarIcon, permission: 'Analytics en rapportages bekijken' },
-      { icon: CogIcon, permission: 'Integraties en betalingen configureren' },
+      { icon: ShieldCheckIcon, permission: t('restaurants.staff.permissions.admin.fullAccess') },
+      { icon: UserGroupIcon, permission: t('restaurants.staff.permissions.admin.manageStaff') },
+      { icon: ChartBarIcon, permission: t('restaurants.staff.permissions.admin.viewAnalytics') },
+      { icon: CogIcon, permission: t('restaurants.staff.permissions.admin.configureIntegrations') },
     ],
     staff: [
-      { icon: ClipboardDocumentCheckIcon, permission: 'Bestellingen bekijken en beheren' },
-      { icon: UserIcon, permission: 'Eigen profiel bijwerken' },
-      { icon: ChartBarIcon, permission: 'Basis statistieken bekijken' },
+      { icon: ClipboardDocumentCheckIcon, permission: t('restaurants.staff.permissions.staff.viewOrders') },
+      { icon: UserIcon, permission: t('restaurants.staff.permissions.staff.updateProfile') },
+      { icon: ChartBarIcon, permission: t('restaurants.staff.permissions.staff.viewBasicStats') },
     ],
   }
 
@@ -128,7 +130,7 @@ const RestaurantStaffManagement: NextPage = () => {
                 <li className="flex items-center">
                   <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" />
                   <Link href="/restaurants" className="ml-1 text-gray-500 hover:text-gray-900 transition-colors duration-200">
-                    Restaurants
+                    {t('sidebar.menu.restaurants')}
                   </Link>
                 </li>
                 <li className="flex items-center">
@@ -140,7 +142,7 @@ const RestaurantStaffManagement: NextPage = () => {
                 <li className="flex items-center">
                   <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" />
                   <span className="ml-1 font-medium text-gray-900" aria-current="page">
-                    Personeel Beheer
+                    {t('restaurants.staff.title')}
                   </span>
                 </li>
               </ol>
@@ -152,44 +154,44 @@ const RestaurantStaffManagement: NextPage = () => {
               className="inline-flex items-center px-4 py-2 rounded-lg transition-all text-sm font-medium mb-6 group bg-gray-50 border border-gray-200 text-gray-600 hover:text-gray-700 hover:bg-gray-100 hover:border-green-300"
             >
               <ArrowLeftIcon className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-              Terug naar {restaurantName}
+              {t('restaurants.staff.backToRestaurant', { name: restaurantName })}
             </Link>
 
             {/* Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
-                <h1 className="text-2xl font-semibold text-gray-900 mb-1">Personeel Beheer</h1>
-                <p className="text-gray-600">Beheer personeel voor {restaurantName}</p>
+                <h1 className="text-2xl font-semibold text-gray-900 mb-1">{t('restaurants.staff.title')}</h1>
+                <p className="text-gray-600">{t('restaurants.staff.subtitle', { name: restaurantName })}</p>
               </div>
               <button
                 onClick={() => setShowAddModal(true)}
                 className="inline-flex items-center px-4 py-2.5 rounded-lg font-medium transition-colors bg-green-600 text-white hover:bg-green-700"
               >
                 <UserPlusIcon className="h-4 w-4 mr-2" />
-                Personeel Toevoegen
+                {t('restaurants.staff.addStaff')}
               </button>
             </div>
 
             {/* Quick Stats */}
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
               <div className="p-5 rounded-lg bg-white border border-gray-200">
-                <p className="text-xs text-gray-500">Totaal</p>
+                <p className="text-xs text-gray-500">{t('restaurants.staff.stats.total')}</p>
                 <p className="text-2xl font-semibold mt-1 text-gray-900">{staffMembers.length}</p>
-                <p className="text-xs text-gray-500 mt-1">Personeelsleden</p>
+                <p className="text-xs text-gray-500 mt-1">{t('restaurants.staff.stats.members')}</p>
               </div>
               <div className="p-5 rounded-lg bg-white border border-gray-200">
-                <p className="text-xs text-gray-500">Admins</p>
+                <p className="text-xs text-gray-500">{t('restaurants.staff.stats.admins')}</p>
                 <p className="text-2xl font-semibold mt-1 text-gray-900">
                   {staffMembers.filter(m => m.role === 'admin').length}
                 </p>
-                <p className="text-xs text-gray-500 mt-1">Restaurant Admins</p>
+                <p className="text-xs text-gray-500 mt-1">{t('restaurants.staff.roles.restaurantAdmin')}</p>
               </div>
               <div className="p-5 rounded-lg bg-white border border-gray-200">
-                <p className="text-xs text-gray-500">Staff</p>
+                <p className="text-xs text-gray-500">{t('restaurants.staff.stats.staff')}</p>
                 <p className="text-2xl font-semibold mt-1 text-gray-900">
                   {staffMembers.filter(m => m.role === 'staff').length}
                 </p>
-                <p className="text-xs text-gray-500 mt-1">Restaurant Staff</p>
+                <p className="text-xs text-gray-500 mt-1">{t('restaurants.staff.roles.restaurantStaff')}</p>
               </div>
             </div>
 
@@ -201,7 +203,7 @@ const RestaurantStaffManagement: NextPage = () => {
                   <input
                     type="text"
                     className="w-full pl-10 pr-4 py-2.5 rounded-lg border transition-colors bg-white border-gray-200 text-gray-900 placeholder-gray-400 focus:border-green-600 focus:outline-none"
-                    placeholder="Zoek op naam of email..."
+                    placeholder={t('restaurants.staff.searchPlaceholder')}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
@@ -213,9 +215,9 @@ const RestaurantStaffManagement: NextPage = () => {
                   onChange={(e) => setSelectedRole(e.target.value)}
                   className="px-4 py-2.5 rounded-lg border transition-colors bg-white border-gray-200 text-gray-900 focus:outline-none"
                 >
-                  <option value="all">Alle Rollen</option>
-                  <option value="admin">Restaurant Admin</option>
-                  <option value="staff">Restaurant Staff</option>
+                  <option value="all">{t('restaurants.staff.filters.allRoles')}</option>
+                  <option value="admin">{t('restaurants.staff.roles.restaurantAdmin')}</option>
+                  <option value="staff">{t('restaurants.staff.roles.restaurantStaff')}</option>
                 </select>
               </div>
             </div>
@@ -228,15 +230,15 @@ const RestaurantStaffManagement: NextPage = () => {
                     <div className="mx-auto h-20 w-20 bg-gray-100 rounded-full flex items-center justify-center mb-6">
                       <UserGroupIcon className="h-10 w-10 text-gray-400" />
                     </div>
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">Nog geen personeel</h3>
-                    <p className="text-gray-500 max-w-sm mx-auto">Dit restaurant heeft nog geen personeel toegevoegd</p>
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">{t('restaurants.staff.empty.title')}</h3>
+                    <p className="text-gray-500 max-w-sm mx-auto">{t('restaurants.staff.empty.description')}</p>
                     <div className="mt-8">
                       <button
                         onClick={() => setShowAddModal(true)}
                         className="inline-flex items-center px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition"
                       >
                         <UserPlusIcon className="h-5 w-5 mr-2" />
-                        Eerste personeelslid toevoegen
+                        {t('restaurants.staff.empty.addFirst')}
                       </button>
                     </div>
                   </div>
@@ -251,8 +253,8 @@ const RestaurantStaffManagement: NextPage = () => {
                         <BuildingOfficeIcon className="h-6 w-6 text-white" />
                       </div>
                       <div className="ml-4">
-                        <h3 className="text-xl font-semibold text-gray-900">Restaurant Admin</h3>
-                        <p className="text-sm text-gray-500">Volledige toegang en beheer</p>
+                        <h3 className="text-xl font-semibold text-gray-900">{t('restaurants.staff.roles.restaurantAdmin')}</h3>
+                        <p className="text-sm text-gray-500">{t('restaurants.staff.roles.adminDescription')}</p>
                       </div>
                     </div>
                     <div className="space-y-3">
@@ -272,8 +274,8 @@ const RestaurantStaffManagement: NextPage = () => {
                         <UserIcon className="h-6 w-6 text-white" />
                       </div>
                       <div className="ml-4">
-                        <h3 className="text-xl font-semibold text-gray-900">Restaurant Staff</h3>
-                        <p className="text-sm text-gray-500">Beperkte toegang</p>
+                        <h3 className="text-xl font-semibold text-gray-900">{t('restaurants.staff.roles.restaurantStaff')}</h3>
+                        <p className="text-sm text-gray-500">{t('restaurants.staff.roles.staffDescription')}</p>
                       </div>
                     </div>
                     <div className="space-y-3">
@@ -296,19 +298,19 @@ const RestaurantStaffManagement: NextPage = () => {
                       <thead className="border-b bg-gray-50 border-gray-200">
                         <tr>
                           <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                            Gebruiker
+                            {t('restaurants.staff.table.user')}
                           </th>
                           <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                            Rol
+                            {t('restaurants.staff.table.role')}
                           </th>
                           <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                            Status
+                            {t('common.status')}
                           </th>
                           <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                            Laatste Activiteit
+                            {t('restaurants.staff.table.lastActivity')}
                           </th>
                           <th scope="col" className="relative px-6 py-4">
-                            <span className="sr-only">Acties</span>
+                            <span className="sr-only">{t('common.actions')}</span>
                           </th>
                         </tr>
                       </thead>
@@ -329,17 +331,17 @@ const RestaurantStaffManagement: NextPage = () => {
                             <td className="px-6 py-4 whitespace-nowrap">
                               {member.role === 'admin' ? (
                                 <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-purple-50 text-purple-700">
-                                  Restaurant Admin
+                                  {t('restaurants.staff.roles.restaurantAdmin')}
                                 </span>
                               ) : (
                                 <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-cyan-50 text-cyan-700">
-                                  Restaurant Staff
+                                  {t('restaurants.staff.roles.restaurantStaff')}
                                 </span>
                               )}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-green-50 text-green-700">
-                                Actief
+                                {t('common.active')}
                               </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
@@ -362,11 +364,11 @@ const RestaurantStaffManagement: NextPage = () => {
                                   }}
                                   className="text-sm font-medium transition-colors text-green-600 hover:text-green-700"
                                 >
-                                  Bewerk
+                                  {t('common.edit')}
                                 </button>
                                 <span className="text-gray-300">•</span>
                                 <button className="text-sm font-medium transition-colors text-red-600 hover:text-red-700">
-                                  Verwijder
+                                  {t('common.delete')}
                                 </button>
                               </div>
                             </td>
@@ -379,7 +381,7 @@ const RestaurantStaffManagement: NextPage = () => {
                   <div className="px-6 py-4 border-t bg-gray-50 border-gray-200">
                     <div className="flex items-center justify-between">
                       <div className="text-sm text-gray-600">
-                        <span className="font-medium text-gray-900">{filteredStaff.length}</span> gebruikers gevonden
+                        <span className="font-medium text-gray-900">{filteredStaff.length}</span> {t('restaurants.staff.table.usersFound')}
                       </div>
                     </div>
                   </div>
@@ -402,8 +404,8 @@ const RestaurantStaffManagement: NextPage = () => {
           >
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Personeelslid Bewerken</h3>
-                <p className="text-gray-600">Bewerk gegevens voor {`${selectedUser.firstName || ''} ${selectedUser.lastName || ''}`}</p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('restaurants.staff.modal.editTitle')}</h3>
+                <p className="text-gray-600">{t('restaurants.staff.modal.editSubtitle', { name: `${selectedUser.firstName || ''} ${selectedUser.lastName || ''}` })}</p>
               </div>
               <button
                 onClick={() => {
@@ -432,7 +434,7 @@ const RestaurantStaffManagement: NextPage = () => {
               }}>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-2">Voornaam</label>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.staff.modal.firstName')}</label>
                     <input
                       type="text"
                       className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
@@ -442,7 +444,7 @@ const RestaurantStaffManagement: NextPage = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-2">Achternaam</label>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.staff.modal.lastName')}</label>
                     <input
                       type="text"
                       className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
@@ -454,7 +456,7 @@ const RestaurantStaffManagement: NextPage = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-2">Email</label>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.staff.modal.email')}</label>
                   <input
                     type="email"
                     className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
@@ -465,18 +467,18 @@ const RestaurantStaffManagement: NextPage = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-2">Telefoon (optioneel)</label>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.staff.modal.phone')}</label>
                   <input
                     type="tel"
                     className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    placeholder="+31 6 12345678"
+                    placeholder={t('restaurants.staff.modal.phonePlaceholder')}
                     value={editFormData.phone}
                     onChange={(e) => setEditFormData({...editFormData, phone: e.target.value})}
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-3">Rol</label>
+                  <label className="block text-sm font-medium text-gray-600 mb-3">{t('restaurants.staff.modal.role')}</label>
                   <div className="grid grid-cols-2 gap-3">
                     <label className="relative">
                       <input 
@@ -489,8 +491,8 @@ const RestaurantStaffManagement: NextPage = () => {
                       />
                       <div className="p-4 rounded-lg border-2 transition-all bg-gray-50 border-gray-200 peer-checked:bg-blue-50 peer-checked:border-blue-400 cursor-pointer">
                         <UserGroupIcon className="h-6 w-6 mx-auto mb-2" />
-                        <p className="font-medium text-center">Personeel</p>
-                        <p className="text-xs mt-1 text-center opacity-75">Basis toegang</p>
+                        <p className="font-medium text-center">{t('restaurants.staff.modal.staff')}</p>
+                        <p className="text-xs mt-1 text-center opacity-75">{t('restaurants.staff.modal.basicAccess')}</p>
                       </div>
                     </label>
                     <label className="relative">
@@ -504,8 +506,8 @@ const RestaurantStaffManagement: NextPage = () => {
                       />
                       <div className="p-4 rounded-lg border-2 transition-all bg-gray-50 border-gray-200 peer-checked:bg-blue-50 peer-checked:border-blue-400 cursor-pointer">
                         <ShieldCheckIcon className="h-6 w-6 mx-auto mb-2" />
-                        <p className="font-medium text-center">Manager</p>
-                        <p className="text-xs mt-1 text-center opacity-75">Volledige toegang</p>
+                        <p className="font-medium text-center">{t('restaurants.staff.modal.manager')}</p>
+                        <p className="text-xs mt-1 text-center opacity-75">{t('restaurants.staff.modal.fullAccess')}</p>
                       </div>
                     </label>
                   </div>
@@ -534,7 +536,7 @@ const RestaurantStaffManagement: NextPage = () => {
                           <input
                             type={showNewPassword ? "text" : "password"}
                             className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent pr-12"
-                            placeholder="Minimaal 8 karakters"
+                            placeholder={t('restaurants.staff.modal.passwordPlaceholder')}
                             minLength="8"
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
@@ -559,7 +561,7 @@ const RestaurantStaffManagement: NextPage = () => {
                           <input
                             type={showConfirmNewPassword ? "text" : "password"}
                             className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent pr-12"
-                            placeholder="Herhaal wachtwoord"
+                            placeholder={t('restaurants.staff.modal.confirmPasswordPlaceholder')}
                             minLength="8"
                             value={confirmNewPassword}
                             onChange={(e) => setConfirmNewPassword(e.target.value)}
@@ -611,8 +613,8 @@ const RestaurantStaffManagement: NextPage = () => {
           >
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Restaurant Team</h3>
-                <p className="text-gray-600">Voeg nieuwe teamleden toe aan {restaurantName}</p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('restaurants.staff.modal.addTitle')}</h3>
+                <p className="text-gray-600">{t('restaurants.staff.modal.addSubtitle', { name: restaurantName })}</p>
               </div>
               <button
                 onClick={() => setShowAddModal(false)}
@@ -624,7 +626,7 @@ const RestaurantStaffManagement: NextPage = () => {
 
             <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
               <div className="flex items-center justify-between mb-6">
-                <h4 className="text-lg font-semibold text-gray-900">Nieuwe gebruiker toevoegen</h4>
+                <h4 className="text-lg font-semibold text-gray-900">{t('restaurants.staff.modal.addNewUser')}</h4>
               </div>
               
               <form className="space-y-4" onSubmit={(e) => {
@@ -645,22 +647,22 @@ const RestaurantStaffManagement: NextPage = () => {
               }}>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-2">Voornaam</label>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.staff.modal.firstName')}</label>
                     <input
                       type="text"
                       className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                      placeholder="Jan"
+                      placeholder={t('restaurants.staff.modal.firstNamePlaceholder')}
                       value={formData.firstName}
                       onChange={(e) => setFormData({...formData, firstName: e.target.value})}
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-2">Achternaam</label>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.staff.modal.lastName')}</label>
                     <input
                       type="text"
                       className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                      placeholder="Jansen"
+                      placeholder={t('restaurants.staff.modal.lastNamePlaceholder')}
                       value={formData.lastName}
                       onChange={(e) => setFormData({...formData, lastName: e.target.value})}
                       required
@@ -669,11 +671,11 @@ const RestaurantStaffManagement: NextPage = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-2">Email</label>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.staff.modal.email')}</label>
                   <input
                     type="email"
                     className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    placeholder="jan@restaurant.nl"
+                    placeholder={t('restaurants.staff.modal.emailPlaceholder')}
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                     required
@@ -681,23 +683,23 @@ const RestaurantStaffManagement: NextPage = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-2">Telefoon (optioneel)</label>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.staff.modal.phone')}</label>
                   <input
                     type="tel"
                     className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    placeholder="+31 6 12345678"
+                    placeholder={t('restaurants.staff.modal.phonePlaceholder')}
                     value={formData.phone}
                     onChange={(e) => setFormData({...formData, phone: e.target.value})}
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-2">Wachtwoord</label>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.staff.modal.password')}</label>
                   <div className="relative">
                     <input
                       type={showPassword ? "text" : "password"}
                       className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent pr-12"
-                      placeholder="Minimaal 8 karakters"
+                      placeholder={t('restaurants.staff.modal.passwordPlaceholder')}
                       minLength="8"
                       value={formData.password}
                       onChange={(e) => setFormData({...formData, password: e.target.value})}
@@ -718,12 +720,12 @@ const RestaurantStaffManagement: NextPage = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-2">Bevestig Wachtwoord</label>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.staff.modal.confirmPassword')}</label>
                   <div className="relative">
                     <input
                       type={showConfirmPassword ? "text" : "password"}
                       className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent pr-12"
-                      placeholder="Herhaal wachtwoord"
+                      placeholder={t('restaurants.staff.modal.confirmPasswordPlaceholder')}
                       minLength="8"
                       value={formData.confirmPassword}
                       onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
@@ -744,7 +746,7 @@ const RestaurantStaffManagement: NextPage = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-3">Rol</label>
+                  <label className="block text-sm font-medium text-gray-600 mb-3">{t('restaurants.staff.modal.role')}</label>
                   <div className="grid grid-cols-2 gap-3">
                     <label className="relative">
                       <input 
@@ -757,8 +759,8 @@ const RestaurantStaffManagement: NextPage = () => {
                       />
                       <div className="p-4 rounded-lg border-2 transition-all bg-gray-50 border-gray-200 peer-checked:bg-blue-50 peer-checked:border-blue-400 cursor-pointer">
                         <UserGroupIcon className="h-6 w-6 mx-auto mb-2" />
-                        <p className="font-medium text-center">Personeel</p>
-                        <p className="text-xs mt-1 text-center opacity-75">Basis toegang</p>
+                        <p className="font-medium text-center">{t('restaurants.staff.modal.staff')}</p>
+                        <p className="text-xs mt-1 text-center opacity-75">{t('restaurants.staff.modal.basicAccess')}</p>
                       </div>
                     </label>
                     <label className="relative">
@@ -772,8 +774,8 @@ const RestaurantStaffManagement: NextPage = () => {
                       />
                       <div className="p-4 rounded-lg border-2 transition-all bg-gray-50 border-gray-200 peer-checked:bg-blue-50 peer-checked:border-blue-400 cursor-pointer">
                         <ShieldCheckIcon className="h-6 w-6 mx-auto mb-2" />
-                        <p className="font-medium text-center">Manager</p>
-                        <p className="text-xs mt-1 text-center opacity-75">Volledige toegang</p>
+                        <p className="font-medium text-center">{t('restaurants.staff.modal.manager')}</p>
+                        <p className="text-xs mt-1 text-center opacity-75">{t('restaurants.staff.modal.fullAccess')}</p>
                       </div>
                     </label>
                   </div>
@@ -783,14 +785,14 @@ const RestaurantStaffManagement: NextPage = () => {
                   type="submit"
                   className="w-full px-6 py-3 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black font-semibold rounded-lg hover:opacity-90 transition"
                 >
-                  Gebruiker Toevoegen
+                  {t('restaurants.staff.modal.addUser')}
                 </button>
               </form>
             </div>
             
             <div className="mt-8 bg-gray-50 rounded-lg p-4 border border-gray-200">
               <p className="text-sm text-gray-600">
-                <span className="text-green-500 font-medium">Tip:</span> Voeg minimaal één manager toe. Je kunt later altijd meer gebruikers toevoegen via het gebruikersbeheer.
+                <span className="text-green-500 font-medium">{t('restaurants.staff.modal.tip')}</span> {t('restaurants.staff.modal.tipMessage')}
               </p>
             </div>
           </div>

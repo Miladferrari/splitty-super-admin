@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Layout from '../../../../components/Layout';
 import mockDB from '../../../../utils/mockDatabase';
+import { useTranslation } from '../../../../contexts/TranslationContext';
 import { 
   ArrowLeftIcon,
   ArrowPathIcon,
@@ -22,6 +23,7 @@ import { CheckCircleIcon as CheckCircleIconSolid } from '@heroicons/react/24/sol
 const OrderDetails: NextPage = () => {
   const router = useRouter();
   const { id, orderId } = router.query;
+  const { t } = useTranslation();
   const [order, setOrder] = useState(null);
 
   useEffect(() => {
@@ -657,7 +659,7 @@ const OrderDetails: NextPage = () => {
             className="inline-flex items-center px-4 py-2 rounded-lg transition-all text-sm font-medium group bg-gray-50 border border-gray-200 text-gray-600 hover:text-gray-700 hover:bg-gray-100 hover:border-green-300"
           >
             <ArrowLeftIcon className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-            Terug
+            {t('orders.details.backButton')}
           </button>
 
           {/* Header */}
@@ -688,7 +690,7 @@ const OrderDetails: NextPage = () => {
                   </span>
                 </span>
               </h1>
-              <p className="text-[#6B7280]">Bestel details en betaling informatie</p>
+              <p className="text-[#6B7280]">{t('orders.details.subtitle')}</p>
             </div>
             <div className="flex gap-2">
               <button 
@@ -696,7 +698,7 @@ const OrderDetails: NextPage = () => {
                 className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
               >
                 <ArrowPathIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" />
-                Vernieuwen
+                {t('orders.details.refresh')}
               </button>
             </div>
           </div>
@@ -705,8 +707,8 @@ const OrderDetails: NextPage = () => {
           <div className="bg-white shadow rounded-lg overflow-hidden">
             <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
               <div>
-                <h3 className="text-lg leading-6 font-medium text-gray-900">Bestel Details</h3>
-                <p className="mt-1 text-sm text-gray-500">Aangemaakt op {formatDate(order.createdAt)}</p>
+                <h3 className="text-lg leading-6 font-medium text-gray-900">{t('orders.details.orderDetails')}</h3>
+                <p className="mt-1 text-sm text-gray-500">{t('orders.details.createdAt', { date: formatDate(order.createdAt) })}</p>
               </div>
               <div className="flex items-center">
                 <span className="text-lg font-medium">{order.restaurantName}</span>
@@ -715,65 +717,65 @@ const OrderDetails: NextPage = () => {
             <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
               <dl className="sm:divide-y sm:divide-gray-200">
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Restaurant ID</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('orders.details.restaurantId')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                     {order.restaurantId} ({order.restaurantName})
                   </dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">POS Transactie ID</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('orders.details.posTransactionId')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{order.posTransactionId}</dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Tafel Informatie</dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">Tafel #{order.tableNumber}</dd>
+                  <dt className="text-sm font-medium text-gray-500">{t('orders.details.tableInfo')}</dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{t('orders.tableNumber', { number: order.tableNumber })}</dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Klant</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('orders.details.customer')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{order.customer}</dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Totaal Bedrag</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('orders.details.totalAmount')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-medium">€{order.totalAmount}</dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Betaald Bedrag</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('orders.details.paidAmount')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 font-medium text-green-600">€{order.paidAmount}</dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Resterend Bedrag</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('orders.details.remainingAmount')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">€{order.remainingAmount}</dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Status</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('orders.details.status')}</dt>
                   <dd className="mt-1 sm:mt-0 sm:col-span-2">
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                       {order.status === 'completed' && (
                         <>
                           <CheckCircleIconSolid className="h-4 w-4 mr-1" />
-                          Voltooid
+                          {t('orders.status.completed')}
                         </>
                       )}
                       {order.status === 'in_progress' && (
                         <>
                           <ClockIcon className="h-4 w-4 mr-1" />
-                          Actief
+                          {t('orders.status.inProgress')}
                         </>
                       )}
                       {order.status === 'partial' && (
                         <>
                           <div className="w-2 h-2 bg-orange-500 rounded-full mr-1.5" />
-                          Deels Betaald
+                          {t('orders.status.partial')}
                         </>
                       )}
                     </span>
                     {order.completedAt && (
-                      <p className="text-sm text-gray-500 mt-1">Voltooid op {formatDate(order.completedAt)}</p>
+                      <p className="text-sm text-gray-500 mt-1">{t('orders.details.completedOn', { date: formatDate(order.completedAt) })}</p>
                     )}
                   </dd>
                 </div>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Split Modus</dt>
+                  <dt className="text-sm font-medium text-gray-500">{t('orders.details.splitMode')}</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{order.splitMode}</dd>
                 </div>
               </dl>
@@ -783,8 +785,8 @@ const OrderDetails: NextPage = () => {
           {/* Order Items */}
           <div className="bg-white shadow rounded-lg overflow-hidden">
             <div className="px-4 py-5 sm:px-6">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Bestel Items</h3>
-              <p className="mt-1 text-sm text-gray-500">{order.items.length} items in deze bestelling</p>
+              <h3 className="text-lg leading-6 font-medium text-gray-900">{t('orders.details.orderItems')}</h3>
+              <p className="mt-1 text-sm text-gray-500">{t('orders.details.itemsInOrder', { count: order.items.length })}</p>
             </div>
             <div className="border-t border-gray-200">
               <div className="overflow-x-auto">
@@ -792,19 +794,19 @@ const OrderDetails: NextPage = () => {
                   <thead className="bg-gray-50">
                     <tr>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Artikel
+                        {t('orders.details.item')}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Aantal
+                        {t('orders.details.quantity')}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Stukprijs
+                        {t('orders.details.unitPrice')}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Totaal
+                        {t('orders.details.total')}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Betaalstatus
+                        {t('orders.details.paymentStatus')}
                       </th>
                     </tr>
                   </thead>
@@ -831,7 +833,7 @@ const OrderDetails: NextPage = () => {
                               ? 'bg-orange-100 text-orange-800'
                               : 'bg-gray-100 text-gray-600'
                           }`}>
-                            {item.paymentStatus === 'paid' ? 'Betaald' : item.paymentStatus === 'partial' ? 'Deels betaald' : 'In afwachting'}
+                            {item.paymentStatus === 'paid' ? t('orders.details.betaald') : item.paymentStatus === 'partial' ? t('orders.status.partial') : t('orders.status.pending')}
                           </span>
                         </td>
                       </tr>
@@ -845,8 +847,8 @@ const OrderDetails: NextPage = () => {
           {/* Payments */}
           <div className="bg-white shadow rounded-lg overflow-hidden">
             <div className="px-4 py-5 sm:px-6">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Betalingen</h3>
-              <p className="mt-1 text-sm text-gray-500">{order.payments.length} betaling(en) voor deze bestelling</p>
+              <h3 className="text-lg leading-6 font-medium text-gray-900">{t('orders.details.payments')}</h3>
+              <p className="mt-1 text-sm text-gray-500">{t('orders.details.paymentsForOrder', { count: order.payments.length })}</p>
             </div>
             <div className="border-t border-gray-200">
               <div className="overflow-x-auto">
@@ -854,22 +856,22 @@ const OrderDetails: NextPage = () => {
                   <thead className="bg-gray-50">
                     <tr>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        ID
+                        {t('orders.details.id')}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Methode
+                        {t('orders.details.method')}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Klant
+                        {t('orders.details.customer')}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Bedrag
+                        {t('common.amount')}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Status
+                        {t('orders.details.status')}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Datum
+                        {t('orders.details.date')}
                       </th>
                     </tr>
                   </thead>
@@ -889,13 +891,13 @@ const OrderDetails: NextPage = () => {
                           €{payment.amount.toFixed(2)}
                           {payment.tip && (
                             <span className="text-xs text-gray-400 block">
-                              Fooi: €{payment.tip.toFixed(2)}
+                              {t('orders.details.tip')}: €{payment.tip.toFixed(2)}
                             </span>
                           )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                            Voltooid
+                            {t('orders.status.completed')}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

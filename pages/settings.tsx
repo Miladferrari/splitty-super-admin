@@ -427,16 +427,16 @@ const Settings: NextPage = () => {
   const renderGeneralSettings = () => (
     <div className="space-y-8">
       <div>
-        <h3 className="text-xl font-semibold text-[#111827]">Bedrijfsinformatie</h3>
+        <h3 className="text-xl font-semibold text-[#111827]">{t('settings.general.companyInfo')}</h3>
         <p className="mt-1 text-sm text-[#6B7280]">
-          Deze informatie wordt weergegeven op je publieke profiel
+          {t('settings.general.companyInfoDesc')}
         </p>
       </div>
 
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
         <div>
           <label htmlFor="company-name" className="block text-sm font-medium mb-2 text-gray-700">
-            Bedrijfsnaam
+            {t('settings.general.companyName')}
           </label>
           <input
             type="text"
@@ -449,7 +449,7 @@ const Settings: NextPage = () => {
 
         <div>
           <label htmlFor="email" className="block text-sm font-medium mb-2 text-gray-700">
-            Contact E-mail
+            {t('settings.general.contactEmail')}
           </label>
           <input
             type="email"
@@ -462,7 +462,7 @@ const Settings: NextPage = () => {
 
         <div>
           <label htmlFor="phone" className="block text-sm font-medium mb-2 text-gray-700">
-            Telefoonnummer
+            {t('settings.general.phone')}
           </label>
           <input
             type="tel"
@@ -475,7 +475,7 @@ const Settings: NextPage = () => {
 
         <div>
           <label htmlFor="website" className="block text-sm font-medium mb-2 text-gray-700">
-            Website
+            {t('settings.general.website')}
           </label>
           <input
             type="url"
@@ -488,7 +488,7 @@ const Settings: NextPage = () => {
 
         <div>
           <label htmlFor="kvk-number" className="block text-sm font-medium mb-2 text-gray-700">
-            KVK Nummer
+            {t('settings.general.kvkNumber')}
           </label>
           <input
             type="text"
@@ -501,7 +501,7 @@ const Settings: NextPage = () => {
 
         <div>
           <label htmlFor="btw-number" className="block text-sm font-medium mb-2 text-gray-700">
-            BTW Nummer
+            {t('settings.general.vatNumber')}
           </label>
           <input
             type="text"
@@ -516,12 +516,12 @@ const Settings: NextPage = () => {
       {/* Address Fields */}
       <div>
         <h4 className="text-lg font-medium mb-4 text-gray-900">
-          Adres
+          {t('settings.general.address')}
         </h4>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <div className="sm:col-span-2">
             <label htmlFor="street-address" className="block text-sm font-medium mb-2 text-gray-700">
-              Straat en huisnummer
+              {t('settings.general.streetAddress')}
             </label>
             <input
               type="text"
@@ -534,7 +534,7 @@ const Settings: NextPage = () => {
 
           <div>
             <label htmlFor="postal-code" className="block text-sm font-medium mb-2 text-gray-700">
-              Postcode
+              {t('settings.general.postalCode')}
             </label>
             <input
               type="text"
@@ -547,7 +547,7 @@ const Settings: NextPage = () => {
 
           <div>
             <label htmlFor="city" className="block text-sm font-medium mb-2 text-gray-700">
-              Stad
+              {t('settings.general.city')}
             </label>
             <input
               type="text"
@@ -560,7 +560,7 @@ const Settings: NextPage = () => {
 
           <div className="sm:col-span-2 lg:col-span-1">
             <label htmlFor="country" className="block text-sm font-medium mb-2 text-gray-700">
-              Land
+              {t('settings.general.country')}
             </label>
             <select
               id="country"
@@ -568,10 +568,10 @@ const Settings: NextPage = () => {
               defaultValue="Netherlands"
               className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 cursor-pointer transition bg-white border-gray-200 text-gray-900 focus:ring-green-500 focus:border-transparent"
             >
-              <option value="Netherlands">Nederland</option>
-              <option value="Belgium">België</option>
-              <option value="Germany">Duitsland</option>
-              <option value="France">Frankrijk</option>
+              <option value="Netherlands">{t('settings.general.countries.netherlands')}</option>
+              <option value="Belgium">{t('settings.general.countries.belgium')}</option>
+              <option value="Germany">{t('settings.general.countries.germany')}</option>
+              <option value="France">{t('settings.general.countries.france')}</option>
             </select>
           </div>
         </div>
@@ -579,7 +579,7 @@ const Settings: NextPage = () => {
 
       <div>
         <label htmlFor="timezone" className="block text-sm font-medium mb-2 text-gray-700">
-          Tijdzone
+          {t('settings.general.timezone')}
         </label>
         <select
           id="timezone"
@@ -603,21 +603,21 @@ const Settings: NextPage = () => {
   const renderNotificationSettings = () => (
     <div className="space-y-8">
       <div>
-        <h3 className="text-xl font-semibold text-[#111827]">E-mail Notificaties</h3>
+        <h3 className="text-xl font-semibold text-[#111827]">{t('settings.notifications.emailNotifications')}</h3>
         <p className="mt-1 text-sm text-[#6B7280]">
-          Beheer welke e-mails je wilt ontvangen
+          {t('settings.notifications.emailNotificationsDesc')}
         </p>
       </div>
 
       <div className="rounded-xl p-6 bg-gray-50">
         <div className="grid grid-cols-1 gap-4">
           {[
-            { id: 'new-orders', label: 'Nieuwe Bestellingen', description: 'Ontvang melding bij nieuwe bestellingen', checked: true, category: 'critical' },
-            { id: 'payment-received', label: 'Betaling Ontvangen', description: 'Notificatie voor succesvolle betalingen', checked: true, category: 'critical' },
-            { id: 'payout-sent', label: 'Uitbetaling Verstuurd', description: 'Updates wanneer uitbetalingen worden verwerkt', checked: true, category: 'important' },
-            { id: 'low-inventory', label: 'Lage Voorraad', description: 'Waarschuwing wanneer items bijna op zijn', checked: false, category: 'optional' },
-            { id: 'new-reviews', label: 'Nieuwe Reviews', description: 'Klantbeoordelingen en ratings', checked: false, category: 'optional' },
-            { id: 'marketing', label: 'Marketing Updates', description: 'Product updates en aankondigingen', checked: false, category: 'optional' },
+            { id: 'new-orders', label: t('settings.notifications.newOrders'), description: t('settings.notifications.newOrdersDesc'), checked: true, category: 'critical' },
+            { id: 'payment-received', label: t('settings.notifications.paymentReceived'), description: t('settings.notifications.paymentReceivedDesc'), checked: true, category: 'critical' },
+            { id: 'payout-sent', label: t('settings.notifications.payoutSent'), description: t('settings.notifications.payoutSentDesc'), checked: true, category: 'important' },
+            { id: 'low-inventory', label: t('settings.notifications.lowInventory'), description: t('settings.notifications.lowInventoryDesc'), checked: false, category: 'optional' },
+            { id: 'new-reviews', label: t('settings.notifications.newReviews'), description: t('settings.notifications.newReviewsDesc'), checked: false, category: 'optional' },
+            { id: 'marketing', label: t('settings.notifications.marketingUpdates'), description: t('settings.notifications.marketingUpdatesDesc'), checked: false, category: 'optional' },
           ].map((item) => (
             <div key={item.id} className={`flex items-start p-4 rounded-xl border transition-all duration-200 ${
               darkMode 
@@ -650,7 +650,7 @@ const Settings: NextPage = () => {
                         ? 'bg-red-500/20 text-red-400 border border-red-500/30'
                         : 'bg-red-100 text-red-700 border border-red-200'
                     }`}>
-                      Belangrijk
+                      {t('settings.notifications.labels.important')}
                     </span>
                   )}
                   {item.category === 'important' && (
@@ -659,7 +659,7 @@ const Settings: NextPage = () => {
                         ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
                         : 'bg-yellow-100 text-yellow-700 border border-yellow-200'
                     }`}>
-                      Aanbevolen
+                      {t('settings.notifications.labels.recommended')}
                     </span>
                   )}
                 </div>
@@ -674,9 +674,9 @@ const Settings: NextPage = () => {
 
       <div className={`border-t pt-8 ${darkMode ? 'border-[#2a2d3a]' : 'border-gray-200'}`}>
         <div className="mb-6">
-          <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Push Notificaties</h3>
+          <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>{t('settings.notifications.pushNotifications')}</h3>
           <p className={`mt-1 text-sm ${darkMode ? 'text-[#BBBECC]' : 'text-gray-600'}`}>
-            Beheer mobiele app notificaties
+            {t('settings.notifications.pushNotificationsDesc')}
           </p>
         </div>
 
@@ -685,9 +685,9 @@ const Settings: NextPage = () => {
         }`}>
           <div className="space-y-4">
             {[
-              { id: 'push-orders', label: 'Bestelling Updates', description: 'Real-time updates over bestellingen', checked: true },
-              { id: 'push-payments', label: 'Betaling Alerts', description: 'Directe notificaties bij betalingen', checked: true },
-              { id: 'push-staff', label: 'Personeel Berichten', description: 'Communicatie van teamleden', checked: false },
+              { id: 'push-orders', label: t('settings.notifications.orderUpdates'), description: t('settings.notifications.orderUpdatesDesc'), checked: true },
+              { id: 'push-payments', label: t('settings.notifications.paymentAlerts'), description: t('settings.notifications.paymentAlertsDesc'), checked: true },
+              { id: 'push-staff', label: t('settings.notifications.staffMessages'), description: t('settings.notifications.staffMessagesDesc'), checked: false },
             ].map((item) => (
               <div key={item.id} className={`flex items-start p-4 rounded-lg border transition-all duration-200 ${
                 darkMode 
@@ -728,9 +728,9 @@ const Settings: NextPage = () => {
   const renderPaymentSettings = () => (
     <div className="space-y-8">
       <div>
-        <h3 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-[#111827]'}`}>Betaalmethoden</h3>
+        <h3 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-[#111827]'}`}>{t('settings.billing.paymentMethods')}</h3>
         <p className={`mt-1 text-sm ${darkMode ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>
-          Configureer je betalingsverwerkingsopties
+          {t('settings.billing.paymentMethodsDesc')}
         </p>
       </div>
 
@@ -749,10 +749,10 @@ const Settings: NextPage = () => {
             <div className="ml-4">
               <h4 className={`text-lg font-semibold ${
                 darkMode ? 'text-white' : 'text-gray-900'
-              }`}>Stripe</h4>
+              }`}>{t('settings.billing.stripeTitle')}</h4>
               <p className={`text-sm mt-0.5 ${
                 darkMode ? 'text-[#BBBECC]' : 'text-gray-600'
-              }`}>Verwerk betalingen met Stripe</p>
+              }`}>{t('settings.billing.stripeDesc')}</p>
             </div>
           </div>
           <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium ${
@@ -761,7 +761,7 @@ const Settings: NextPage = () => {
               : 'bg-green-100 text-green-700 border border-green-200'
           }`}>
             <CheckIcon className="h-4 w-4 mr-1.5" />
-            Verbonden
+            {t('settings.billing.connected')}
           </span>
         </div>
         <div className="space-y-4">
@@ -769,7 +769,7 @@ const Settings: NextPage = () => {
             <label htmlFor="stripe-key" className={`block text-sm font-medium mb-2 ${
               darkMode ? 'text-[#BBBECC]' : 'text-gray-700'
             }`}>
-              Publishable Key
+              {t('settings.billing.publishableKey')}
             </label>
             <input
               type="text"
@@ -786,9 +786,9 @@ const Settings: NextPage = () => {
       </div>
 
       <div>
-        <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Uitbetalingsinstellingen</h3>
+        <h3 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>{t('settings.billing.payoutSettings')}</h3>
         <p className={`mt-1 text-sm ${darkMode ? 'text-[#BBBECC]' : 'text-gray-600'}`}>
-          Configureer automatische uitbetalingen aan restaurants
+          {t('settings.billing.payoutSettingsDesc')}
         </p>
       </div>
 
@@ -797,7 +797,7 @@ const Settings: NextPage = () => {
           <label htmlFor="payout-frequency" className={`block text-sm font-medium mb-2 ${
             darkMode ? 'text-[#BBBECC]' : 'text-gray-700'
           }`}>
-            Payout Frequency
+            {t('settings.billing.payoutFrequency')}
           </label>
           <select
             id="payout-frequency"
@@ -809,10 +809,10 @@ const Settings: NextPage = () => {
             }`}
             defaultValue="weekly"
           >
-            <option value="daily">Daily</option>
-            <option value="weekly">Weekly</option>
-            <option value="biweekly">Bi-weekly</option>
-            <option value="monthly">Monthly</option>
+            <option value="daily">{t('settings.billing.frequencies.daily')}</option>
+            <option value="weekly">{t('settings.billing.frequencies.weekly')}</option>
+            <option value="biweekly">{t('settings.billing.frequencies.biweekly')}</option>
+            <option value="monthly">{t('settings.billing.frequencies.monthly')}</option>
           </select>
         </div>
 
@@ -820,7 +820,7 @@ const Settings: NextPage = () => {
           <label htmlFor="minimum-payout" className={`block text-sm font-medium mb-2 ${
             darkMode ? 'text-[#BBBECC]' : 'text-gray-700'
           }`}>
-            Minimum Payout Amount
+            {t('settings.billing.minimumPayout')}
           </label>
           <div className="relative rounded-xl shadow-sm">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -846,9 +846,9 @@ const Settings: NextPage = () => {
   const renderSecuritySettings = () => (
     <div className="space-y-8">
       <div>
-        <h3 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-[#111827]'}`}>Beveiligingsinstellingen</h3>
+        <h3 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-[#111827]'}`}>{t('settings.security.securitySettings')}</h3>
         <p className={`mt-1 text-sm ${darkMode ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>
-          Beheer je account beveiligingsvoorkeuren
+          {t('settings.security.securitySettingsDesc')}
         </p>
       </div>
 
@@ -857,7 +857,7 @@ const Settings: NextPage = () => {
           <label htmlFor="current-password" className={`block text-sm font-medium mb-2 ${
             darkMode ? 'text-[#BBBECC]' : 'text-gray-700'
           }`}>
-            Huidig Wachtwoord
+            {t('settings.security.currentPassword')}
           </label>
           <input
             type="password"
@@ -874,7 +874,7 @@ const Settings: NextPage = () => {
           <label htmlFor="new-password" className={`block text-sm font-medium mb-2 ${
             darkMode ? 'text-[#BBBECC]' : 'text-gray-700'
           }`}>
-            Nieuw Wachtwoord
+            {t('settings.security.newPassword')}
           </label>
           <input
             type="password"
@@ -891,7 +891,7 @@ const Settings: NextPage = () => {
           <label htmlFor="confirm-password" className={`block text-sm font-medium mb-2 ${
             darkMode ? 'text-[#BBBECC]' : 'text-gray-700'
           }`}>
-            Confirm New Password
+            {t('settings.security.confirmPassword')}
           </label>
           <input
             type="password"
@@ -906,9 +906,9 @@ const Settings: NextPage = () => {
       </div>
 
       <div className={`border-t pt-6 ${darkMode ? 'border-[#2a2d3a]' : 'border-gray-200'}`}>
-        <h3 className={`text-lg font-medium leading-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Twee-Factor Authenticatie</h3>
+        <h3 className={`text-lg font-medium leading-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>{t('settings.security.twoFactorAuth')}</h3>
         <p className={`mt-1 text-sm ${darkMode ? 'text-[#BBBECC]' : 'text-gray-600'}`}>
-          Voeg een extra beveiligingslaag toe aan je account
+          {t('settings.security.twoFactorAuthDesc')}
         </p>
       </div>
 
@@ -922,25 +922,25 @@ const Settings: NextPage = () => {
             }`} />
             <div className="ml-4">
               <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                Twee-Factor Authenticatie is ingeschakeld
+                {t('settings.security.twoFactorEnabled')}
               </p>
               <p className={`text-sm ${darkMode ? 'text-[#BBBECC]' : 'text-gray-600'}`}>
-                Je account is beveiligd met 2FA
+                {t('settings.security.twoFactorEnabledDesc')}
               </p>
             </div>
           </div>
           <button className={`text-sm font-medium ${
             darkMode ? 'text-red-400 hover:text-red-300' : 'text-red-600 hover:text-red-700'
           }`}>
-            Uitschakelen
+            {t('settings.security.disable')}
           </button>
         </div>
       </div>
 
       <div className={`border-t pt-6 ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
-        <h3 className={`text-lg font-medium leading-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Login Sessions</h3>
+        <h3 className={`text-lg font-medium leading-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>{t('settings.security.loginSessions')}</h3>
         <p className={`mt-1 text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-          Manage your active login sessions
+          {t('settings.security.loginSessionsDesc')}
         </p>
       </div>
 
@@ -966,11 +966,11 @@ const Settings: NextPage = () => {
             {session.current ? (
               <span className={`text-sm ${
                 darkMode ? 'text-green-400' : 'text-green-600'
-              }`}>Huidige sessie</span>
+              }`}>{t('settings.security.currentSession')}</span>
             ) : (
               <button className={`text-sm ${
                 darkMode ? 'text-red-400 hover:text-red-300' : 'text-red-600 hover:text-red-700'
-              }`}>Intrekken</button>
+              }`}>{t('settings.security.revoke')}</button>
             )}
           </div>
         ))}

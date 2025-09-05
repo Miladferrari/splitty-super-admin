@@ -7,6 +7,7 @@ import Layout from '../../components/Layout'
 import Breadcrumb from '../../components/Breadcrumb'
 import { useRestaurants } from '../../contexts/RestaurantsContext'
 import { useUsers } from '../../contexts/UsersContext'
+import { useTranslation } from '../../contexts/TranslationContext'
 import RestaurantDeleteModal from '../../components/RestaurantDeleteModal'
 import {
   ArrowLeftIcon,
@@ -40,6 +41,7 @@ import {
 const RestaurantDetail: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
+  const { t } = useTranslation()
   const { getRestaurant, updateRestaurant, deleteRestaurant, deleteRestaurantPermanently } = useRestaurants()
   const { getCompanyUser, authenticateUser, restaurantUsers } = useUsers()
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -410,10 +412,10 @@ const RestaurantDetail: NextPage = () => {
   const isNotFullyOnboarded = contextRestaurant && !contextRestaurant.isOnboarded
 
   const quickStats = [
-    { label: 'Omzet', value: '€0', icon: BanknotesIcon, color: 'from-[#2BE89A] to-[#4FFFB0]', trend: null },
-    { label: 'Transacties', value: 0, icon: ShoppingBagIcon, color: 'from-[#4ECDC4] to-[#44A08D]', trend: null },
-    { label: 'Gem. Order', value: '€0', icon: CreditCardIcon, color: 'from-[#667EEA] to-[#764BA2]', trend: null },
-    { label: 'Rating', value: 0, icon: StarIcon, color: 'from-[#FF6B6B] to-[#FF8E53]', trend: null },
+    { label: t('dashboard.stats.revenue.title'), value: '€0', icon: BanknotesIcon, color: 'from-[#2BE89A] to-[#4FFFB0]', trend: null },
+    { label: t('dashboard.stats.transactions.title'), value: 0, icon: ShoppingBagIcon, color: 'from-[#4ECDC4] to-[#44A08D]', trend: null },
+    { label: t('dashboard.stats.averageAmount.title'), value: '€0', icon: CreditCardIcon, color: 'from-[#667EEA] to-[#764BA2]', trend: null },
+    { label: t('common.rating'), value: 0, icon: StarIcon, color: 'from-[#FF6B6B] to-[#FF8E53]', trend: null },
   ]
 
   // Generate active tables for this restaurant (memoized to prevent re-renders)
@@ -487,7 +489,7 @@ const RestaurantDetail: NextPage = () => {
               }`}
             >
               <ArrowLeftIcon className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-              Terug naar Restaurants
+              {t('restaurants.backToList')}
             </Link>
 
             {/* Header */}
@@ -497,7 +499,7 @@ const RestaurantDetail: NextPage = () => {
                   {restaurant?.name || 'Restaurant Details'}
                 </h1>
                 <p className={`${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>
-                  Beheer restaurant informatie en instellingen
+                  {t('restaurants.subtitle')}
                 </p>
               </div>
               <div className="flex gap-3">
@@ -507,7 +509,7 @@ const RestaurantDetail: NextPage = () => {
                     className="inline-flex items-center px-4 py-2.5 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-all shadow-sm"
                   >
                     <TrashIcon className="h-5 w-5 mr-2" />
-                    Permanent Verwijderen
+                    {t('restaurants.deleteModal.confirmButton')}
                   </button>
                 ) : (
                   <>
@@ -516,14 +518,14 @@ const RestaurantDetail: NextPage = () => {
                       className="inline-flex items-center px-4 py-2.5 border border-red-300 text-red-600 font-medium rounded-lg hover:bg-red-50 transition-all"
                     >
                       <TrashIcon className="h-5 w-5 mr-2" />
-                      Archiveren
+                      {t('restaurants.actions.archive')}
                     </button>
                     <Link
                       href={`/restaurants/${id}/edit`}
                       className="inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-green-500 to-green-600 text-white font-medium rounded-lg hover:from-green-600 hover:to-green-700 transition-all shadow-sm"
                     >
                       <PencilIcon className="h-5 w-5 mr-2" />
-                      Bewerk Restaurant
+                      {t('restaurants.profile.editRestaurant')}
                     </Link>
                   </>
                 )}
@@ -539,9 +541,9 @@ const RestaurantDetail: NextPage = () => {
                       <ClockIcon className={`h-6 w-6 ${false ? 'text-yellow-400' : 'text-yellow-600'}`} />
                     </div>
                     <div>
-                      <p className={`font-semibold text-lg ${false ? 'text-yellow-400' : 'text-yellow-700'}`}>Onboarding niet voltooid</p>
+                      <p className={`font-semibold text-lg ${false ? 'text-yellow-400' : 'text-yellow-700'}`}>{t('restaurants.onboardingProgress')}</p>
                       <p className={`text-sm mt-1 ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>
-                        Dit restaurant moet eerst de setup voltooien voordat het actief kan worden
+                        {t('restaurants.onboardingProgress')}
                       </p>
                     </div>
                   </div>
@@ -549,7 +551,7 @@ const RestaurantDetail: NextPage = () => {
                     onClick={() => router.push(`/restaurants/${id}/onboarding`)}
                     className="inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-medium rounded-lg hover:from-yellow-600 hover:to-yellow-700 transition-all shadow-sm"
                   >
-                    <span className="mr-2">Start Onboarding</span>
+                    <span className="mr-2">{t('restaurants.actions.continueOnboarding')}</span>
                     <ArrowRightIcon className="h-5 w-5" />
                   </button>
                 </div>
@@ -579,12 +581,12 @@ const RestaurantDetail: NextPage = () => {
                     {contextRestaurant?.deleted ? (
                       <>
                         <TrashIcon className="h-3.5 w-3.5 mr-1" />
-                        Gearchiveerd
+                        {t('common.archived')}
                       </>
                     ) : (
                       <>
                         <CheckCircleIcon className="h-3.5 w-3.5 mr-1" />
-                        {restaurant.status === 'active' ? 'Actief' : 'Inactief'}
+                        {restaurant.status === 'active' ? t('common.active') : t('common.inactive')}
                       </>
                     )}
                   </span>
@@ -633,13 +635,13 @@ const RestaurantDetail: NextPage = () => {
                       false ? 'bg-[#0A0B0F] border border-[#2a2d3a]' : 'bg-gray-100 border border-gray-200'
                     }`}>
                       <BuildingStorefrontIcon className={`h-3.5 w-3.5 mr-1 ${false ? 'text-[#BBBECC]' : 'text-gray-600'}`} />
-                      <span className={false ? 'text-white' : 'text-gray-900'}>{restaurant.tables} tafels</span>
+                      <span className={false ? 'text-white' : 'text-gray-900'}>{restaurant.tables} {t('common.status')}</span>
                     </span>
                     <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs ${
                       false ? 'bg-[#0A0B0F] border border-[#2a2d3a]' : 'bg-gray-100 border border-gray-200'
                     }`}>
                       <ClockIcon className={`h-3.5 w-3.5 mr-1 ${false ? 'text-[#BBBECC]' : 'text-gray-600'}`} />
-                      <span className={false ? 'text-white' : 'text-gray-900'}>Piek: {restaurant.peakHours}</span>
+                      <span className={false ? 'text-white' : 'text-gray-900'}>{t('dashboard.stats.peak')}: {restaurant.peakHours}</span>
                     </span>
                   </div>
                 </div>
@@ -1046,19 +1048,19 @@ const RestaurantDetail: NextPage = () => {
                     <div className="mt-8 bg-[#0A0B0F] rounded-lg p-6 border border-[#2a2d3a]">
                       <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
                         <MapPinIcon className="h-5 w-5 text-[#2BE89A] mr-2" />
-                        Restaurant Informatie
+                        {t('restaurants.profile.information')}
                       </h3>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                          <p className="text-xs text-[#BBBECC] uppercase tracking-wider mb-1">Email</p>
+                          <p className="text-xs text-[#BBBECC] uppercase tracking-wider mb-1">{t('common.email')}</p>
                           <p className="text-white">{restaurant.email}</p>
                         </div>
                         <div>
-                          <p className="text-xs text-[#BBBECC] uppercase tracking-wider mb-1">Telefoon</p>
+                          <p className="text-xs text-[#BBBECC] uppercase tracking-wider mb-1">{t('common.phone')}</p>
                           <p className="text-white">{restaurant.phone}</p>
                         </div>
                         <div>
-                          <p className="text-xs text-[#BBBECC] uppercase tracking-wider mb-1">Locatie</p>
+                          <p className="text-xs text-[#BBBECC] uppercase tracking-wider mb-1">{t('restaurants.table.location')}</p>
                           <p className="text-white">{restaurant.location}</p>
                         </div>
                       </div>
@@ -1073,7 +1075,7 @@ const RestaurantDetail: NextPage = () => {
                 <div>
                   <div className="mb-6">
                     <h2 className={`text-2xl font-bold ${false ? 'text-white' : 'text-[#111827]'} mb-2`}>Setup Essentials</h2>
-                    <p className={false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}>Essentiële configuratie voor restaurant operaties</p>
+                    <p className={false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}>{t('restaurants.profile.technicalConfig')}</p>
                   </div>
                   
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
@@ -1088,7 +1090,7 @@ const RestaurantDetail: NextPage = () => {
                           false ? 'text-white' : 'text-[#111827]'
                         }`}>
                           <MapPinIcon className={`h-5 w-5 mr-2 ${false ? 'text-[#2BE89A]' : 'text-green-500'}`} />
-                          Contact Info
+                          {t('restaurants.profile.contactPerson')}
                         </h3>
                         <Link
                           href={`/restaurants/${id}/edit`}
@@ -1102,7 +1104,7 @@ const RestaurantDetail: NextPage = () => {
                         <div>
                           <p className={`text-xs uppercase tracking-wider mb-1 ${
                             false ? 'text-[#9CA3B5]' : 'text-[#9CA3AF]'
-                          }`}>Adres</p>
+                          }`}>{t('common.address')}</p>
                           <p className={`text-sm leading-snug ${
                             false ? 'text-white' : 'text-[#111827]'
                           }`}>
@@ -1124,7 +1126,7 @@ const RestaurantDetail: NextPage = () => {
                         </div>
                         <div className="flex justify-between items-center">
                           <div>
-                            <p className={`text-xs ${false ? 'text-[#9CA3B5]' : 'text-[#9CA3AF]'}`}>Telefoon</p>
+                            <p className={`text-xs ${false ? 'text-[#9CA3B5]' : 'text-[#9CA3AF]'}`}>{t('common.phone')}</p>
                             <a href={`tel:${restaurant.phone}`} className={`text-sm transition ${
                               false ? 'text-white hover:text-[#2BE89A]' : 'text-[#111827] hover:text-green-600'
                             }`}>
@@ -1203,7 +1205,7 @@ const RestaurantDetail: NextPage = () => {
                                 ? 'bg-[#0A0B0F] border border-[#2a2d3a] text-[#2BE89A] hover:text-[#4FFFB0] hover:bg-[#1c1e27]'
                                 : 'bg-gray-50 border border-gray-200 text-green-600 hover:text-green-700 hover:bg-gray-100'
                             }`}>
-                            Beheer alle personeel
+                            {t('restaurants.staff.title')}
                           </Link>
                         </div>
                       )}
@@ -1313,7 +1315,7 @@ const RestaurantDetail: NextPage = () => {
                               false ? 'text-[#2BE89A] hover:text-[#4FFFB0]' : 'text-green-600 hover:text-green-700'
                             }`}>
                             <PlusIcon className="h-4 w-4 mr-1" />
-                            Setup POS
+                            {t('pos.configure')}
                           </button>
                         </div>
                       ) : (
@@ -1393,7 +1395,7 @@ const RestaurantDetail: NextPage = () => {
                               className="inline-flex items-center text-sm text-[#2BE89A] hover:text-[#4FFFB0] font-medium"
                             >
                               <PlusIcon className="h-4 w-4 mr-1" />
-                              Add Link
+                              {t('common.new')}
                             </button>
                           </>
                         )}
@@ -1418,14 +1420,14 @@ const RestaurantDetail: NextPage = () => {
                           false ? 'text-white' : 'text-[#111827]'
                         }`}>
                           <TableCellsIcon className={`h-6 w-6 mr-3 ${false ? 'text-[#2BE89A]' : 'text-green-500'}`} />
-                          Actieve Tafels
+                          {t('restaurants.profile.activeStaff')}
                         </h3>
                         <Link
                           href={`/restaurants/${id}/tables`}
                           className={`inline-flex items-center text-sm font-medium transition ${
                             false ? 'text-[#2BE89A] hover:text-[#4FFFB0]' : 'text-green-600 hover:text-green-700'
                           }`}>
-                          <span>Alle Tafels</span>
+                          <span>{t('common.all')}</span>
                           <ArrowRightIcon className="ml-1.5 h-4 w-4" />
                         </Link>
                       </div>
@@ -1439,8 +1441,8 @@ const RestaurantDetail: NextPage = () => {
                           }`}>
                             <TableCellsIcon className={`h-8 w-8 ${false ? 'text-[#BBBECC]' : 'text-gray-600'}`} />
                           </div>
-                          <h4 className={`text-lg font-medium mb-2 ${false ? 'text-white' : 'text-[#111827]'}`}>Geen Actieve Tafels</h4>
-                          <p className={false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}>Er zijn momenteel geen actieve tafels in dit restaurant.</p>
+                          <h4 className={`text-lg font-medium mb-2 ${false ? 'text-white' : 'text-[#111827]'}`}>{t('common.none')}</h4>
+                          <p className={false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}>{t('common.none')}</p>
                         </div>
                       ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -1455,8 +1457,8 @@ const RestaurantDetail: NextPage = () => {
                             >
                               <div className="flex justify-between items-start mb-3">
                                 <div>
-                                  <h4 className={`text-lg font-bold ${false ? 'text-white' : 'text-[#111827]'}`}>Tafel {table.tableNumber}</h4>
-                                  <p className={`text-xs ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>{table.guests} gasten</p>
+                                  <h4 className={`text-lg font-bold ${false ? 'text-white' : 'text-[#111827]'}`}>{t('orders.table.table')} {table.tableNumber}</h4>
+                                  <p className={`text-xs ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>{table.guests} {t('orders.table.guests')}</p>
                                 </div>
                                 <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
                                   table.remaining === table.amount 
@@ -1465,25 +1467,25 @@ const RestaurantDetail: NextPage = () => {
                                     ? 'bg-orange-500/20 text-orange-400'
                                     : 'bg-[#2BE89A]/20 text-[#2BE89A]'
                                 }`}>
-                                  {table.remaining === table.amount ? 'Onbetaald' : table.remaining > 0 ? 'Gedeeltelijk' : 'Betaald'}
+                                  {table.remaining === table.amount ? t('common.pending') : table.remaining > 0 ? t('orders.status.partial') : t('common.completed')}
                                 </span>
                               </div>
                               
                               <div className="space-y-2 mb-3">
                                 <div className="flex justify-between text-sm">
-                                  <span className={false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}>Order #</span>
+                                  <span className={false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}>{t('common.order')} #</span>
                                   <span className={`font-medium ${false ? 'text-white' : 'text-[#111827]'}`}>{table.orderId}</span>
                                 </div>
                                 <div className="flex justify-between text-sm">
-                                  <span className={false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}>Bedrag</span>
+                                  <span className={false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}>{t('common.amount')}</span>
                                   <span className={`font-medium ${false ? 'text-white' : 'text-[#111827]'}`}>€{table.amount.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between text-sm">
-                                  <span className={false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}>Resterend</span>
+                                  <span className={false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}>{t('common.pending')}</span>
                                   <span className="text-yellow-500 font-medium">€{table.remaining.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between text-sm">
-                                  <span className={false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}>Duur</span>
+                                  <span className={false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}>{t('common.time')}</span>
                                   <span className={`flex items-center ${false ? 'text-white' : 'text-[#111827]'}`}>
                                     <ClockIcon className="h-3 w-3 mr-1" />
                                     {table.duration}
@@ -1499,7 +1501,7 @@ const RestaurantDetail: NextPage = () => {
                                     : 'bg-gray-50 text-green-600 hover:bg-gray-100 border border-gray-200'
                                 }`}
                               >
-                                Bekijk Details
+                                {t('restaurants.profile.viewDetails')}
                               </Link>
                             </div>
                           ))}
@@ -1532,11 +1534,11 @@ const RestaurantDetail: NextPage = () => {
                           Splitty Orders & Transacties
                         </h3>
                         <Link
-                          href={`/restaurants/${id}/orders`}
+                          href={`/restaurants/${id}/transacties`}
                           className={`inline-flex items-center text-sm font-medium transition ${
                             false ? 'text-[#2BE89A] hover:text-[#4FFFB0]' : 'text-green-600 hover:text-green-700'
                           }`}>
-                          <span>Bekijk Alle Orders</span>
+                          <span>{t('orders.filters.all')}</span>
                           <ArrowTopRightOnSquareIcon className="ml-1.5 h-4 w-4" />
                         </Link>
                       </div>
@@ -1550,7 +1552,7 @@ const RestaurantDetail: NextPage = () => {
                           }`}>
                             <CurrencyDollarIcon className={`h-10 w-10 ${false ? 'text-[#BBBECC]' : 'text-gray-600'}`} />
                           </div>
-                          <h4 className={`text-lg font-medium mb-2 ${false ? 'text-white' : 'text-[#111827]'}`}>Nog Geen Splitty Orders</h4>
+                          <h4 className={`text-lg font-medium mb-2 ${false ? 'text-white' : 'text-[#111827]'}`}>{t('orders.noResults')}</h4>
                           <p className={`max-w-sm mx-auto ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>
                             Splitty orders verschijnen hier in realtime zodra klanten beginnen met betalen.
                           </p>
@@ -1563,7 +1565,7 @@ const RestaurantDetail: NextPage = () => {
                               false ? 'bg-[#0A0B0F] border border-[#2a2d3a]' : 'bg-gray-50 border border-gray-200'
                             }`}>
                               <div className="flex items-center justify-between mb-2">
-                                <p className={`text-sm font-medium ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>Deze Maand</p>
+                                <p className={`text-sm font-medium ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>{t('dashboard.filters.thisMonth')}</p>
                                 <div className="p-2 bg-gradient-to-r from-green-400 to-green-500 rounded-lg">
                                   <ShoppingBagIcon className="h-4 w-4 text-white" />
                                 </div>
@@ -1579,7 +1581,7 @@ const RestaurantDetail: NextPage = () => {
                               false ? 'bg-[#0A0B0F] border border-[#2a2d3a]' : 'bg-gray-50 border border-gray-200'
                             }`}>
                               <div className="flex items-center justify-between mb-2">
-                                <p className={`text-sm font-medium ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>Vandaag</p>
+                                <p className={`text-sm font-medium ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>{t('dashboard.filters.today')}</p>
                                 <div className="p-2 bg-gradient-to-r from-[#4ECDC4] to-[#44A08D] rounded-lg">
                                   <ArrowTrendingUpIcon className="h-4 w-4 text-white" />
                                 </div>
@@ -1589,20 +1591,20 @@ const RestaurantDetail: NextPage = () => {
                               </p>
                               <p className="text-xs text-green-500 mt-1 flex items-center">
                                 <ArrowTrendingUpIcon className="h-3 w-3 mr-1" />
-                                +15% vs gisteren
+                                +15% vs {t('dashboard.filters.yesterday')}
                               </p>
                             </div>
                             <div className={`rounded-xl p-4 ${
                               false ? 'bg-[#0A0B0F] border border-[#2a2d3a]' : 'bg-gray-50 border border-gray-200'
                             }`}>
                               <div className="flex items-center justify-between mb-2">
-                                <p className={`text-sm font-medium ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>Actieve Orders</p>
+                                <p className={`text-sm font-medium ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>{t('orders.filters.active')}</p>
                                 <div className="p-2 bg-gradient-to-r from-[#667EEA] to-[#764BA2] rounded-lg">
                                   <ClockIcon className="h-4 w-4 text-white" />
                                 </div>
                               </div>
                               <p className={`text-2xl font-bold ${false ? 'text-white' : 'text-[#111827]'}`}>3</p>
-                              <p className={`text-xs mt-1 ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>In behandeling</p>
+                              <p className={`text-xs mt-1 ${false ? 'text-[#BBBECC]' : 'text-[#6B7280]'}`}>{t('common.pending')}</p>
                             </div>
                           </div>
 
@@ -1614,7 +1616,7 @@ const RestaurantDetail: NextPage = () => {
                               false ? 'bg-[#0A0B0F] border-b border-[#2a2d3a]' : 'bg-gray-50 border-b border-gray-200'
                             }`}>
                               <h4 className={`text-sm font-medium ${false ? 'text-white' : 'text-gray-900'}`}>
-                                Recente Betalingen - Laatste 5
+                                {t('common.payment')} - {t('common.previous')} 5
                               </h4>
                             </div>
                             <div className="overflow-x-auto">
@@ -1623,22 +1625,22 @@ const RestaurantDetail: NextPage = () => {
                                   <tr className="border-b border-gray-200">
                                     <th className={`px-4 py-2 text-left text-xs font-medium uppercase tracking-wider ${
                                       false ? 'text-[#BBBECC]' : 'text-gray-500'
-                                    }`}>Betaling ID</th>
+                                    }`}>{t('common.payment')} ID</th>
                                     <th className={`px-4 py-2 text-left text-xs font-medium uppercase tracking-wider ${
                                       false ? 'text-[#BBBECC]' : 'text-gray-500'
-                                    }`}>Tafel</th>
+                                    }`}>{t('orders.table.table')}</th>
                                     <th className={`px-4 py-2 text-left text-xs font-medium uppercase tracking-wider ${
                                       false ? 'text-[#BBBECC]' : 'text-gray-500'
-                                    }`}>Bedrag</th>
+                                    }`}>{t('common.amount')}</th>
                                     <th className={`px-4 py-2 text-left text-xs font-medium uppercase tracking-wider ${
                                       false ? 'text-[#BBBECC]' : 'text-gray-500'
                                     }`}>Status</th>
                                     <th className={`px-4 py-2 text-left text-xs font-medium uppercase tracking-wider ${
                                       false ? 'text-[#BBBECC]' : 'text-gray-500'
-                                    }`}>Tijd</th>
+                                    }`}>{t('common.time')}</th>
                                     <th className={`px-4 py-2 text-left text-xs font-medium uppercase tracking-wider ${
                                       false ? 'text-[#BBBECC]' : 'text-gray-500'
-                                    }`}>Acties</th>
+                                    }`}>{t('common.actions')}</th>
                                   </tr>
                                 </thead>
                                 <tbody className={false ? 'bg-[#1c1e27]' : 'bg-white'}>
@@ -1663,12 +1665,12 @@ const RestaurantDetail: NextPage = () => {
                                         {order.status === 'completed' ? (
                                           <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                             <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5"></div>
-                                            Betaald
+                                            {t('common.completed')}
                                           </span>
                                         ) : order.status === 'in_progress' ? (
                                           <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
                                             <div className="w-1.5 h-1.5 bg-orange-500 rounded-full mr-1.5 animate-pulse"></div>
-                                            In Progress
+                                            {t('common.pending')}
                                           </span>
                                         ) : (
                                           <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
@@ -1690,7 +1692,7 @@ const RestaurantDetail: NextPage = () => {
                                               false ? 'text-[#2BE89A] hover:text-[#4FFFB0]' : 'text-green-600 hover:text-green-700'
                                             }`}
                                           >
-                                            Order
+                                            {t('common.order')}
                                           </Link>
                                           <span className="text-gray-300 text-xs">|</span>
                                           <Link 
@@ -1699,7 +1701,7 @@ const RestaurantDetail: NextPage = () => {
                                               false ? 'text-[#2BE89A] hover:text-[#4FFFB0]' : 'text-green-600 hover:text-green-700'
                                             }`}
                                           >
-                                            Betaling
+                                            {t('common.payment')}
                                           </Link>
                                         </div>
                                       </td>
@@ -1712,12 +1714,12 @@ const RestaurantDetail: NextPage = () => {
                               false ? 'bg-[#0A0B0F] border-t border-[#2a2d3a]' : 'bg-gray-50 border-t border-gray-200'
                             }`}>
                               <Link
-                                href={`/restaurants/${id}/orders`}
+                                href={`/restaurants/${id}/transacties`}
                                 className={`text-xs font-medium ${
                                   false ? 'text-[#2BE89A] hover:text-[#4FFFB0]' : 'text-green-600 hover:text-green-700'
                                 }`}
                               >
-                                Bekijk alle betalingen →
+                                {t('restaurants.profile.viewDetails')} →
                               </Link>
                             </div>
                           </div>
@@ -1859,8 +1861,8 @@ const RestaurantDetail: NextPage = () => {
           >
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Google Reviews</h3>
-                <p className="text-gray-600">Configureer Google Reviews link voor {restaurant?.name}</p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('restaurants.googleReviews.title')}</h3>
+                <p className="text-gray-600">{t('restaurants.googleReviews.subtitle', { name: restaurant?.name })}</p>
               </div>
               <button
                 onClick={() => {
@@ -1877,7 +1879,7 @@ const RestaurantDetail: NextPage = () => {
 
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-600 mb-2">Restaurant</label>
+                <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.googleReviews.restaurant')}</label>
                 <div className="relative">
                   <div className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg pr-12">
                     <span className="text-gray-900 font-medium">{restaurant?.name}</span>
@@ -1887,7 +1889,7 @@ const RestaurantDetail: NextPage = () => {
                   </div>
                   <button 
                     className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600 hover:text-gray-900 transition" 
-                    title="Kopieer restaurant informatie"
+                    title={t('restaurants.googleReviews.copyRestaurantInfo')}
                     onClick={() => {
                       navigator.clipboard.writeText(`${restaurant?.name} ${restaurant?.address?.street} ${restaurant?.address?.postalCode} ${restaurant?.address?.city}`)
                     }}
@@ -1900,20 +1902,20 @@ const RestaurantDetail: NextPage = () => {
               </div>
 
               <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                <h4 className="text-base font-medium text-gray-900 mb-4">Google Review link instellen voor {restaurant?.name}</h4>
+                <h4 className="text-base font-medium text-gray-900 mb-4">{t('restaurants.googleReviews.setupTitle', { name: restaurant?.name })}</h4>
                 
                 <div className="mb-6">
                   <div className="flex items-start mb-3">
                     <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-500 text-black text-sm font-bold mr-3 flex-shrink-0">1</span>
                     <div className="flex-1">
-                      <p className="text-sm text-gray-900 font-medium mb-2">Zoek {restaurant?.name} op Google</p>
+                      <p className="text-sm text-gray-900 font-medium mb-2">{t('restaurants.googleReviews.step1Title', { name: restaurant?.name })}</p>
                       <a 
                         href="https://developers.google.com/maps/documentation/places/web-service/place-id" 
                         target="_blank" 
                         rel="noopener noreferrer" 
                         className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black text-sm font-medium rounded-lg hover:opacity-90 transition"
                       >
-                        Open Google Place ID Finder
+                        {t('restaurants.googleReviews.openPlaceIdFinder')}
                         <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                         </svg>
@@ -1926,8 +1928,8 @@ const RestaurantDetail: NextPage = () => {
                   <div className="flex items-start">
                     <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-500 text-black text-sm font-bold mr-3 flex-shrink-0">2</span>
                     <div className="flex-1">
-                      <p className="text-sm text-gray-900 font-medium mb-1">Zoek onder "Find the ID of a particular place"</p>
-                      <p className="text-xs text-gray-600">Typ "{restaurant?.name}" en selecteer het juiste resultaat</p>
+                      <p className="text-sm text-gray-900 font-medium mb-1">{t('restaurants.googleReviews.step2Title')}</p>
+                      <p className="text-xs text-gray-600">{t('restaurants.googleReviews.step2Description', { name: restaurant?.name })}</p>
                     </div>
                   </div>
                 </div>
@@ -1936,8 +1938,8 @@ const RestaurantDetail: NextPage = () => {
                   <div className="flex items-start">
                     <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-500 text-black text-sm font-bold mr-3 flex-shrink-0">3</span>
                     <div className="flex-1">
-                      <p className="text-sm text-gray-900 font-medium mb-1">Kopieer de Place ID</p>
-                      <p className="text-xs text-gray-600">Deze verschijnt onder de kaart (bijv: ChIJN1t_tDeuEmsRU...)</p>
+                      <p className="text-sm text-gray-900 font-medium mb-1">{t('restaurants.googleReviews.step3Title')}</p>
+                      <p className="text-xs text-gray-600">{t('restaurants.googleReviews.step3Description')}</p>
                     </div>
                   </div>
                 </div>
@@ -1946,26 +1948,26 @@ const RestaurantDetail: NextPage = () => {
                   <div className="flex items-start">
                     <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-500 text-black text-sm font-bold mr-3 flex-shrink-0">4</span>
                     <div className="flex-1">
-                      <p className="text-sm text-gray-900 font-medium mb-1">Plak de Place ID hieronder</p>
-                      <p className="text-xs text-gray-600">Vervang alleen "PLACE_ID" met de gekopieerde ID van {restaurant?.name}</p>
+                      <p className="text-sm text-gray-900 font-medium mb-1">{t('restaurants.googleReviews.step4Title')}</p>
+                      <p className="text-xs text-gray-600">{t('restaurants.googleReviews.step4Description', { name: restaurant?.name })}</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-600 mb-2">Google Review Link</label>
+                <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.googleReviews.googleReviewLink')}</label>
                 <div className="flex items-center bg-white border border-gray-200 rounded-lg focus-within:ring-2 focus-within:ring-[#2BE89A] focus-within:border-transparent">
                   <span className="text-gray-600 font-mono text-sm pl-4 pr-0 whitespace-nowrap">https://search.google.com/local/writereview?placeid=</span>
                   <input 
                     type="text" 
-                    placeholder="PLACE_ID" 
+                    placeholder={t('restaurants.googleReviews.placeIdPlaceholder')} 
                     className="flex-1 bg-transparent py-3 pr-4 pl-0 text-gray-900 font-mono text-sm placeholder-gray-400 focus:outline-none" 
                     value={googleReviewLink}
                     onChange={(e) => setGoogleReviewLink(e.target.value)}
                   />
                 </div>
-                <p className="text-xs text-gray-600 mt-2">Het restaurant kan dit later altijd wijzigen</p>
+                <p className="text-xs text-gray-600 mt-2">{t('restaurants.googleReviews.canChangeLabel')}</p>
               </div>
 
               <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
@@ -1976,7 +1978,7 @@ const RestaurantDetail: NextPage = () => {
                   }}
                   className="px-6 py-3 bg-white border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition"
                 >
-                  Annuleren
+                  {t('restaurants.googleReviews.cancel')}
                 </button>
                 <button
                   onClick={() => {
@@ -1987,7 +1989,7 @@ const RestaurantDetail: NextPage = () => {
                   }}
                   className="px-6 py-3 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black font-semibold rounded-lg hover:opacity-90 transition"
                 >
-                  Link Opslaan
+                  {t('restaurants.googleReviews.saveLink')}
                 </button>
               </div>
             </div>
@@ -2007,8 +2009,8 @@ const RestaurantDetail: NextPage = () => {
           >
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Stap 3: POS Systeem Koppeling</h3>
-                <p className="text-gray-600">Configureer het kassasysteem van {restaurant?.name} voor automatische synchronisatie</p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('restaurants.posModal.title')}</h3>
+                <p className="text-gray-600">{t('restaurants.posModal.subtitle', { name: restaurant?.name })}</p>
               </div>
               <WifiIcon className="h-12 w-12 text-gray-600 opacity-20" />
             </div>
@@ -2017,7 +2019,7 @@ const RestaurantDetail: NextPage = () => {
               {/* Restaurant (disabled) */}
               <div className="opacity-50 cursor-not-allowed">
                 <label className="block text-sm font-medium text-gray-600 mb-2">
-                  Restaurant <span className="text-red-500">*</span>
+                  {t('restaurants.posModal.restaurant')} <span className="text-red-500">*</span>
                 </label>
                 <div className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg">
                   <span className="text-gray-900 font-medium">{restaurant?.name}</span>
@@ -2028,7 +2030,7 @@ const RestaurantDetail: NextPage = () => {
               {/* POS System */}
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-2">
-                  POS Systeem <span className="text-red-500">*</span>
+                  {t('restaurants.posModal.posSystem')} <span className="text-red-500">*</span>
                 </label>
                 <select 
                   className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
@@ -2036,11 +2038,11 @@ const RestaurantDetail: NextPage = () => {
                   onChange={(e) => setPosFormData({...posFormData, posSystem: e.target.value})}
                   required
                 >
-                  <option value="">Selecteer het POS systeem van het restaurant</option>
-                  <option value="untill">Untill</option>
-                  <option value="lightspeed">Lightspeed</option>
-                  <option value="epos">EPOS Now</option>
-                  <option value="other">Other</option>
+                  <option value="">{t('restaurants.posModal.selectPosPlaceholder')}</option>
+                  <option value="untill">{t('restaurants.posModal.providers.untill')}</option>
+                  <option value="lightspeed">{t('restaurants.posModal.providers.lightspeed')}</option>
+                  <option value="epos">{t('restaurants.posModal.providers.epos')}</option>
+                  <option value="other">{t('restaurants.posModal.providers.other')}</option>
                 </select>
               </div>
 
@@ -2048,12 +2050,12 @@ const RestaurantDetail: NextPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-600 mb-2">
-                    POS Gebruikersnaam <span className="text-red-500">*</span>
+                    {t('restaurants.posModal.posUsername')} <span className="text-red-500">*</span>
                   </label>
                   <input 
                     type="text" 
                     className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    placeholder="POS account gebruikersnaam"
+                    placeholder={t('restaurants.posModal.posUsernamePlaceholder')}
                     value={posFormData.username}
                     onChange={(e) => setPosFormData({...posFormData, username: e.target.value})}
                     required
@@ -2061,12 +2063,12 @@ const RestaurantDetail: NextPage = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-600 mb-2">
-                    POS Wachtwoord <span className="text-red-500">*</span>
+                    {t('restaurants.posModal.posPassword')} <span className="text-red-500">*</span>
                   </label>
                   <input 
                     type="password" 
                     className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    placeholder="POS account wachtwoord"
+                    placeholder={t('restaurants.posModal.posPasswordPlaceholder')}
                     value={posFormData.password}
                     onChange={(e) => setPosFormData({...posFormData, password: e.target.value})}
                     required
@@ -2077,11 +2079,11 @@ const RestaurantDetail: NextPage = () => {
               {/* API URL */}
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-2">
-                  API URL <span className="text-red-500">*</span>
+                  {t('restaurants.posModal.apiUrl')} <span className="text-red-500">*</span>
                 </label>
                 <input 
                   type="text" 
-                  placeholder="https://restaurant-pos-server.com"
+                  placeholder={t('restaurants.posModal.apiUrlPlaceholder')}
                   className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                   value={posFormData.apiUrl}
                   onChange={(e) => setPosFormData({...posFormData, apiUrl: e.target.value})}
@@ -2091,16 +2093,16 @@ const RestaurantDetail: NextPage = () => {
 
               {/* Environment */}
               <div>
-                <label className="block text-sm font-medium text-gray-600 mb-2">Omgeving</label>
+                <label className="block text-sm font-medium text-gray-600 mb-2">{t('restaurants.posModal.environment')}</label>
                 <select 
                   className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                   value={posFormData.environment}
                   onChange={(e) => setPosFormData({...posFormData, environment: e.target.value})}
                 >
-                  <option value="production">Productie</option>
-                  <option value="staging">Staging</option>
-                  <option value="development">Development</option>
-                  <option value="test">Test</option>
+                  <option value="production">{t('restaurants.posModal.production')}</option>
+                  <option value="staging">{t('restaurants.posModal.staging')}</option>
+                  <option value="development">{t('restaurants.posModal.development')}</option>
+                  <option value="test">{t('restaurants.posModal.test')}</option>
                 </select>
               </div>
 
@@ -2116,8 +2118,8 @@ const RestaurantDetail: NextPage = () => {
                   />
                 </div>
                 <div className="ml-3">
-                  <label htmlFor="is-active" className="text-sm font-medium text-gray-900">Activeren</label>
-                  <p className="text-sm text-gray-600">Schakel deze POS integratie in voor {restaurant?.name}</p>
+                  <label htmlFor="is-active" className="text-sm font-medium text-gray-900">{t('restaurants.posModal.activate')}</label>
+                  <p className="text-sm text-gray-600">{t('restaurants.posModal.activateDescription', { name: restaurant?.name })}</p>
                 </div>
               </div>
 
@@ -2130,7 +2132,7 @@ const RestaurantDetail: NextPage = () => {
                 }}
                 className="w-full px-6 py-3 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black font-semibold rounded-lg hover:opacity-90 transition-all shadow-lg"
               >
-                Verbinding Testen
+                {t('restaurants.posModal.testConnection')}
               </button>
             </div>
           </div>

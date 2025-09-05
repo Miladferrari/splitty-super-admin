@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Layout from '../../../components/Layout'
 import { useRestaurants } from '../../../contexts/RestaurantsContext'
+import { useTranslation } from '../../../contexts/TranslationContext'
 import {
   ArrowLeftIcon,
   TableCellsIcon,
@@ -21,6 +22,7 @@ const RestaurantTables: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
   const { restaurants } = useRestaurants()
+  const { t } = useTranslation()
   const [searchTerm, setSearchTerm] = useState('')
   const [filterStatus, setFilterStatus] = useState('all')
   
@@ -103,9 +105,9 @@ const RestaurantTables: NextPage = () => {
   const getStatusText = (status) => {
     switch (status) {
       case 'leeg':
-        return 'Leeg'
+        return t('tables.restaurant.filters.empty')
       case 'bezet':
-        return 'Bezet'
+        return t('tables.restaurant.filters.occupied')
       default:
         return status
     }
@@ -187,7 +189,7 @@ const RestaurantTables: NextPage = () => {
                 <li className="flex items-center">
                   <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400" />
                   <span className="ml-1 font-medium text-gray-900" aria-current="page">
-                    Tafel Overzicht
+                    {t('tables.restaurant.breadcrumb')}
                   </span>
                 </li>
               </ol>
@@ -199,31 +201,31 @@ const RestaurantTables: NextPage = () => {
               className="inline-flex items-center px-4 py-2 rounded-lg transition-all text-sm font-medium mb-6 group bg-gray-50 border border-gray-200 text-gray-600 hover:text-gray-700 hover:bg-gray-100 hover:border-green-300"
             >
               <ArrowLeftIcon className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-              Terug naar {restaurant.name}
+              {t('tables.restaurant.backTo', { restaurant: restaurant.name })}
             </Link>
             
             {/* Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
-                <h1 className="text-2xl font-semibold text-gray-900 mb-1">Tafel Overzicht</h1>
-                <p className="text-gray-600">Monitor alle tafels in {restaurant.name}</p>
+                <h1 className="text-2xl font-semibold text-gray-900 mb-1">{t('tables.restaurant.title')}</h1>
+                <p className="text-gray-600">{t('tables.restaurant.subtitle', { restaurant: restaurant.name })}</p>
               </div>
             </div>
 
             {/* Statistics */}
             <div className="grid grid-cols-3 gap-4">
               <div className="p-5 rounded-lg bg-white border border-gray-200">
-                <p className="text-xs text-gray-500">Totaal Tafels</p>
+                <p className="text-xs text-gray-500">{t('tables.restaurant.stats.totalTables')}</p>
                 <p className="text-2xl font-semibold mt-1 text-gray-900">{stats.total}</p>
               </div>
               
               <div className="p-5 rounded-lg bg-white border border-gray-200">
-                <p className="text-xs text-gray-500">Leeg</p>
+                <p className="text-xs text-gray-500">{t('tables.restaurant.stats.empty')}</p>
                 <p className="text-2xl font-semibold mt-1 text-green-600">{stats.leeg}</p>
               </div>
               
               <div className="p-5 rounded-lg bg-white border border-gray-200">
-                <p className="text-xs text-gray-500">Bezet</p>
+                <p className="text-xs text-gray-500">{t('tables.restaurant.stats.occupied')}</p>
                 <p className="text-2xl font-semibold mt-1 text-red-600">{stats.bezet}</p>
               </div>
             </div>
@@ -235,7 +237,7 @@ const RestaurantTables: NextPage = () => {
                   <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500" />
                   <input
                     type="text"
-                    placeholder="Zoek tafel nummer..."
+                    placeholder={t('tables.restaurant.searchPlaceholder')}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full pl-10 pr-4 py-2.5 rounded-lg border transition-colors bg-white border-gray-200 text-gray-900 placeholder-gray-400 focus:border-green-600 focus:outline-none"
@@ -252,7 +254,7 @@ const RestaurantTables: NextPage = () => {
                       : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
                   }`}
                 >
-                  Alle
+                  {t('tables.restaurant.filters.all')}
                 </button>
                 <button
                   onClick={() => setFilterStatus('leeg')}
@@ -262,7 +264,7 @@ const RestaurantTables: NextPage = () => {
                       : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
                   }`}
                 >
-                  Leeg
+                  {t('tables.restaurant.filters.empty')}
                 </button>
                 <button
                   onClick={() => setFilterStatus('bezet')}
@@ -272,7 +274,7 @@ const RestaurantTables: NextPage = () => {
                       : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
                   }`}
                 >
-                  Bezet
+                  {t('tables.restaurant.filters.occupied')}
                 </button>
               </div>
             </div>
@@ -281,8 +283,8 @@ const RestaurantTables: NextPage = () => {
             {filteredTables.filter(t => t.status === 'bezet').length > 0 && (
               <div className="space-y-4">
                 <div>
-                  <h2 className="text-lg font-semibold text-gray-900 mb-1">Bezette Tafels</h2>
-                  <p className="text-sm text-gray-500">Tafels met actieve bestellingen</p>
+                  <h2 className="text-lg font-semibold text-gray-900 mb-1">{t('tables.restaurant.sections.occupied')}</h2>
+                  <p className="text-sm text-gray-500">{t('tables.restaurant.sections.occupiedDesc')}</p>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
                   {filteredTables.filter(t => t.status === 'bezet').map((table) => (
@@ -294,29 +296,29 @@ const RestaurantTables: NextPage = () => {
                     <>
                       <div className="flex justify-between items-start mb-3">
                         <div>
-                          <h4 className="text-lg font-bold text-[#111827]">Tafel {table.number}</h4>
-                          <p className="text-xs text-[#6B7280]">{table.currentOrder.guests || 2} gasten</p>
+                          <h4 className="text-lg font-bold text-[#111827]">{t('tables.restaurant.card.table')} {table.number}</h4>
+                          <p className="text-xs text-[#6B7280]">{table.currentOrder.guests || 2} {t('tables.restaurant.card.guests')}</p>
                         </div>
                         <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-500/20 text-red-400">
-                          Bezet
+                          {t('tables.restaurant.card.occupied')}
                         </span>
                       </div>
                       
                       <div className="space-y-2 mb-3">
                         <div className="flex justify-between text-sm">
-                          <span className="text-[#6B7280]">Order #</span>
+                          <span className="text-[#6B7280]">{t('tables.restaurant.card.order')}</span>
                           <span className="font-medium text-[#111827]">{table.currentOrder.orderId.split('-')[2]}</span>
                         </div>
                         <div className="flex justify-between text-sm">
-                          <span className="text-[#6B7280]">Bedrag</span>
+                          <span className="text-[#6B7280]">{t('tables.restaurant.card.amount')}</span>
                           <span className="font-medium text-[#111827]">€{table.currentOrder.amount}</span>
                         </div>
                         <div className="flex justify-between text-sm">
-                          <span className="text-[#6B7280]">Betaald</span>
+                          <span className="text-[#6B7280]">{t('tables.restaurant.card.paid')}</span>
                           <span className="text-green-500 font-medium">€{(parseFloat(table.currentOrder.amount) * 0.3).toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between text-sm">
-                          <span className="text-[#6B7280]">Duur</span>
+                          <span className="text-[#6B7280]">{t('tables.restaurant.card.duration')}</span>
                           <span className="flex items-center text-[#111827]">
                             <ClockIcon className="h-3 w-3 mr-1" />
                             {calculateDuration(table.currentOrder.startTime)}
@@ -328,7 +330,7 @@ const RestaurantTables: NextPage = () => {
                         href={`/restaurants/${id}/orders/${table.currentOrder.orderId}`}
                         className="w-full inline-flex justify-center items-center px-3 py-2 text-sm font-medium rounded-lg transition bg-gray-50 text-green-600 hover:bg-gray-100 border border-gray-200 mb-2"
                       >
-                        Bekijk Details
+                        {t('tables.restaurant.card.viewDetails')}
                       </Link>
                       
                       <a 
@@ -337,18 +339,18 @@ const RestaurantTables: NextPage = () => {
                         rel="noopener noreferrer"
                         className="w-full inline-flex justify-center items-center px-3 py-2 text-sm font-medium rounded-lg transition bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200"
                       >
-                        Open Link
+                        {t('tables.restaurant.card.openLink')}
                       </a>
                     </>
                   ) : (
                     <>
                       <div className="flex justify-between items-start mb-3">
                         <div>
-                          <h4 className="text-lg font-bold text-[#111827]">Tafel {table.number}</h4>
-                          <p className="text-xs text-[#6B7280]">Beschikbaar</p>
+                          <h4 className="text-lg font-bold text-[#111827]">{t('tables.restaurant.card.table')} {table.number}</h4>
+                          <p className="text-xs text-[#6B7280]">{t('tables.restaurant.card.available')}</p>
                         </div>
                         <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
-                          Leeg
+                          {t('tables.restaurant.card.empty')}
                         </span>
                       </div>
                       
@@ -356,8 +358,8 @@ const RestaurantTables: NextPage = () => {
                         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 mb-3">
                           <CheckCircleIcon className="h-6 w-6 text-gray-400" />
                         </div>
-                        <p className="text-sm text-gray-500">Klaar voor gasten</p>
-                        <p className="text-xs text-gray-400 mt-1">Wacht op nieuwe bestelling</p>
+                        <p className="text-sm text-gray-500">{t('tables.restaurant.card.readyForGuests')}</p>
+                        <p className="text-xs text-gray-400 mt-1">{t('tables.restaurant.card.waitingForOrder')}</p>
                       </div>
                       
                       <a 
@@ -366,7 +368,7 @@ const RestaurantTables: NextPage = () => {
                         rel="noopener noreferrer"
                         className="w-full inline-flex justify-center items-center px-3 py-2 text-sm font-medium rounded-lg transition bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200"
                       >
-                        Open Link
+                        {t('tables.restaurant.card.openLink')}
                       </a>
                     </>
                   )}
@@ -380,8 +382,8 @@ const RestaurantTables: NextPage = () => {
             {filteredTables.filter(t => t.status === 'leeg').length > 0 && (
               <div className="space-y-4">
                 <div>
-                  <h2 className="text-lg font-semibold text-gray-900 mb-1">Lege Tafels</h2>
-                  <p className="text-sm text-gray-500">Beschikbare tafels voor nieuwe gasten</p>
+                  <h2 className="text-lg font-semibold text-gray-900 mb-1">{t('tables.restaurant.sections.empty')}</h2>
+                  <p className="text-sm text-gray-500">{t('tables.restaurant.sections.emptyDesc')}</p>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
                   {filteredTables.filter(t => t.status === 'leeg').map((table) => (
@@ -391,11 +393,11 @@ const RestaurantTables: NextPage = () => {
                     >
                       <div className="flex justify-between items-start mb-3">
                         <div>
-                          <h4 className="text-lg font-bold text-[#111827]">Tafel {table.number}</h4>
-                          <p className="text-xs text-[#6B7280]">Beschikbaar</p>
+                          <h4 className="text-lg font-bold text-[#111827]">{t('tables.restaurant.card.table')} {table.number}</h4>
+                          <p className="text-xs text-[#6B7280]">{t('tables.restaurant.card.available')}</p>
                         </div>
                         <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
-                          Leeg
+                          {t('tables.restaurant.card.empty')}
                         </span>
                       </div>
                       
@@ -403,8 +405,8 @@ const RestaurantTables: NextPage = () => {
                         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 mb-3">
                           <CheckCircleIcon className="h-6 w-6 text-gray-400" />
                         </div>
-                        <p className="text-sm text-gray-500">Klaar voor gasten</p>
-                        <p className="text-xs text-gray-400 mt-1">Wacht op nieuwe bestelling</p>
+                        <p className="text-sm text-gray-500">{t('tables.restaurant.card.readyForGuests')}</p>
+                        <p className="text-xs text-gray-400 mt-1">{t('tables.restaurant.card.waitingForOrder')}</p>
                       </div>
                       
                       <a 
@@ -413,7 +415,7 @@ const RestaurantTables: NextPage = () => {
                         rel="noopener noreferrer"
                         className="w-full inline-flex justify-center items-center px-3 py-2 text-sm font-medium rounded-lg transition bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200"
                       >
-                        Open Link
+                        {t('tables.restaurant.card.openLink')}
                       </a>
                     </div>
                   ))}
@@ -424,8 +426,8 @@ const RestaurantTables: NextPage = () => {
             {filteredTables.length === 0 && (
               <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
                 <TableCellsIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Geen tafels gevonden</h3>
-                <p className="text-gray-600">Probeer je zoekopdracht aan te passen</p>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">{t('tables.emptyState.noTables')}</h3>
+                <p className="text-gray-600">{t('tables.emptyState.adjustSearch')}</p>
               </div>
             )}
           </div>

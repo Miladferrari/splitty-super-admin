@@ -1,6 +1,7 @@
 import React, { useState, ReactNode } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { useTranslation } from '../contexts/TranslationContext'
 import {
   UserGroupIcon,
   CreditCardIcon,
@@ -38,32 +39,32 @@ type StepStatus = 'completed' | 'current' | 'available' | 'locked'
 const OnboardingSteps: OnboardingStep[] = [
   {
     id: 1,
-    name: 'Personeel',
-    description: 'Restaurant gebruikers toevoegen',
+    name: 'personnel',
+    description: 'personnel',
     icon: UserGroupIcon,
   },
   {
     id: 2,
-    name: 'Stripe',
-    description: 'Betaalaccount koppelen',
+    name: 'stripe',
+    description: 'stripe',
     icon: CreditCardIcon,
   },
   {
     id: 3,
-    name: 'POS API',
-    description: 'Kassasysteem integreren',
+    name: 'posApi',
+    description: 'posApi',
     icon: WifiIcon,
   },
   {
     id: 4,
-    name: 'QR houders',
-    description: 'Tafel QR codes configureren',
+    name: 'qrHolders',
+    description: 'qrHolders',
     icon: QrCodeIcon,
   },
   {
     id: 5,
-    name: 'Google Reviews',
-    description: 'Review link toevoegen',
+    name: 'googleReviews',
+    description: 'googleReviews',
     icon: StarIcon,
   }
 ]
@@ -76,6 +77,7 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
   children 
 }) => {
   const router = useRouter()
+  const { t } = useTranslation('common')
   const { deleteRestaurant } = useRestaurants()
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false)
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false)
@@ -144,7 +146,7 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
             </button>
             <div>
               <h1 className="text-lg font-semibold text-gray-900">{restaurant?.name} Onboarding</h1>
-              <p className="text-sm text-gray-600">Stap {currentStep} van 4</p>
+              <p className="text-sm text-gray-600">{t('restaurants.onboarding.step')} {currentStep} {t('restaurants.onboarding.of')} 4</p>
             </div>
           </div>
         </div>
@@ -161,11 +163,11 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
                 className="inline-flex items-center px-4 py-2 rounded-lg transition-all text-sm font-medium mb-4 group bg-gray-50 border border-gray-200 text-gray-600 hover:text-gray-700 hover:bg-gray-100 hover:border-green-300"
               >
                 <ArrowLeftIcon className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-                Terug naar restaurants
+                {t('restaurants.onboarding.backToRestaurants')}
               </Link>
               <div>
                 <h2 className="text-xl font-bold text-gray-900">{restaurant?.name}</h2>
-                <p className="text-sm text-gray-600">Restaurant Onboarding</p>
+                <p className="text-sm text-gray-600">{t('restaurants.onboarding.restaurantOnboarding')}</p>
               </div>
             </div>
 
@@ -174,7 +176,7 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
               <div className="flex items-center justify-between mb-3">
                 <span className="text-sm font-semibold text-gray-900 flex items-center">
                   <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
-                  Voortgang
+                  {t('restaurants.onboarding.progress')}
                 </span>
                 <span className="text-xs font-medium text-green-600">
                   {completedSteps.length}/5
@@ -242,7 +244,7 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
                                 ? 'text-gray-900' 
                                 : 'text-gray-600'
                             }`}>
-                              {step.name}
+                              {t(`restaurants.onboarding.sidebar.steps.${step.name}.name`)}
                             </h3>
                             <div className={`w-2 h-2 rounded-full ${
                               status === 'completed'
@@ -254,7 +256,7 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
                                 : 'bg-gray-300'
                             }`} />
                           </div>
-                          <p className="text-sm mt-1 text-gray-600">{step.description}</p>
+                          <p className="text-sm mt-1 text-gray-600">{t(`restaurants.onboarding.sidebar.steps.${step.description}.description`)}</p>
                         </div>
                       </div>
                     </button>
@@ -266,7 +268,7 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
                   <div className="flex items-center">
                     <div className="flex-1 border-t border-gray-200"></div>
                     <span className="px-3 text-xs font-medium rounded-full text-yellow-600 bg-yellow-50">
-                      Kun je ook later doen
+                      {t('restaurants.onboarding.sidebar.optionalLater')}
                     </span>
                     <div className="flex-1 border-t border-gray-200"></div>
                   </div>
@@ -321,7 +323,7 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
                                 ? 'text-gray-900' 
                                 : 'text-gray-600'
                             }`}>
-                              {step.name}
+                              {t(`restaurants.onboarding.sidebar.steps.${step.name}.name`)}
                             </h3>
                             <div className={`w-2 h-2 rounded-full ${
                               status === 'completed'
@@ -333,7 +335,7 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
                                 : 'bg-gray-300'
                             }`} />
                           </div>
-                          <p className="text-sm mt-1 text-gray-600">{step.description}</p>
+                          <p className="text-sm mt-1 text-gray-600">{t(`restaurants.onboarding.sidebar.steps.${step.description}.description`)}</p>
                         </div>
                       </div>
                     </button>
@@ -352,15 +354,15 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-sm font-semibold mb-1 text-gray-900">Onboarding handleiding</h4>
+                    <h4 className="text-sm font-semibold mb-1 text-gray-900">{t('restaurants.onboarding.sidebar.guide.title')}</h4>
                     <p className="text-xs mb-3 text-gray-600">
-                      Vergeten hoe onboarding werkt? Bekijk de stap-voor-stap guide.
+                      {t('restaurants.onboarding.sidebar.guide.description')}
                     </p>
                     <Link
                       href="/knowledge-base#restaurant-onboarding"
                       className="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black text-xs font-medium rounded-lg hover:opacity-90 transition-all group"
                     >
-                      Bekijk handleiding
+                      {t('restaurants.onboarding.sidebar.guide.viewGuide')}
                       <svg className="h-3 w-3 ml-1.5 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                       </svg>
@@ -376,7 +378,7 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
                   className="w-full p-2.5 text-xs font-medium rounded-lg transition-colors border flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 border-red-200"
                 >
                   <TrashIcon className="h-4 w-4 mr-2" />
-                  Restaurant Verwijderen
+                  {t('restaurants.onboarding.sidebar.deleteRestaurant')}
                 </button>
               )}
             </div>
@@ -390,7 +392,7 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
             <div className="relative w-80 h-full overflow-y-auto bg-white">
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-bold text-gray-900">Onboarding Steps</h2>
+                  <h2 className="text-xl font-bold text-gray-900">{t('restaurants.onboarding.sidebar.mobileTitle')}</h2>
                   <button
                     onClick={() => setIsMobileSidebarOpen(false)}
                     className="p-2 rounded-lg transition bg-gray-50 text-gray-600 hover:text-gray-700"
@@ -402,7 +404,7 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
                 {/* Progress Overview */}
                 <div className="mb-6 rounded-lg p-4 border bg-gray-50 border-gray-200">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-600">Voortgang</span>
+                    <span className="text-sm font-medium text-gray-600">{t('restaurants.onboarding.progress')}</span>
                     <span className="text-xs font-medium text-green-600">
                       {completedSteps.length}/5
                     </span>
@@ -461,9 +463,9 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
                                 ? 'text-gray-900' 
                                 : 'text-gray-600'
                             }`}>
-                              {step.name}
+                              {t(`restaurants.onboarding.sidebar.steps.${step.name}.name`)}
                             </h3>
-                            <p className="text-sm mt-1 text-gray-600">{step.description}</p>
+                            <p className="text-sm mt-1 text-gray-600">{t(`restaurants.onboarding.sidebar.steps.${step.description}.description`)}</p>
                           </div>
                         </div>
                       </button>
