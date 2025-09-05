@@ -17,7 +17,6 @@ import {
   ChevronDownIcon,
   ArrowRightOnRectangleIcon,
   ChevronRightIcon,
-  BookOpenIcon,
   GlobeAltIcon,
   ArrowsRightLeftIcon,
 } from '@heroicons/react/24/outline'
@@ -138,7 +137,6 @@ const Layout: React.FC<LayoutProps> = ({ children }): React.ReactElement => {
     { name: t('sidebar.menu.allSplittys'), href: '/orders', icon: ArrowsRightLeftIcon, roles: ['ceo', 'admin', 'account_manager', 'support'] },
     { name: t('sidebar.menu.testOrder'), href: '/test-order', icon: BeakerIcon, roles: ['ceo', 'admin', 'developer'] },
     { name: t('sidebar.menu.splittyTeam'), href: '/users', icon: UsersIcon, roles: ['ceo', 'admin'] },
-    { name: t('sidebar.menu.knowledgeBase'), href: '/knowledge-base', icon: BookOpenIcon, roles: ['ceo', 'admin', 'account_manager', 'support', 'developer'] },
     { name: t('sidebar.menu.settings'), href: '/settings', icon: Cog6ToothIcon, roles: ['ceo', 'admin', 'account_manager', 'support', 'developer'] },
   ], [language, t])
   const router = useRouter()
