@@ -14,6 +14,7 @@ import {
   BuildingStorefrontIcon,
   TrashIcon,
   RocketLaunchIcon,
+  ChatBubbleLeftRightIcon,
 } from '@heroicons/react/24/outline'
 import RestaurantDeleteModal from './RestaurantDeleteModal'
 import { useRestaurants } from '../contexts/RestaurantsContext'
@@ -67,6 +68,12 @@ const OnboardingSteps: OnboardingStep[] = [
     name: 'googleReviews',
     description: 'googleReviews',
     icon: StarIcon,
+  },
+  {
+    id: 6,
+    name: 'telegram',
+    description: 'telegram',
+    icon: ChatBubbleLeftRightIcon,
   }
 ]
 

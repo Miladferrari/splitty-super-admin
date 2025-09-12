@@ -579,6 +579,10 @@
           "googleReviews": {
             "name": "Google Reviews",
             "description": "Review link toevoegen"
+          },
+          "telegram": {
+            "name": "Telegram",
+            "description": "Betalingsnotificaties"
           }
         },
         "optionalLater": "Kun je ook later doen",
@@ -767,6 +771,28 @@
           "placeIdPlaceholder": "PLACE_ID",
           "canChangeLabel": "Het restaurant kan dit later altijd wijzigen",
           "successMessage": "Review link toegevoegd! Klanten van {{restaurantName}} ontvangen na betaling een review verzoek"
+        },
+        "telegram": {
+          "title": "Stap 6: Telegram Notificaties",
+          "subtitle": "Stel betalingsnotificaties in voor {{restaurantName}}",
+          "step1": {
+            "title": "Verifieer Restaurant Naam",
+            "description": "Typ de restaurantnaam ter bevestiging",
+            "nameMatches": "Naam komt overeen!"
+          },
+          "step2": {
+            "title": "Maak Telegram Groep",
+            "description": "We maken een speciale notificatiegroep voor dit restaurant",
+            "createButton": "Maak Telegram Groep",
+            "creating": "Groep aanmaken...",
+            "created": "GROEP AANGEMAAKT!"
+          },
+          "step3": {
+            "title": "Word Lid & Deel Link",
+            "description": "Word lid van de groep en deel de uitnodigingslink met het restaurantpersoneel",
+            "joinButton": "Word Lid van Telegram Groep"
+          },
+          "successMessage": "Telegram notificaties geconfigureerd! Betalingsnotificaties voor {{restaurantName}} worden naar deze groep gestuurd"
         },
         "navigation": {
           "previous": "Vorige",

@@ -579,6 +579,10 @@
           "googleReviews": {
             "name": "Google Reviews",
             "description": "Add review link"
+          },
+          "telegram": {
+            "name": "Telegram",
+            "description": "Payment notifications"
           }
         },
         "optionalLater": "You can also do this later",
@@ -767,6 +771,28 @@
           "placeIdPlaceholder": "PLACE_ID",
           "canChangeLabel": "The restaurant can always change this later",
           "successMessage": "Review link added! Customers of {{restaurantName}} will receive a review request after payment"
+        },
+        "telegram": {
+          "title": "Step 6: Telegram Notifications",
+          "subtitle": "Set up payment notifications for {{restaurantName}}",
+          "step1": {
+            "title": "Verify Restaurant Name",
+            "description": "Type the restaurant name to confirm",
+            "nameMatches": "Name matches!"
+          },
+          "step2": {
+            "title": "Create Telegram Group",
+            "description": "We'll create a dedicated notification group for this restaurant",
+            "createButton": "Create Telegram Group",
+            "creating": "Creating group...",
+            "created": "GROUP CREATED!"
+          },
+          "step3": {
+            "title": "Join Group & Share Link",
+            "description": "Join the group and share the invite link with restaurant staff",
+            "joinButton": "Join Telegram Group"
+          },
+          "successMessage": "Telegram notifications configured! Payment notifications for {{restaurantName}} will be sent to this group"
         },
         "navigation": {
           "previous": "Previous",

@@ -60,6 +60,13 @@ const RestaurantOnboarding: NextPage = () => {
     placeId: '',
     isConfigured: false 
   })
+  const [telegramData, setTelegramData] = useState({
+    restaurantName: '',
+    groupCreated: false,
+    groupLink: '',
+    isCreating: false,
+    isConfigured: false
+  })
   const [qrStandData, setQrStandData] = useState({
     selectedDesign: '',
     tableCount: '',
@@ -129,6 +136,9 @@ const RestaurantOnboarding: NextPage = () => {
             if (parsed.completedSteps.includes(5)) {
               validCompletedSteps.push(5);
             }
+            if (parsed.completedSteps.includes(6)) {
+              validCompletedSteps.push(6);
+            }
             
             setCompletedSteps(validCompletedSteps);
           }
@@ -145,6 +155,7 @@ const RestaurantOnboarding: NextPage = () => {
             }
             setGoogleReviewData(parsed.googleReviewData)
           }
+          if (parsed.telegramData) setTelegramData(parsed.telegramData)
           if (parsed.qrStandData) {
             // Ensure tableSections exists for backwards compatibility
             if (!parsed.qrStandData.tableSections) {
@@ -223,6 +234,7 @@ const RestaurantOnboarding: NextPage = () => {
       stripeData: updatedData.stripeData || stripeData,
       posData: updatedData.posData || posData,
       googleReviewData: updatedData.googleReviewData || googleReviewData,
+      telegramData: updatedData.telegramData || telegramData,
       qrStandData: updatedData.qrStandData || qrStandData,
       completedSteps: updatedData.completedSteps || completedSteps,
       currentStep: updatedData.currentStep || currentStep,
@@ -374,7 +386,7 @@ const RestaurantOnboarding: NextPage = () => {
     // For now, just navigate to next step without marking as complete
     // Completion logic will be added later when API connections are implemented
     
-    if (currentStep < 5) {
+    if (currentStep < 6) {
       const nextStep = currentStep + 1;
       setCurrentStep(nextStep);
       
@@ -386,9 +398,10 @@ const RestaurantOnboarding: NextPage = () => {
         stripeData,
         posData,
         googleReviewData,
+        telegramData,
         qrStandData
       });
-    } else if (currentStep === 5) {
+    } else if (currentStep === 6) {
       // Complete onboarding - this is the final step
       updateRestaurant(id, { 
         isOnboarded: true,
@@ -1572,6 +1585,176 @@ const RestaurantOnboarding: NextPage = () => {
           </div>
         )
 
+      case 6:
+        return (
+          <div className="space-y-6">
+            {/* Main Content Card */}
+            <div className="bg-white rounded-lg p-6 border border-gray-200">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-1">{t('restaurants.onboarding.steps.telegram.title')}</h3>
+                  <p className="text-sm text-gray-500">
+                    {t('restaurants.onboarding.steps.telegram.subtitle', { restaurantName: restaurant?.name })}
+                  </p>
+                </div>
+                <div className="p-3 bg-gray-50 rounded-lg">
+                  <svg className="h-6 w-6 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.56c-.21 2.2-1.11 7.53-1.57 10-.2 1.04-.59 1.39-.96 1.42-.82.06-1.44-.54-2.24-.98-1.24-.68-1.94-1.1-3.14-1.77-1.39-.77-.49-1.19.3-1.88.21-.18 3.85-3.53 3.92-3.83.01-.04.01-.18-.07-.26-.09-.07-.22-.05-.31-.03-.13.03-2.2 1.4-6.2 4.11-.59.4-1.12.6-1.6.59-.53-.01-1.54-.3-2.29-.54-.92-.3-1.65-.46-1.59-.97.03-.27.4-.54 1.12-.83 4.38-1.91 7.3-3.17 8.77-3.78C15.84 9.57 16.34 9.4 16.73 9.4c.09 0 .29.02.42.12.11.08.14.2.16.28-.01.05.01.12 0 .24z"/>
+                  </svg>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                {/* Step 1: Restaurant Name Check */}
+                <div className="bg-gray-50 rounded-lg p-5 border border-gray-200">
+                  <div className="flex items-start mb-4">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#2BE89A] text-black text-xs font-semibold mr-3 flex-shrink-0">1</span>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-900 mb-1">{t('restaurants.onboarding.steps.telegram.step1.title')}</p>
+                      <p className="text-xs text-gray-600">{t('restaurants.onboarding.steps.telegram.step1.description')}</p>
+                    </div>
+                  </div>
+                  <input
+                    type="text"
+                    value={telegramData.restaurantName}
+                    onChange={(e) => setTelegramData({...telegramData, restaurantName: e.target.value})}
+                    placeholder={restaurant?.name}
+                    className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:border-[#2BE89A] focus:ring-1 focus:ring-[#2BE89A] transition-colors"
+                  />
+                  {telegramData.restaurantName && telegramData.restaurantName.toLowerCase() === restaurant?.name?.toLowerCase() && (
+                    <div className="mt-2 flex items-center text-xs text-green-600">
+                      <CheckCircleIcon className="h-4 w-4 mr-1" />
+                      {t('restaurants.onboarding.steps.telegram.step1.nameMatches')}
+                    </div>
+                  )}
+                </div>
+
+                {/* Step 2: Create Telegram Group */}
+                <div className="bg-gray-50 rounded-lg p-5 border border-gray-200">
+                  <div className="flex items-start mb-4">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#2BE89A] text-black text-xs font-semibold mr-3 flex-shrink-0">2</span>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-900 mb-1">{t('restaurants.onboarding.steps.telegram.step2.title')}</p>
+                      <p className="text-xs text-gray-600">{t('restaurants.onboarding.steps.telegram.step2.description')}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      if (telegramData.restaurantName && !telegramData.groupCreated && !telegramData.isCreating) {
+                        setTelegramData({...telegramData, isCreating: true});
+                        
+                        // Simulate group creation
+                        setTimeout(() => {
+                          const groupLink = `https://t.me/+${Math.random().toString(36).substring(2, 15)}`;
+                          setTelegramData({
+                            ...telegramData,
+                            isCreating: false,
+                            groupCreated: true,
+                            groupLink: groupLink,
+                            isConfigured: true
+                          });
+                          
+                          // Save progress
+                          saveProgress({
+                            telegramData: {
+                              ...telegramData,
+                              isCreating: false,
+                              groupCreated: true,
+                              groupLink: groupLink,
+                              isConfigured: true
+                            }
+                          });
+                        }, 2000);
+                      }
+                    }}
+                    disabled={!telegramData.restaurantName || telegramData.groupCreated || telegramData.isCreating}
+                    className={`w-full px-4 py-2.5 font-medium rounded-lg transition-all flex items-center justify-center ${
+                      telegramData.groupCreated 
+                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                        : telegramData.isCreating
+                        ? 'bg-[#2BE89A]/20 text-gray-600 cursor-wait'
+                        : !telegramData.restaurantName
+                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                        : 'bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black hover:opacity-90'
+                    }`}
+                  >
+                    {telegramData.isCreating ? (
+                      <>
+                        <svg className="animate-spin h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        {t('restaurants.onboarding.steps.telegram.step2.creating')}
+                      </>
+                    ) : telegramData.groupCreated ? (
+                      <>
+                        <CheckCircleIcon className="h-4 w-4 mr-2" />
+                        {t('restaurants.onboarding.steps.telegram.step2.created')}
+                      </>
+                    ) : (
+                      t('restaurants.onboarding.steps.telegram.step2.createButton')
+                    )}
+                  </button>
+                </div>
+
+                {/* Step 3: Join Group and Share Link */}
+                {telegramData.groupCreated && (
+                  <div className="bg-gray-50 rounded-lg p-5 border border-gray-200">
+                    <div className="flex items-start mb-4">
+                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#2BE89A] text-black text-xs font-semibold mr-3 flex-shrink-0">3</span>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-gray-900 mb-1">{t('restaurants.onboarding.steps.telegram.step3.title')}</p>
+                        <p className="text-xs text-gray-600">{t('restaurants.onboarding.steps.telegram.step3.description')}</p>
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex items-center bg-white border border-gray-200 rounded-lg px-4 py-3">
+                        <input
+                          type="text"
+                          value={telegramData.groupLink}
+                          readOnly
+                          className="flex-1 bg-transparent text-sm text-gray-900 font-mono outline-none"
+                        />
+                        <button
+                          onClick={() => {
+                            navigator.clipboard.writeText(telegramData.groupLink);
+                            setShowCopiedMessage(true);
+                            setTimeout(() => setShowCopiedMessage(false), 2000);
+                          }}
+                          className="ml-3 p-2 hover:bg-gray-50 rounded-md transition"
+                        >
+                          <svg className="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                          </svg>
+                        </button>
+                      </div>
+                      <button
+                        onClick={() => window.open(telegramData.groupLink, '_blank')}
+                        className="w-full px-4 py-2.5 bg-[#0088cc] text-white font-medium rounded-lg hover:bg-[#0077b5] transition flex items-center justify-center"
+                      >
+                        <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.56c-.21 2.2-1.11 7.53-1.57 10-.2 1.04-.59 1.39-.96 1.42-.82.06-1.44-.54-2.24-.98-1.24-.68-1.94-1.1-3.14-1.77-1.39-.77-.49-1.19.3-1.88.21-.18 3.85-3.53 3.92-3.83.01-.04.01-.18-.07-.26-.09-.07-.22-.05-.31-.03-.13.03-2.2 1.4-6.2 4.11-.59.4-1.12.6-1.6.59-.53-.01-1.54-.3-2.29-.54-.92-.3-1.65-.46-1.59-.97.03-.27.4-.54 1.12-.83 4.38-1.91 7.3-3.17 8.77-3.78C15.84 9.57 16.34 9.4 16.73 9.4c.09 0 .29.02.42.12.11.08.14.2.16.28-.01.05.01.12 0 .24z"/>
+                        </svg>
+                        {t('restaurants.onboarding.steps.telegram.step3.joinButton')}
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Success Message */}
+                {telegramData.isConfigured && (
+                  <div className="bg-[#2BE89A]/5 rounded-lg p-4 border border-[#2BE89A]/20">
+                    <p className="text-sm text-gray-700 flex items-center">
+                      <CheckCircleIcon className="h-5 w-5 text-[#2BE89A] mr-2" />
+                      {t('restaurants.onboarding.steps.telegram.successMessage', { restaurantName: restaurant?.name })}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )
+
       default:
         return null
     }
@@ -1746,7 +1929,7 @@ const RestaurantOnboarding: NextPage = () => {
                     disabled={isLocked || (currentStep === 1 && personnelData.filter(p => p.role === 'manager').length === 0)}
                     className={`px-8 py-3 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black font-semibold rounded-lg hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed group`}
                   >
-                    {currentStep === 5 ? (
+                    {currentStep === 6 ? (
                       <>
                         {t('restaurants.onboarding.steps.navigation.complete')}
                         <CheckCircleIcon className="h-5 w-5 ml-2 inline group-hover:scale-110 transition-transform" />
