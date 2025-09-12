@@ -1,0 +1,1668 @@
+{
+  "sidebar": {
+    "company": "Splitty B.V.",
+    "subtitle": "Super Admin Panel",
+    "collapse": "Collapse",
+    "menu": {
+      "dashboard": "Dashboard",
+      "restaurants": "Restaurants",
+      "allRestaurants": "All Restaurants",
+      "posConnections": "POS Connections",
+      "payouts": "Payouts",
+      "allSplittys": "All Splitty's",
+      "testOrder": "Test Order",
+      "splittyTeam": "Splitty Team",
+      "support": "Support",
+      "knowledgeBase": "Knowledge Base",
+      "settings": "Settings"
+    },
+    "notifications": "Notifications",
+    "language": {
+      "english": "English",
+      "dutch": "Nederlands"
+    },
+    "user": {
+      "role": "CEO & Founder",
+      "accountSettings": "Account Settings",
+      "logout": "Logout",
+      "myProfile": "My Profile"
+    }
+  },
+  "common": {
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "close": "Close",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "loading": "Loading...",
+    "loadingScreen": {
+      "adminPanelLoading": "Your admin panel is loading",
+      "pleaseWait": "Please wait a moment"
+    },
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "info": "Info",
+    "yes": "Yes",
+    "no": "No",
+    "all": "All",
+    "none": "None",
+    "select": "Select",
+    "selected": "Selected",
+    "status": "Status",
+    "actions": "Actions",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "city": "City",
+    "country": "Country",
+    "date": "Date",
+    "time": "Time",
+    "amount": "Amount",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "tax": "Tax",
+    "discount": "Discount",
+    "payment": "Payment",
+    "active": "Active",
+    "inactive": "Inactive",
+    "pending": "Pending",
+    "completed": "Completed",
+    "failed": "Failed",
+    "new": "New",
+    "department": "Department",
+    "hours": "hours",
+    "days": "days",
+    "ago": "ago",
+    "refresh": "Refresh",
+    "export": "Export",
+    "order": "Order"
+  },
+  "restaurants": {
+    "title": "Restaurant Partners",
+    "subtitle": "Manage all your restaurant partners and their performance",
+    "newRestaurant": "New Restaurant",
+    "addNewRestaurant": "Add New Restaurant",
+    "notFound": "Restaurant not found",
+    "backToProfile": "Back to Restaurant Profile",
+    "backToList": "Back to Restaurants",
+    "stats": {
+      "totalPartners": "TOTAL PARTNERS",
+      "setupRequired": "SETUP REQUIRED",
+      "archived": "ARCHIVED"
+    },
+    "tabs": {
+      "all": "All restaurants",
+      "onboarding": "In onboarding",
+      "deleted": "Archived"
+    },
+    "search": "Search restaurants, locations...",
+    "filterByLocation": "Filter by location",
+    "table": {
+      "restaurant": "Restaurant",
+      "location": "Location",
+      "status": "Status",
+      "transactions": "Transactions",
+      "rating": "Rating",
+      "actions": "Actions"
+    },
+    "status": {
+      "active": "Active",
+      "onboarding": "Onboarding",
+      "inactive": "Inactive",
+      "deleted": "Deleted",
+      "archived": "Archived",
+      "setupRequired": "Setup Required",
+      "onboardingIncomplete": "Onboarding Incomplete"
+    },
+    "onboardingProgress": "Onboarding Progress",
+    "steps": {
+      "businessInfo": "Business Info",
+      "posIntegration": "POS Integration",
+      "payments": "Payments",
+      "complete": "Complete"
+    },
+    "deleteModal": {
+      "title": "Permanently delete",
+      "warning": "You are about to permanently delete",
+      "cautionTitle": "⚠️ Warning: This action cannot be undone",
+      "cautionText": "If you delete this restaurant now:",
+      "consequences": [
+        "All restaurant data will be permanently deleted",
+        "All transaction history will be lost",
+        "All user accounts will be deleted",
+        "This action cannot be reversed"
+      ],
+      "confirmLabel": "Type the restaurant name to confirm:",
+      "confirmPlaceholder": "Enter restaurant name",
+      "confirmButton": "Permanently delete",
+      "cancelButton": "Cancel"
+    },
+    "actions": {
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete",
+      "restore": "Restore",
+      "continueOnboarding": "Continue onboarding",
+      "archive": "Archive",
+      "unarchive": "Unarchive",
+      "deleteAction": "Delete"
+    },
+    "emptyState": {
+      "noArchived": "No archived restaurants",
+      "noFound": "No restaurants found",
+      "archivedDescription": "Archived restaurants will appear here",
+      "foundDescription": "Start by adding your first restaurant partner.",
+      "addFirst": "Add Restaurant"
+    },
+    "profile": {
+      "title": "Restaurant Profile",
+      "information": "Restaurant Information",
+      "details": "Details",
+      "contactPerson": "Contact Person",
+      "businessInfo": "Business Information",
+      "technicalConfig": "Technical Configuration",
+      "performance": "Performance",
+      "activeStaff": "Active Staff Members",
+      "manageStaff": "Manage Staff",
+      "editRestaurant": "Edit Restaurant",
+      "viewDetails": "View Details",
+      "posStatus": "POS Status",
+      "stripeStatus": "Stripe Status",
+      "connected": "Connected",
+      "notConnected": "Not Connected",
+      "configure": "Configure",
+      "totalRevenue": "Total Revenue",
+      "totalTransactions": "Total Transactions",
+      "averageOrderValue": "Average Order Value",
+      "rating": "Rating",
+      "thisMonth": "this month",
+      "allTime": "all time",
+      "lastMonth": "Last month",
+      "growth": "growth",
+      "backToProfile": "Back to Restaurant Profile"
+    },
+    "edit": {
+      "title": "Edit Restaurant",
+      "subtitle": "Update restaurant details",
+      "basicInfo": "Basic Information",
+      "contactInfo": "Contact Information",
+      "addressInfo": "Address Information",
+      "generalInfo": "General Information",
+      "restaurantName": "Restaurant Name",
+      "restaurantLogo": "Restaurant Logo",
+      "restaurantBanner": "Restaurant Banner",
+      "namePlaceholder": "E.g. Restaurant Amsterdam",
+      "changeLogo": "Change Logo",
+      "uploadLogo": "Upload Logo",
+      "changeBanner": "Change Banner",
+      "uploadBanner": "Upload Banner",
+      "imageRequirements": "PNG, JPG up to 5MB",
+      "bannerRequirements": "Recommended: 1920x400px, PNG or JPG up to 5MB",
+      "emailPlaceholder": "info@restaurant.com",
+      "streetAndNumber": "Street & Number",
+      "address": "Address",
+      "city": "City",
+      "postalCode": "Postal Code",
+      "country": "Country",
+      "countries": {
+        "netherlands": "Netherlands",
+        "belgium": "Belgium",
+        "germany": "Germany",
+        "france": "France"
+      },
+      "phone": "Phone",
+      "email": "Email",
+      "website": "Website",
+      "contactPerson": "Contact Person",
+      "contactName": "Contact Name",
+      "contactEmail": "Contact Email",
+      "contactPhone": "Contact Phone",
+      "technicalSettings": "Technical Settings",
+      "posSystem": "POS System",
+      "apiEndpoint": "API Endpoint",
+      "apiKey": "API Key",
+      "stripeAccount": "Stripe Account ID",
+      "saveChanges": "Save Changes",
+      "cancel": "Cancel",
+      "saving": "Saving...",
+      "updateSuccess": "Restaurant updated successfully!",
+      "updateError": "Failed to update restaurant",
+      "validation": {
+        "nameRequired": "Restaurant name is required",
+        "emailRequired": "Email is required",
+        "invalidEmail": "Invalid email address",
+        "phoneRequired": "Phone number is required",
+        "streetRequired": "Street is required",
+        "postalCodeRequired": "Postal code is required",
+        "cityRequired": "City is required"
+      }
+    },
+    "staff": {
+      "title": "Staff Management",
+      "subtitle": "Manage staff for {{name}}",
+      "backToRestaurant": "Back to {{name}}",
+      "addStaff": "Add Staff",
+      "searchPlaceholder": "Search by name or email...",
+      "stats": {
+        "total": "Total",
+        "members": "Staff Members",
+        "admins": "Admins",
+        "staff": "Staff",
+        "active": "Active"
+      },
+      "filters": {
+        "allRoles": "All Roles"
+      },
+      "empty": {
+        "title": "No staff yet",
+        "description": "This restaurant hasn't added any staff yet",
+        "addFirst": "Add first staff member"
+      },
+      "table": {
+        "user": "User",
+        "role": "Role",
+        "lastActivity": "Last Activity",
+        "usersFound": "users found"
+      },
+      "roles": {
+        "restaurantAdmin": "Restaurant Admin",
+        "restaurantStaff": "Restaurant Staff",
+        "adminDescription": "Full access and management",
+        "staffDescription": "Limited access"
+      },
+      "permissions": {
+        "admin": {
+          "fullAccess": "Full access to restaurant settings",
+          "manageStaff": "Manage staff and assign roles",
+          "viewAnalytics": "View analytics and reports",
+          "configureIntegrations": "Configure integrations and payments"
+        },
+        "staff": {
+          "viewOrders": "View and manage orders",
+          "updateProfile": "Update own profile",
+          "viewBasicStats": "View basic statistics"
+        }
+      },
+      "modal": {
+        "editTitle": "Edit Staff Member",
+        "editSubtitle": "Edit details for {{name}}",
+        "addTitle": "Restaurant Team",
+        "addSubtitle": "Add new team members to {{name}}",
+        "addNewUser": "Add new user",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Email",
+        "phone": "Phone (optional)",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "passwordPlaceholder": "Minimum 8 characters",
+        "confirmPasswordPlaceholder": "Repeat password",
+        "firstNamePlaceholder": "John",
+        "lastNamePlaceholder": "Doe",
+        "emailPlaceholder": "john@restaurant.com",
+        "phonePlaceholder": "+1 234 567 8900",
+        "role": "Role",
+        "staff": "Staff",
+        "manager": "Manager",
+        "basicAccess": "Basic access",
+        "fullAccess": "Full access",
+        "addUser": "Add User",
+        "tip": "Tip:",
+        "tipMessage": "Add at least one manager. You can always add more users later through user management."
+      }
+    },
+    "new": {
+      "title": "Add New Restaurant",
+      "subtitle": "Onboard a new restaurant partner to Splitty",
+      "steps": {
+        "businessInfo": "Business Information",
+        "contactPerson": "Contact Person",
+        "technicalSetup": "Technical Setup",
+        "review": "Review"
+      },
+      "businessInfo": {
+        "title": "Business Information",
+        "restaurantName": "Restaurant Name",
+        "legalName": "Legal Business Name",
+        "registrationNumber": "Registration Number (KvK)",
+        "vatNumber": "VAT Number",
+        "address": "Street Address",
+        "city": "City",
+        "postalCode": "Postal Code",
+        "country": "Country",
+        "phone": "Business Phone",
+        "email": "Business Email",
+        "website": "Website (optional)",
+        "cuisine": "Cuisine Type",
+        "seatingCapacity": "Seating Capacity"
+      },
+      "contactPerson": {
+        "title": "Contact Person",
+        "description": "Primary contact for this restaurant",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "role": "Role/Title",
+        "email": "Email",
+        "phone": "Phone",
+        "preferredLanguage": "Preferred Language"
+      },
+      "technicalSetup": {
+        "title": "Technical Setup",
+        "posSystem": "POS System",
+        "selectPos": "Select POS System",
+        "apiCredentials": "API Credentials",
+        "apiEndpoint": "API Endpoint",
+        "apiKey": "API Key",
+        "apiSecret": "API Secret (if applicable)",
+        "testConnection": "Test Connection",
+        "connectionSuccess": "Connection successful!",
+        "connectionFailed": "Connection failed. Please check credentials.",
+        "stripeSetup": "Stripe Setup",
+        "stripeAccountId": "Stripe Account ID",
+        "createStripeAccount": "Create Stripe Account",
+        "linkExistingAccount": "Link Existing Account"
+      },
+      "review": {
+        "title": "Review & Confirm",
+        "checkDetails": "Please review all details before creating the restaurant",
+        "editSection": "Edit"
+      },
+      "navigation": {
+        "back": "Back",
+        "next": "Next",
+        "cancel": "Cancel",
+        "previous": "Previous",
+        "create": "Create Restaurant",
+        "creating": "Creating...",
+        "createAndStartOnboarding": "Create & Start Onboarding"
+      },
+      "contactAndFees": {
+        "title": "Contact & Fees",
+        "description": "Set up contact information and payment options",
+        "contactInfo": {
+          "title": "Contact Information",
+          "contactEmail": "Contact Email",
+          "contactPhone": "Contact Phone",
+          "phonePlaceholder": "+31 6 12345678"
+        },
+        "serviceFees": {
+          "title": "Service Fees",
+          "feeType": "Fee Type",
+          "feeAmount": "Fee Amount",
+          "flatFee": "Fixed Amount",
+          "percentageFee": "Percentage"
+        }
+      },
+      "mediaAndBranding": {
+        "title": "Media & Branding",
+        "description": "Upload logo and banner images",
+        "requiredImagesError": "Both images are required to add a restaurant",
+        "logoLabel": "Restaurant Logo",
+        "bannerLabel": "Restaurant Banner",
+        "uploadFile": "Upload file",
+        "dragAndDrop": "or drag and drop",
+        "fileFormats": "PNG, JPG up to 10MB",
+        "nextStepsTitle": "What happens next?",
+        "onlyPngJpgAllowed": "Only PNG, JPG and GIF files are allowed",
+        "fileTooLarge": "File must be smaller than 10MB"
+      },
+      "form": {
+        "subtitle": "Fill in the details to add a restaurant",
+        "basicInfoTitle": "Basic Information",
+        "restaurantNameLabel": "Restaurant Name",
+        "restaurantNamePlaceholder": "e.g. Restaurant Golden Spoon",
+        "addressPlaceholder": "Street Name 123",
+        "cityLabel": "City",
+        "cityPlaceholder": "Amsterdam",
+        "postalCodeLabel": "Postal Code",
+        "postalCodePlaceholder": "1234 AB",
+        "countryLabel": "Country",
+        "countries": {
+          "netherlands": "Netherlands",
+          "belgium": "Belgium",
+          "germany": "Germany",
+          "france": "France"
+        }
+      },
+      "success": {
+        "title": "Restaurant Added Successfully!",
+        "message": "The restaurant has been added to the system. You will be redirected to the onboarding page where you can add staff, connect Stripe and configure the POS system.",
+        "nextSteps": "Next Steps:",
+        "step1": "Complete Stripe onboarding",
+        "step2": "Configure POS integration",
+        "step3": "Add staff members",
+        "step4": "Test the payment flow",
+        "viewRestaurant": "View Restaurant",
+        "addAnother": "Add Another Restaurant"
+      },
+      "contactAndFees": {
+        "title": "Contact & Fees",
+        "description": "Set contact information and payment options",
+        "contactInfo": {
+          "title": "Contact Information",
+          "contactEmail": "Contact Email",
+          "contactPhone": "Contact Phone",
+          "phonePlaceholder": "+31 6 12345678"
+        },
+        "serviceFees": {
+          "title": "Service Fees",
+          "feeType": "Fee Type",
+          "feeAmount": "Fee Amount",
+          "flatFee": "Flat Fee",
+          "percentageFee": "Percentage"
+        }
+      },
+      "mediaAndBranding": {
+        "title": "Media & Branding",
+        "description": "Upload logo and banner images",
+        "logoLabel": "Restaurant Logo",
+        "bannerLabel": "Restaurant Banner",
+        "uploadFile": "Upload file",
+        "dragAndDrop": "or drag and drop",
+        "fileFormats": "PNG, JPG up to 10MB",
+        "onlyPngJpgAllowed": "Only PNG, JPG and GIF files are allowed",
+        "fileTooLarge": "File must be smaller than 10MB",
+        "requiredImagesError": "Both images are required to add a restaurant",
+        "nextStepsTitle": "What happens next?"
+      },
+      "form": {
+        "basicInfoTitle": "Basic Information",
+        "subtitle": "Fill in the details to add a restaurant",
+        "restaurantNameLabel": "Restaurant Name",
+        "restaurantNamePlaceholder": "e.g. Restaurant The Golden Spoon",
+        "addressPlaceholder": "Street 123",
+        "cityLabel": "City",
+        "cityPlaceholder": "Amsterdam",
+        "postalCodeLabel": "Postal Code",
+        "postalCodePlaceholder": "1234 AB",
+        "countryLabel": "Country",
+        "countries": {
+          "netherlands": "Netherlands",
+          "belgium": "Belgium",
+          "germany": "Germany",
+          "france": "France"
+        }
+      },
+      "navigation": {
+        "cancel": "Cancel",
+        "previous": "Previous",
+        "next": "Next",
+        "createAndStartOnboarding": "Create & Start Onboarding"
+      }
+    },
+    "googleReviews": {
+      "title": "Google Reviews",
+      "subtitle": "Configure Google Reviews link for {{name}}",
+      "restaurant": "Restaurant",
+      "copyRestaurantInfo": "Copy restaurant information",
+      "setupTitle": "Set up Google Review link for {{name}}",
+      "step1Title": "Search for {{name}} on Google",
+      "openPlaceIdFinder": "Open Google Place ID Finder",
+      "step2Title": "Search under \"Find the ID of a particular place\"",
+      "step2Description": "Type \"{{name}}\" and select the correct result",
+      "step3Title": "Copy the Place ID",
+      "step3Description": "This appears below the map (e.g.: ChIJN1t_tDeuEmsRU...)",
+      "step4Title": "Paste the Place ID below",
+      "step4Description": "Replace only \"PLACE_ID\" with the copied ID from {{name}}",
+      "googleReviewLink": "Google Review Link",
+      "placeIdPlaceholder": "PLACE_ID",
+      "canChangeLabel": "The restaurant can always change this later",
+      "cancel": "Cancel",
+      "saveLink": "Save Link",
+      "successMessage": "Review link added! Customers of {{name}} will receive a review request after payment."
+    },
+    "posModal": {
+      "title": "Step 3: POS System Connection",
+      "subtitle": "Configure the POS system for {{name}} for automatic synchronization",
+      "restaurant": "Restaurant",
+      "posSystem": "POS System",
+      "selectPosPlaceholder": "Select the restaurant's POS system",
+      "posUsername": "POS Username",
+      "posPassword": "POS Password",
+      "posUsernamePlaceholder": "POS account username",
+      "posPasswordPlaceholder": "POS account password",
+      "apiUrl": "API URL",
+      "apiUrlPlaceholder": "https://restaurant-pos-server.com",
+      "environment": "Environment",
+      "production": "Production",
+      "staging": "Staging",
+      "development": "Development",
+      "test": "Test",
+      "activate": "Activate",
+      "activateDescription": "Enable this POS integration for {{name}}",
+      "testConnection": "Test Connection",
+      "connectionSuccess": "Connection successful! POS is configured.",
+      "fillRequiredFields": "Please fill in all required fields before testing the connection.",
+      "providers": {
+        "untill": "Untill",
+        "lightspeed": "Lightspeed",
+        "epos": "EPOS Now",
+        "other": "Other"
+      }
+    },
+    "onboarding": {
+      "backToRestaurants": "Back to restaurants",
+      "restaurantOnboarding": "Restaurant Onboarding",
+      "progress": "Progress",
+      "step": "Step",
+      "of": "of",
+      "sidebar": {
+        "steps": {
+          "personnel": {
+            "name": "Staff",
+            "description": "Add restaurant users"
+          },
+          "stripe": {
+            "name": "Stripe",
+            "description": "Connect payment account"
+          },
+          "posApi": {
+            "name": "POS API",
+            "description": "Integrate POS system"
+          },
+          "qrHolders": {
+            "name": "QR Holders",
+            "description": "Configure table QR codes"
+          },
+          "googleReviews": {
+            "name": "Google Reviews",
+            "description": "Add review link"
+          }
+        },
+        "optionalLater": "You can also do this later",
+        "guide": {
+          "title": "Onboarding Guide",
+          "description": "Forgot how onboarding works? Check the step-by-step guide.",
+          "viewGuide": "View guide"
+        },
+        "deleteRestaurant": "Delete Restaurant",
+        "mobileTitle": "Onboarding Steps"
+      },
+      "welcome": {
+        "title": "Welcome to Splitty Onboarding!",
+        "subtitle": "Let's get {{restaurantName}} ready for the future of restaurant payments",
+        "features": {
+          "personnel": {
+            "title": "Personnel",
+            "description": "Configure access for the restaurant team"
+          },
+          "payments": {
+            "title": "Payments",
+            "description": "Set up Stripe for the restaurant"
+          },
+          "posSystem": {
+            "title": "POS System",
+            "description": "Connect the POS system"
+          },
+          "reviews": {
+            "title": "Reviews",
+            "description": "Configure customer feedback"
+          },
+          "qrStands": {
+            "title": "QR Stands",
+            "description": "Table QR codes and layout"
+          }
+        },
+        "info": {
+          "estimatedTime": "10-15 minutes",
+          "estimatedTimeDesc": "Estimated time",
+          "autoSaved": "Automatically saved",
+          "autoSavedDesc": "Continue later",
+          "instantActive": "Instantly active",
+          "instantActiveDesc": "After completion"
+        },
+        "startButton": "Let's get started"
+      },
+      "steps": {
+        "personnel": {
+          "title": "Step 1: Restaurant Team",
+          "subtitle": "Add at least one manager to continue",
+          "usersAdded": "{{count}} users added",
+          "addNewUser": "Add new user",
+          "form": {
+            "firstName": "First name",
+            "lastName": "Last name",
+            "email": "Email",
+            "phone": "Phone (optional)",
+            "password": "Password",
+            "confirmPassword": "Confirm Password",
+            "passwordPlaceholder": "Minimum 8 characters",
+            "confirmPasswordPlaceholder": "Repeat password",
+            "firstNamePlaceholder": "John",
+            "lastNamePlaceholder": "Doe",
+            "emailPlaceholder": "john@restaurant.com",
+            "phonePlaceholder": "+1 234 567 8900",
+            "role": "Role",
+            "staff": "Staff",
+            "manager": "Manager",
+            "basicAccess": "Basic access",
+            "fullAccess": "Full access",
+            "addUser": "Add User",
+            "roleLabel": "Role"
+          },
+          "tip": "Tip:",
+          "tipMessage": "Add at least one manager. You can always add more users later through user management.",
+          "addNewUserForm": "Add new user"
+        },
+        "stripe": {
+          "title": "Step 2: Stripe Connect",
+          "subtitle": "Configure payment processing for the restaurant",
+          "connected": "Connected",
+          "restaurant": "Restaurant",
+          "integration": {
+            "title": "Stripe Connect Integration",
+            "description": "Stripe Connect enables the restaurant to securely receive payments. The restaurant manages their own Stripe account and receives payouts directly.",
+            "features": {
+              "secure": "Secure Payments",
+              "secureDesc": "Fully integrated and PCI compliant",
+              "direct": "Direct Payouts",
+              "directDesc": "Money goes directly to restaurant",
+              "dashboard": "Real-time Dashboard",
+              "dashboardDesc": "Track all transactions",
+              "pciCompliant": "PCI Compliant",
+              "dailyPayout": "Daily payout",
+              "realTimeInsight": "Real-time insight"
+            },
+            "connectButton": "Connect with Stripe",
+            "connectDescription": "The restaurant will set up their own Stripe account"
+          },
+          "success": {
+            "title": "Stripe Successfully Connected!",
+            "description": "Payment processing is now configured for {{restaurantName}}",
+            "accountId": "Account ID",
+            "connectedAt": "Connected at",
+            "status": "Status",
+            "active": "Active",
+            "testConnection": "Test Connection",
+            "disconnect": "Disconnect"
+          },
+          "tip": "Tip:",
+          "tipConnected": "Stripe is connected and ready. You can continue to the next step.",
+          "tipNotConnected": "Connect Stripe to enable payment processing for this restaurant."
+        },
+        "pos": {
+          "title": "Step 3: POS System Connection",
+          "subtitle": "Configure the POS system for {{restaurantName}} for automatic synchronization",
+          "restaurant": "Restaurant",
+          "posSystem": "POS System",
+          "selectPos": "Select the restaurant's POS system",
+          "posUsername": "POS Username",
+          "posPassword": "POS Password",
+          "posUsernamePlaceholder": "POS account username",
+          "posPasswordPlaceholder": "POS account password",
+          "apiUrl": "API URL",
+          "apiUrlPlaceholder": "https://restaurant-pos-server.com",
+          "environment": "Environment",
+          "production": "Production",
+          "staging": "Staging",
+          "development": "Development",
+          "test": "Test",
+          "activate": "Activate",
+          "activateDescription": "Enable this POS integration for {{restaurantName}}",
+          "testConnection": "Test Connection"
+        },
+        "qrHolders": {
+          "title": "Step 4: QR holders",
+          "subtitle": "Configure QR stands and table layout for {{restaurantName}}",
+          "selectDesign": "Select QR Stand Design",
+          "tablesPerSection": "Tables per Section",
+          "sections": {
+            "bar": "Bar",
+            "inside": "Inside",
+            "terrace": "Terrace",
+            "lounge": "Lounge"
+          },
+          "totalTables": "Total tables",
+          "totalTablesDesc": "Automatically calculated based on all sections",
+          "floorPlan": {
+            "title": "Floor Plan Upload (Optional)",
+            "uploadText": "Drag files here or click to upload",
+            "fileTypes": "PNG, JPG, PDF - Max 5MB per file - Multiple files allowed",
+            "description": "Upload floor plans, photos or documents of the restaurant (multiple files allowed)"
+          }
+        },
+        "googleReviews": {
+          "title": "Step 5: Google Reviews",
+          "subtitle": "Configure Google Reviews link for {{restaurantName}}",
+          "restaurant": "Restaurant",
+          "copyInfo": "Copy restaurant information",
+          "setupTitle": "Set up Google Review link for {{restaurantName}}",
+          "step1": "Search for {{restaurantName}} on Google",
+          "openFinder": "Open Google Place ID Finder",
+          "step2": "Search under \"Find the ID of a particular place\"",
+          "step2Desc": "Type \"{{restaurantName}}\" and select the correct result",
+          "step3": "Copy the Place ID",
+          "step3Desc": "This appears below the map (e.g.: ChIJN1t_tDeuEmsRU...)",
+          "step4": "Paste the Place ID below",
+          "step4Desc": "Replace only \"PLACE_ID\" with the copied ID from {{restaurantName}}",
+          "reviewLink": "Google Review Link",
+          "placeIdPlaceholder": "PLACE_ID",
+          "canChangeLabel": "The restaurant can always change this later"
+        },
+        "navigation": {
+          "previous": "Previous",
+          "next": "Next Step",
+          "complete": "Complete Onboarding"
+        }
+      }
+    }
+  },
+  "users": {
+    "title": "Splitty Team",
+    "subtitle": "Manage team members and their permissions",
+    "newUser": "Add Team Member",
+    "stats": {
+      "totalUsers": "TOTAL USERS",
+      "activeUsers": "ACTIVE USERS",
+      "adminUsers": "ADMINISTRATORS"
+    },
+    "search": "Search team members...",
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "status": "Status",
+      "lastLogin": "Last Login",
+      "actions": "Actions"
+    },
+    "roles": {
+      "ceo": "CEO & Founder",
+      "admin": "Administrator",
+      "accountManager": "Account Manager",
+      "support": "Support",
+      "developer": "Developer"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "pending": "Pending"
+    },
+    "foundResults": "users found",
+    "noResults": "No users found",
+    "adjustFilters": "Try adjusting your search filters",
+    "stats": {
+      "totalUsers": "TOTAL USERS",
+      "activeUsers": "ACTIVE USERS", 
+      "adminUsers": "ADMINISTRATORS",
+      "supportTeam": "SUPPORT TEAM"
+    }
+  },
+  "orders": {
+    "title": "All Splitty's",
+    "subtitle": "View and manage all split payment transactions",
+    "splittyTransactions": "Splitty Transactions",
+    "backToRestaurant": "Back to {{name}}",
+    "viewAllOrdersPayments": "View all orders and payments for {{name}}",
+    "searchPlaceholder": "Search order number or table...",
+    "table": "Table",
+    "tableNumber": "Table {{number}}",
+    "amounts": "Amounts",
+    "paymentMethod": "Payment Method",
+    "noPaymentsFound": "No payments found",
+    "tryAdjustingFilters": "Try adjusting your filters",
+    "pagination": {
+      "showing": "Showing {{start}} to {{end}} of {{total}} payments"
+    },
+    "stats": {
+      "totalOrders": "TOTAL ORDERS",
+      "todayOrders": "TODAY'S ORDERS",
+      "totalVolume": "TOTAL VOLUME",
+      "totalPayments": "Total Payments",
+      "totalAmount": "Total Amount",
+      "allTransactions": "All transactions",
+      "completed": "Completed",
+      "successfullyPaid": "Successfully paid",
+      "paid": "paid"
+    },
+    "search": "Search orders...",
+    "filters": {
+      "all": "All Transactions",
+      "today": "Today",
+      "week": "This Week",
+      "thisWeek": "This Week",
+      "month": "This Month",
+      "thisMonth": "This Month",
+      "allStatus": "All Status",
+      "allPayments": "All Payments",
+      "creditCard": "Credit Card",
+      "cash": "Cash",
+      "active": "Active",
+      "completed": "Completed",
+      "allRestaurants": "All Restaurants"
+    },
+    "table": {
+      "orderId": "Order ID",
+      "restaurant": "Restaurant",
+      "table": "Table",
+      "amount": "Amount",
+      "guests": "Guests",
+      "status": "Status",
+      "date": "Date",
+      "actions": "Actions"
+    },
+    "status": {
+      "completed": "Completed",
+      "pending": "Pending", 
+      "partial": "Partial",
+      "cancelled": "Cancelled",
+      "paid": "Paid",
+      "inProgress": "In Progress"
+    },
+    "extra": {
+      "activeOrders": "ACTIVE ORDERS",
+      "transactionRevenue": "TRANSACTION REVENUE"
+    },
+    "details": {
+      "backButton": "Back",
+      "refresh": "Refresh",
+      "orderDetails": "Order Details",
+      "subtitle": "Order details and payment information",
+      "createdAt": "Created on {{date}}",
+      "restaurantId": "Restaurant ID",
+      "posTransactionId": "POS Transaction ID",
+      "tableInfo": "Table Information",
+      "customer": "Customer",
+      "totalAmount": "Total Amount",
+      "paidAmount": "Paid Amount",
+      "remainingAmount": "Remaining Amount",
+      "status": "Status",
+      "splitMode": "Split Mode",
+      "orderItems": "Order Items",
+      "itemsInOrder": "{{count}} items in this order",
+      "item": "Item",
+      "quantity": "Quantity",
+      "unitPrice": "Unit Price",
+      "total": "Total",
+      "paymentStatus": "Payment Status",
+      "paid": "Paid",
+      "payments": "Payments",
+      "paymentsForOrder": "{{count}} payment(s) for this order",
+      "id": "ID",
+      "method": "Method",
+      "tip": "Tip",
+      "date": "Date",
+      "completedOn": "Completed on {{date}}",
+      "betaald": "Paid"
+    },
+    "foundResults": "Splitty transactions found",
+    "noResults": "No Splitty transactions found", 
+    "adjustFilters": "Try adjusting your filters or select a different restaurant"
+  },
+  "payments": {
+    "title": "Payments",
+    "subtitle": "Track all payment transactions",
+    "details": {
+      "paymentDetails": "Payment Details",
+      "transactionInfo": "Payment details and transaction information",
+      "refresh": "Refresh",
+      "payForItems": "Pay for Items",
+      "subtitle": "Payment details and transaction information",
+      "orderId": "Order ID",
+      "restaurant": "Restaurant",
+      "tableNumber": "Table Number",
+      "splitMode": "Split Mode",
+      "payForItems": "Pay for Items",
+      "status": "Status",
+      "completedOn": "Completed on",
+      "customerInfo": "Customer Information",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "notProvided": "Not provided",
+      "paymentInfo": "Payment Information",
+      "paymentMethod": "Payment Method",
+      "amount": "Amount",
+      "tip": "Tip",
+      "processingFees": "Processing Fees",
+      "netAmount": "Net Amount",
+      "technicalDetails": "Technical Details",
+      "stripePaymentId": "Stripe Payment ID",
+      "stripeChargeId": "Stripe Charge ID",
+      "posTransactionId": "POS Transaction ID",
+      "paidItems": "Paid Items",
+      "ipAddress": "IP Address"
+    },
+    "filters": {
+      "allStatuses": "All Statuses",
+      "succeeded": "Succeeded",
+      "failed": "Failed",
+      "pending": "Processing"
+    },
+    "table": {
+      "paymentId": "Payment ID",
+      "order": "Order",
+      "restaurant": "Restaurant",
+      "amount": "Amount",
+      "method": "Method",
+      "status": "Status",
+      "date": "Date",
+      "view": "View"
+    },
+    "stats": {
+      "totalPayments": "TOTAL PAYMENTS",
+      "succeeded": "SUCCEEDED", 
+      "totalAmount": "TOTAL AMOUNT",
+      "failed": "FAILED"
+    },
+    "breadcrumb": "Payments",
+    "subtitle": "Manage all payment transactions",
+    "viewPayouts": "View Payouts",
+    "export": "Export",
+    "searchPlaceholder": "Search by payment ID, order ID, or restaurant...",
+    "dateFilters": {
+      "today": "Today",
+      "last7days": "Last 7 Days", 
+      "last30days": "Last 30 Days",
+      "allTime": "All Time"
+    },
+    "tableFooter": {
+      "showing": "Showing {{count}} payments"
+    },
+    "emptyState": {
+      "message": "No payments found matching your criteria."
+    },
+    "payouts": {
+      "title": "Payouts",
+      "subtitle": "Manage restaurant payouts and settlements",
+      "stats": {
+        "totalPayouts": "TOTAL PAYOUTS",
+        "paidOut": "PAID OUT",
+        "processing": "PROCESSING",
+        "restaurants": "RESTAURANTS"
+      },
+      "searchPlaceholder": "Search by payout ID or restaurant...",
+      "filters": {
+        "allStatuses": "All Statuses"
+      },
+      "status": {
+        "paid": "Paid",
+        "pending": "Processing"
+      },
+      "amount": "Amount",
+      "period": "Period",
+      "orders": "Orders",
+      "bankAccount": "Bank Account",
+      "created": "Created",
+      "expected": "Expected",
+      "details": "Details",
+      "noResults": "No payouts found matching your criteria."
+    }
+  },
+  "pos": {
+    "title": "POS Connections",
+    "subtitle": "Manage Point of Sale integrations",
+    "stats": {
+      "connected": "CONNECTED",
+      "pending": "PENDING SETUP", 
+      "issues": "WITH ISSUES",
+      "totalRestaurants": "TOTAL RESTAURANTS",
+      "active": "ACTIVE",
+      "notConnected": "NOT CONNECTED"
+    },
+    "providers": {
+      "lightspeed": "Lightspeed",
+      "square": "Square",
+      "clover": "Clover",
+      "toast": "Toast",
+      "other": "Other"
+    },
+    "refreshing": "Refreshing...",
+    "refreshStatus": "Refresh Status",
+    "attentionRequired": "Attention required",
+    "configure": "Configure",
+    "details": "Details",
+    "restaurantStatus": "Restaurant POS Status",
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "notConnected": "Not connected"
+    },
+    "notifications": {
+      "connectionLost": "POS Connection Lost",
+      "systemNotReachable": "POS system is not reachable",
+      "inactive": "POS Inactive",
+      "systemInactive": "POS system is inactive",
+      "notConfigured": "POS Not Configured",
+      "integrationSetup": "POS integration needs to be set up"
+    },
+    "noActiveRestaurants": "No active restaurants",
+    "addFirstRestaurant": "Start by adding your first restaurant partner.",
+    "addRestaurant": "Add Restaurant"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your account settings and preferences",
+    "tabs": {
+      "general": "General",
+      "profile": "Profile",
+      "notifications": "Notifications",
+      "security": "Security",
+      "billing": "Billing",
+      "integrations": "Integrations"
+    },
+    "general": {
+      "title": "General Settings",
+      "language": "Language",
+      "timezone": "Timezone",
+      "currency": "Currency",
+      "dateFormat": "Date Format"
+    },
+    "profile": {
+      "title": "Profile Settings",
+      "personalInfo": "Personal Information",
+      "changePassword": "Change Password",
+      "twoFactor": "Two-Factor Authentication",
+      "profilePhoto": "Profile Photo",
+      "removePhoto": "Remove profile photo",
+      "clickToUpload": "Click to upload",
+      "orDragHere": "or drag here",
+      "fileFormats": "PNG, JPG, GIF • Max 5MB",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "role": "Role",
+      "bio": "Bio",
+      "bioPlaceholder": "Tell something about yourself...",
+      "invalidFileType": "Only PNG, JPG and GIF files are allowed",
+      "fileTooLarge": "File is too large. Maximum 5MB allowed."
+    },
+    "notifications": {
+      "title": "Notification Preferences",
+      "emailNotifications": "Email Notifications",
+      "pushNotifications": "Push Notifications",
+      "smsNotifications": "SMS Notifications"
+    },
+    "security": {
+      "title": "Security Settings",
+      "incorrectPassword": "Current password is incorrect",
+      "passwordMismatch": "New passwords do not match"
+    },
+    "billing": {
+      "title": "Payment Methods"
+    },
+    "integrations": {
+      "title": "Integrations & Webhooks"
+    },
+    "legal": {
+      "title": "Legal",
+      "description": "Documents & compliance"
+    },
+    "changesSaved": "Changes saved!",
+    "saved": "Saved",
+    "saveChanges": "Save Changes"
+  },
+  "support": {
+    "title": "Support",
+    "subtitle": "Chat with restaurants and handle support tickets",
+    "tabs": {
+      "activeChats": "Active Chats",
+      "tickets": "Support Tickets",
+      "knowledge": "Knowledge Base"
+    },
+    "searchRestaurants": "Search restaurants...",
+    "newMessages": "new messages",
+    "restaurants": "restaurants",
+    "noConversations": "No support conversations",
+    "conversation": "Support conversation",
+    "restaurant": "Restaurant",
+    "support": "Support",
+    "messageInput": "Type your message...",
+    "sendMessage": "Send",
+    "time": {
+      "now": "Now",
+      "minAgo": "min ago",
+      "hoursAgo": "hours ago",
+      "daysAgo": "days ago"
+    },
+    "status": {
+      "active": "Active"
+    }
+  },
+  "knowledgeBase": {
+    "title": "Knowledge Base",
+    "subtitle": "Documentation and resources for the team",
+    "search": "Search articles...",
+    "categories": {
+      "gettingStarted": "Getting Started",
+      "restaurants": "Restaurant Onboarding",
+      "payments": "Payments",
+      "support": "Support",
+      "integrations": "Integrations",
+      "troubleshooting": "Troubleshooting",
+      "posSystems": "POS Systems",
+      "supportProcedures": "Support Procedures",
+      "faqTips": "FAQ & Tips"
+    },
+    "articles": {
+      "welcome": "Welcome to Splitty",
+      "firstRestaurant": "Your First Restaurant",
+      "teamRoles": "Team Roles & Permissions",
+      "onboardGuide": "Complete Onboarding Guide",
+      "personnelSetup": "Adding Personnel",
+      "stripeSetup": "Stripe Connect Setup",
+      "posIntegration": "POS Integration",
+      "untillSetup": "Untill API Setup",
+      "lightspeedSetup": "Lightspeed Integration",
+      "posTroubleshooting": "POS Troubleshooting",
+      "paymentFlow": "Payment Flow Explanation",
+      "stripeDashboard": "Stripe Dashboard Guide",
+      "refunds": "Refunds & Chargebacks",
+      "ticketSystem": "Ticket System",
+      "escalation": "Escalation Procedures",
+      "commonIssues": "Common Issues",
+      "restaurantFaq": "Restaurant FAQ",
+      "technicalFaq": "Technical FAQ",
+      "bestPractices": "Best Practices"
+    },
+    "quickStats": {
+      "title": "Quick Stats",
+      "totalArticles": "Total Articles",
+      "categories": "Categories",
+      "lastUpdate": "Last Update",
+      "today": "Today"
+    },
+    "readingTime": "10 min reading time",
+    "lastUpdated": "Last updated: Today",
+    "wasUseful": "Was this article useful?",
+    "yes": "Yes",
+    "no": "No",
+    "relatedArticles": "Related Articles",
+    "readMore": "Read more about this topic"
+  },
+  "testOrder": {
+    "title": "Test Order",
+    "subtitle": "Create a test order for debugging and testing",
+    "form": {
+      "selectRestaurant": "Select Restaurant",
+      "tableNumber": "Table Number",
+      "guestCount": "Number of Guests",
+      "orderAmount": "Order Amount",
+      "createOrder": "Create Test Order",
+      "chooseRestaurant": "Choose a restaurant...",
+      "tableNumberPlaceholder": "e.g. 12, A3, Terrace-5"
+    },
+    "menu": {
+      "starters": "Starters",
+      "mains": "Main Courses",
+      "desserts": "Desserts",
+      "drinks": "Drinks"
+    },
+    "actions": {
+      "add": "Add",
+      "clearCart": "Clear cart"
+    },
+    "cart": {
+      "title": "Shopping Cart",
+      "items": "items",
+      "selectItems": "Select items from the menu",
+      "perItem": "per item"
+    },
+    "orderSummary": {
+      "subtotal": "Subtotal",
+      "serviceFee": "Service fee (3%)",
+      "total": "Total"
+    },
+    "validation": {
+      "fillAllFields": "Select a restaurant, enter a table number and add items to the cart",
+      "orderSent": "Test order successfully sent!",
+      "selectRestaurant": "Select a restaurant first",
+      "enterTableNumber": "Enter a table number"
+    },
+    "testModeActive": "Test Mode Active",
+    "testModeInfo": {
+      "title": "Test Mode Info",
+      "description": "This order is only simulated. No real transactions will be processed."
+    }
+  },
+  "tables": {
+    "title": "Active Tables",
+    "breadcrumb": "Active Tables",
+    "subtitle": "Overview of all active tables per restaurant",
+    "refresh": "Refresh",
+    "search": "Search",
+    "searchPlaceholder": "Search by restaurant, table number, or order ID...",
+    "stats": {
+      "activeTables": "ACTIVE TABLES",
+      "totalGuests": "TOTAL GUESTS", 
+      "totalAmount": "TOTAL AMOUNT",
+      "remaining": "STILL TO PAY"
+    },
+    "restaurantProfile": "Restaurant Profile",
+    "activeTablesCount": "{{count}} active tables",
+    "table": {
+      "table": "Table",
+      "orderNumber": "Order #",
+      "guests": "Guests",
+      "amount": "Amount",
+      "remaining": "Remaining", 
+      "duration": "Duration",
+      "viewOrder": "View Order"
+    },
+    "status": {
+      "unpaid": "Unpaid",
+      "partial": "Partial"
+    },
+    "emptyState": {
+      "message": "No active tables found matching your criteria.",
+      "noTables": "No tables found",
+      "adjustSearch": "Try adjusting your search"
+    },
+    "restaurant": {
+      "breadcrumb": "Table Overview",
+      "backTo": "Back to {{restaurant}}",
+      "title": "Table Overview",
+      "subtitle": "Monitor all tables in {{restaurant}}",
+      "stats": {
+        "totalTables": "Total Tables",
+        "empty": "Empty",
+        "occupied": "Occupied"
+      },
+      "searchPlaceholder": "Search table number...",
+      "filters": {
+        "all": "All",
+        "empty": "Empty",
+        "occupied": "Occupied"
+      },
+      "sections": {
+        "occupied": "Occupied Tables",
+        "occupiedDesc": "Tables with active orders",
+        "empty": "Empty Tables",
+        "emptyDesc": "Available tables for new guests"
+      },
+      "card": {
+        "table": "Table",
+        "guests": "guests",
+        "available": "Available",
+        "empty": "Empty",
+        "occupied": "Occupied",
+        "order": "Order #",
+        "amount": "Amount",
+        "paid": "Paid",
+        "duration": "Duration",
+        "viewDetails": "View Details",
+        "openLink": "Open Link",
+        "readyForGuests": "Ready for guests",
+        "waitingForOrder": "Waiting for new order"
+      }
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Here are today's insights",
+    "greeting": {
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening"
+    },
+    "filters": {
+      "allStores": "All locations",
+      "allRestaurants": "All Restaurants",
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "last7days": "Last 7 days",
+      "last30days": "Last 30 days",
+      "last90days": "Last 90 days",
+      "last365days": "Last 365 days",
+      "lastWeek": "Last week",
+      "lastMonth": "Last month",
+      "lastQuarter": "Last quarter",
+      "lastYear": "Last year",
+      "weekToDate": "Week to date",
+      "monthToDate": "Month to date",
+      "quarterToDate": "Quarter to date",
+      "yearToDate": "Year to date",
+      "thisMonth": "This month",
+      "previousMonth": "Previous month",
+      "custom": "Custom",
+      "compareWithPrevious": "Compare with previous period",
+      "compare": "Compare",
+      "from": "From",
+      "to": "To",
+      "cancel": "Cancel",
+      "apply": "Apply"
+    },
+    "stats": {
+      "splittyRevenue": {
+        "title": "Splitty Revenue",
+        "description": "Total revenue today"
+      },
+      "processedPayments": {
+        "title": "Processed Payments",
+        "description": "Total transaction volume"
+      },
+      "totalTransactions": {
+        "title": "Total Transactions",
+        "description": "Total number of payments"
+      },
+      "averageAmount": {
+        "title": "Average Amount",
+        "description": "Per transaction"
+      },
+      "activeRestaurants": {
+        "title": "Active Restaurants",
+        "description": "Live on Splitty"
+      },
+      "tableSize": {
+        "title": "Table Size",
+        "description": "Average per table",
+        "unit": "people"
+      },
+      "peak": "Peak",
+      "revenue": {
+        "title": "Revenue"
+      },
+      "transactions": {
+        "title": "Transactions"
+      }
+    },
+    "analytics": {
+      "title": "Analytics",
+      "views": {
+        "total": "Total",
+        "restaurant": "Restaurant",
+        "region": "Region"
+      },
+      "metrics": {
+        "stripeCosts": "Stripe Costs",
+        "netProfit": "Net Profit",
+        "margin": "margin",
+        "perTransaction": "per transaction",
+        "ofRevenue": "of revenue",
+        "ofVolume": "of volume"
+      },
+      "regions": {
+        "northHolland": "North Holland",
+        "southHolland": "South Holland",
+        "utrecht": "Utrecht"
+      }
+    },
+    "sections": {
+      "financialOverview": {
+        "title": "Financial Overview",
+        "stripeCosts": "Stripe Costs",
+        "netProfit": "Net Profit",
+        "profit": "Profit",
+        "loss": "Loss",
+        "perTransaction": "per transaction",
+        "transactionCosts": "Transaction costs all payment methods"
+      },
+      "openQuotations": {
+        "title": "Open Quotations",
+        "viewAll": "View all",
+        "status": {
+          "urgent": "Urgent",
+          "pending": "Pending"
+        },
+        "time": {
+          "hoursAgo": "hours ago",
+          "dayAgo": "day ago"
+        }
+      },
+      "bestPerforming": {
+        "title": "Top Performing Restaurants",
+        "subtitle": "Based on revenue",
+        "liveRankings": "Live Rankings",
+        "exportCSV": "Export CSV",
+        "inRevenue": "in revenue",
+        "columns": {
+          "restaurant": "Restaurant",
+          "revenue": "Revenue",
+          "transactions": "Transactions",
+          "rating": "Rating"
+        },
+        "splittyFee": "Splitty Fee"
+      },
+      "partners": {
+        "title": "Partners & Integrations",
+        "types": {
+          "paymentProvider": "Payment Provider",
+          "posIntegration": "POS Integration"
+        },
+        "status": {
+          "active": "Active",
+          "pending": "Pending"
+        }
+      }
+    },
+    "chart": {
+      "title": "Analytics Dashboard",
+      "allMetrics": "All Metrics",
+      "perHour": "Per hour",
+      "perDay": "Per day",
+      "metrics": {
+        "all": "All metrics",
+        "revenue": "Revenue",
+        "payments": "Payments",
+        "tips": "Tips"
+      },
+      "labels": {
+        "revenue": "Splitty Revenue",
+        "payments": "Processed Payments",
+        "transactions": "Total Transactions",
+        "averageAmount": "Average Amount",
+        "tableSize": "Avg. Table Size"
+      },
+      "noData": "No data available"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "addRestaurant": "Add Restaurant",
+      "viewReports": "View Reports",
+      "manageUsers": "Manage Users",
+      "settings": "Settings"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your account settings and preferences",
+    "saveChanges": "Save Changes",
+    "saved": "Saved",
+    "tabs": {
+      "profile": "Profile",
+      "general": "General",
+      "notifications": "Notifications",
+      "billing": "Billing & Payment",
+      "security": "Security",
+      "integrations": "API & Integrations"
+    },
+    "profile": {
+      "title": "Personal Profile Settings",
+      "personalInfo": "Manage your personal information and preferences",
+      "profilePhoto": "Profile Photo",
+      "removePhoto": "Remove photo",
+      "clickToUpload": "Click to upload",
+      "orDragHere": "or drag and drop here",
+      "fileFormats": "SVG, PNG, JPG or GIF (max. 5MB)",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "role": "Role",
+      "bio": "Bio",
+      "bioPlaceholder": "Tell us a little about yourself",
+      "invalidFileType": "Please upload an image file (JPG, PNG, GIF, SVG)",
+      "fileTooLarge": "File size must be less than 5MB"
+    },
+    "general": {
+      "title": "General Settings",
+      "companyInfo": "Company Information",
+      "companyInfoDesc": "This information is displayed on your public profile",
+      "companyName": "Company Name",
+      "contactEmail": "Contact Email",
+      "phone": "Phone Number",
+      "website": "Website",
+      "kvkNumber": "Chamber of Commerce Number",
+      "vatNumber": "VAT Number",
+      "address": "Address",
+      "streetAddress": "Street and house number",
+      "postalCode": "Postal Code",
+      "city": "City",
+      "country": "Country",
+      "countries": {
+        "netherlands": "Netherlands",
+        "belgium": "Belgium",
+        "germany": "Germany",
+        "france": "France"
+      },
+      "timezone": "Timezone"
+    },
+    "notifications": {
+      "title": "Notification Settings",
+      "emailNotifications": "Email Notifications",
+      "emailNotificationsDesc": "Manage which emails you want to receive",
+      "newOrders": "New Orders",
+      "newOrdersDesc": "Receive notification for new orders",
+      "paymentReceived": "Payment Received",
+      "paymentReceivedDesc": "Notification for successful payments",
+      "payoutSent": "Payout Sent",
+      "payoutSentDesc": "Updates when payouts are processed",
+      "lowInventory": "Low Inventory",
+      "lowInventoryDesc": "Warning when items are running low",
+      "newReviews": "New Reviews",
+      "newReviewsDesc": "Customer reviews and ratings",
+      "marketingUpdates": "Marketing Updates",
+      "marketingUpdatesDesc": "Product updates and announcements",
+      "pushNotifications": "Push Notifications",
+      "pushNotificationsDesc": "Manage mobile app notifications",
+      "orderUpdates": "Order Updates",
+      "orderUpdatesDesc": "Real-time updates about orders",
+      "paymentAlerts": "Payment Alerts",
+      "paymentAlertsDesc": "Direct notifications for payments",
+      "staffMessages": "Staff Messages",
+      "staffMessagesDesc": "Communication from team members",
+      "labels": {
+        "important": "Important",
+        "recommended": "Recommended"
+      }
+    },
+    "billing": {
+      "title": "Billing & Payment Settings",
+      "paymentMethods": "Payment Methods",
+      "paymentMethodsDesc": "Configure your payment processing options",
+      "stripeTitle": "Stripe",
+      "stripeDesc": "Process payments with Stripe",
+      "connected": "Connected",
+      "publishableKey": "Publishable Key",
+      "payoutSettings": "Payout Settings",
+      "payoutSettingsDesc": "Configure automatic payouts to restaurants",
+      "payoutFrequency": "Payout Frequency",
+      "minimumPayout": "Minimum Payout Amount",
+      "frequencies": {
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "biweekly": "Bi-weekly",
+        "monthly": "Monthly"
+      }
+    },
+    "security": {
+      "title": "Security Settings",
+      "securitySettings": "Security Settings",
+      "securitySettingsDesc": "Manage your account security preferences",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm New Password",
+      "twoFactorAuth": "Two-Factor Authentication",
+      "twoFactorAuthDesc": "Add an extra layer of security to your account",
+      "twoFactorEnabled": "Two-Factor Authentication is enabled",
+      "twoFactorEnabledDesc": "Your account is secured with 2FA",
+      "disable": "Disable",
+      "loginSessions": "Login Sessions",
+      "loginSessionsDesc": "Manage your active login sessions",
+      "currentSession": "Current session",
+      "revoke": "Revoke"
+    },
+    "integrations": {
+      "title": "API & Integrations"
+    },
+    "legal": {
+      "title": "Legal & Privacy",
+      "description": "Legal documents and privacy settings"
+    }
+  },
+  "login": {
+    "welcomeBack": "Welcome back!",
+    "subtitle": "Log in to your Splitty Super Admin account",
+    "email": "Email address",
+    "emailPlaceholder": "you@email.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "signIn": "Sign In",
+    "signingIn": "Signing in...",
+    "noAccount": "Don't have an account?",
+    "contactUs": "Contact us",
+    "invalidCredentials": "Invalid email or password",
+    "copyright": "© 2025 Splitty B.V. All rights reserved."
+  },
+  "team": {
+    "new": {
+      "backToTeam": "Back to team overview",
+      "addNewEmployee": "Add New Employee",
+      "personalInfo": "Personal Information",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "security": "Security",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "passwordStrength": "Password strength",
+      "passwordStrengthLevels": {
+        "veryWeak": "Very weak",
+        "weak": "Weak",
+        "fair": "Fair",
+        "strong": "Strong",
+        "veryStrong": "Very strong"
+      },
+      "passwordsMatch": "Passwords match",
+      "passwordsNoMatch": "Passwords don't match",
+      "roleAccess": "Role & Access",
+      "selectRole": "Select Role",
+      "roles": {
+        "ceo": {
+          "label": "CEO",
+          "description": "Full access to all features"
+        },
+        "admin": {
+          "label": "Administrator",
+          "description": "System management and configuration"
+        },
+        "accountManager": {
+          "label": "Account Manager",
+          "description": "Manage restaurant relationships"
+        },
+        "support": {
+          "label": "Support",
+          "description": "Customer support"
+        },
+        "developer": {
+          "label": "Developer",
+          "description": "Technical development"
+        }
+      },
+      "department": "Department",
+      "selectDepartment": "Select a department",
+      "activeEmployee": "Active employee",
+      "inactiveEmployeeNote": "Inactive employees cannot log in",
+      "cancel": "Cancel",
+      "addEmployee": "Add Employee",
+      "passwordValidationError": "Passwords don't match",
+      "placeholders": {
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "john.doe@example.com",
+        "phone": "+31 6 12345678",
+        "password": "••••••••"
+      }
+    }
+  }
+}

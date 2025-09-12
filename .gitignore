@@ -1,0 +1,30 @@
+# Build and cache
+.next
+.turbo
+out
+.cache
+.eslintcache
+*.log
+*.cache
+
+# Node modules
+node_modules
+
+# System files
+.DS_Store
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# IDEs
+.vscode
+.idea
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Vercel
+.vercel

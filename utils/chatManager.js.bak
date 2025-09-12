@@ -1,0 +1,248 @@
+// Chat Manager for Support System
+class ChatManager {
+  constructor() {
+    this.storageKey = 'splitty_support_tickets'
+    this.messagesKey = 'splitty_support_messages'
+  }
+
+  // Get all tickets
+  getTickets() {
+    if (typeof window === 'undefined') return []
+    const stored = localStorage.getItem(this.storageKey)
+    return stored ? JSON.parse(stored) : this.getDefaultTickets()
+  }
+
+  // Alias for getTickets to match expected API
+  getAllTickets() {
+    return this.getTickets()
+  }
+
+  // Get default tickets for demo
+  getDefaultTickets() {
+    return [
+      {
+        id: 'TCK001',
+        restaurantName: 'Bella Italia',
+        restaurantId: 'REST001',
+        contactPerson: 'Marco Rossi',
+        subject: 'QR-codes werken niet meer',
+        category: 'technical',
+        status: 'open',
+        priority: 'high',
+        createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+        lastUpdate: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
+        unreadCount: 2
+      },
+      {
+        id: 'TCK002',
+        restaurantName: 'De Gouden Draak',
+        restaurantId: 'REST002',
+        contactPerson: 'Li Wei',
+        subject: 'Vraag over commissiestructuur',
+        category: 'billing',
+        status: 'awaiting',
+        priority: 'medium',
+        createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+        lastUpdate: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
+        unreadCount: 0
+      },
+      {
+        id: 'TCK003',
+        restaurantName: 'Café de Paris',
+        restaurantId: 'REST003',
+        contactPerson: 'Sophie Martin',
+        subject: 'POS integratie met Lightspeed',
+        category: 'integration',
+        status: 'open',
+        priority: 'high',
+        createdAt: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
+        lastUpdate: new Date(Date.now() - 45 * 60 * 1000).toISOString(),
+        unreadCount: 1
+      }
+    ]
+  }
+
+  // Save tickets
+  saveTickets(tickets) {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(this.storageKey, JSON.stringify(tickets))
+    }
+  }
+
+  // Save a single ticket
+  saveTicket(ticket) {
+    const tickets = this.getAllTickets()
+    const index = tickets.findIndex(t => t.id === ticket.id)
+    if (index !== -1) {
+      tickets[index] = ticket
+    } else {
+      tickets.push(ticket)
+    }
+    this.saveTickets(tickets)
+  }
+
+  // Close a ticket
+  closeTicket(ticketId, closedBy) {
+    const tickets = this.getAllTickets()
+    const ticket = tickets.find(t => t.id === ticketId)
+    if (ticket) {
+      ticket.status = 'closed'
+      ticket.closedAt = new Date().toISOString()
+      ticket.closedBy = closedBy
+      this.saveTickets(tickets)
+    }
+    return ticket
+  }
+
+  // Get messages for a ticket
+  getMessages(ticketId) {
+    if (typeof window === 'undefined') return []
+    const stored = localStorage.getItem(`${this.messagesKey}_${ticketId}`)
+    return stored ? JSON.parse(stored) : this.getDefaultMessages(ticketId)
+  }
+
+  // Get default messages for demo
+  getDefaultMessages(ticketId) {
+    const defaultMessages = {
+      'TCK001': [
+        {
+          id: 1,
+          sender: 'Marco Rossi',
+          senderType: 'customer',
+          message: 'Sinds vanmorgen werken onze QR-codes niet meer. Gasten kunnen niet scannen.',
+          timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
+        },
+        {
+          id: 2,
+          sender: 'Support Team',
+          senderType: 'support',
+          message: 'We kijken er direct naar. Kunt u een foto sturen van de QR-code?',
+          timestamp: new Date(Date.now() - 90 * 60 * 1000).toISOString()
+        },
+        {
+          id: 3,
+          sender: 'Marco Rossi',
+          senderType: 'customer',
+          message: 'Foto is verstuurd via email.',
+          timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString()
+        }
+      ],
+      'TCK002': [
+        {
+          id: 1,
+          sender: 'Li Wei',
+          senderType: 'customer',
+          message: 'Ik heb een vraag over de nieuwe commissiestructuur die volgende maand ingaat.',
+          timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
+        },
+        {
+          id: 2,
+          sender: 'Support Team',
+          senderType: 'support',
+          message: 'Ik zal onze account manager vragen contact met u op te nemen.',
+          timestamp: new Date(Date.now() - 20 * 60 * 60 * 1000).toISOString()
+        }
+      ],
+      'TCK003': [
+        {
+          id: 1,
+          sender: 'Sophie Martin',
+          senderType: 'customer',
+          message: 'We willen graag Lightspeed POS koppelen met Splitty. Is dit mogelijk?',
+          timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString()
+        },
+        {
+          id: 2,
+          sender: 'Support Team',
+          senderType: 'support',
+          message: 'Ja, Lightspeed wordt ondersteund! Ik stuur u de handleiding.',
+          timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
+        },
+        {
+          id: 3,
+          sender: 'Sophie Martin',
+          senderType: 'customer',
+          message: 'Bedankt! Ik krijg een foutmelding bij stap 3.',
+          timestamp: new Date(Date.now() - 45 * 60 * 1000).toISOString()
+        }
+      ]
+    }
+    return defaultMessages[ticketId] || []
+  }
+
+  // Save messages
+  saveMessages(ticketId, messages) {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(`${this.messagesKey}_${ticketId}`, JSON.stringify(messages))
+    }
+  }
+
+  // Add new message
+  addMessage(ticketId, message) {
+    const messages = this.getMessages(ticketId)
+    const newMessage = {
+      id: messages.length + 1,
+      ...message,
+      timestamp: new Date().toISOString()
+    }
+    messages.push(newMessage)
+    this.saveMessages(ticketId, messages)
+    
+    // Update ticket last update time
+    const tickets = this.getTickets()
+    const ticketIndex = tickets.findIndex(t => t.id === ticketId)
+    if (ticketIndex !== -1) {
+      tickets[ticketIndex].lastUpdate = new Date().toISOString()
+      if (message.senderType === 'support') {
+        tickets[ticketIndex].status = 'awaiting'
+        tickets[ticketIndex].unreadCount = 0
+      } else {
+        tickets[ticketIndex].status = 'open'
+      }
+      this.saveTickets(tickets)
+    }
+    
+    return newMessage
+  }
+
+  // Update ticket status
+  updateTicketStatus(ticketId, status) {
+    const tickets = this.getTickets()
+    const ticketIndex = tickets.findIndex(t => t.id === ticketId)
+    if (ticketIndex !== -1) {
+      tickets[ticketIndex].status = status
+      tickets[ticketIndex].lastUpdate = new Date().toISOString()
+      this.saveTickets(tickets)
+    }
+  }
+
+  // Mark messages as read
+  markAsRead(ticketId) {
+    const tickets = this.getTickets()
+    const ticketIndex = tickets.findIndex(t => t.id === ticketId)
+    if (ticketIndex !== -1) {
+      tickets[ticketIndex].unreadCount = 0
+      this.saveTickets(tickets)
+    }
+  }
+
+  // Get statistics
+  getStats() {
+    const tickets = this.getTickets()
+    return {
+      total: tickets.length,
+      open: tickets.filter(t => t.status === 'open').length,
+      awaiting: tickets.filter(t => t.status === 'awaiting').length,
+      highPriority: tickets.filter(t => t.priority === 'high').length,
+      resolved: tickets.filter(t => t.status === 'resolved').length
+    }
+  }
+}
+
+// Export singleton instance
+if (typeof window !== 'undefined') {
+  window.chatManager = window.chatManager || new ChatManager()
+  module.exports = window.chatManager
+} else {
+  module.exports = null
+}

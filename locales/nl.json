@@ -1,0 +1,1668 @@
+{
+  "sidebar": {
+    "company": "Splitty B.V.",
+    "subtitle": "Super Admin Panel",
+    "collapse": "Inklappen",
+    "menu": {
+      "dashboard": "Dashboard",
+      "restaurants": "Restaurants",
+      "allRestaurants": "Alle Restaurants",
+      "posConnections": "POS Connecties",
+      "payouts": "Uitbetalingen",
+      "allSplittys": "Alle Splitty's",
+      "testOrder": "Test Bestelling",
+      "splittyTeam": "Splitty Team",
+      "support": "Support",
+      "knowledgeBase": "Kennisbank",
+      "settings": "Instellingen"
+    },
+    "notifications": "Notificaties",
+    "language": {
+      "english": "English",
+      "dutch": "Nederlands"
+    },
+    "user": {
+      "role": "CEO & Founder",
+      "accountSettings": "Account Instellingen",
+      "logout": "Uitloggen",
+      "myProfile": "Mijn Profiel"
+    }
+  },
+  "common": {
+    "search": "Zoeken",
+    "filter": "Filteren",
+    "export": "Exporteren",
+    "import": "Importeren",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "delete": "Verwijderen",
+    "edit": "Bewerken",
+    "view": "Bekijken",
+    "close": "Sluiten",
+    "confirm": "Bevestigen",
+    "back": "Terug",
+    "next": "Volgende",
+    "previous": "Vorige",
+    "loading": "Laden...",
+    "loadingScreen": {
+      "adminPanelLoading": "Je admin panel wordt geladen",
+      "pleaseWait": "Even geduld alsjeblieft"
+    },
+    "error": "Fout",
+    "success": "Geslaagd",
+    "warning": "Waarschuwing",
+    "info": "Info",
+    "yes": "Ja",
+    "no": "Nee",
+    "all": "Alle",
+    "none": "Geen",
+    "select": "Selecteer",
+    "selected": "Geselecteerd",
+    "status": "Status",
+    "actions": "Acties",
+    "name": "Naam",
+    "email": "E-mail",
+    "phone": "Telefoon",
+    "address": "Adres",
+    "city": "Stad",
+    "country": "Land",
+    "date": "Datum",
+    "time": "Tijd",
+    "amount": "Bedrag",
+    "total": "Totaal",
+    "subtotal": "Subtotaal",
+    "tax": "BTW",
+    "discount": "Korting",
+    "payment": "Betaling",
+    "active": "Actief",
+    "inactive": "Inactief",
+    "pending": "In behandeling",
+    "completed": "Voltooid",
+    "failed": "Mislukt",
+    "new": "Nieuw",
+    "department": "Afdeling",
+    "hours": "uur",
+    "days": "dagen",
+    "ago": "geleden",
+    "refresh": "Vernieuwen",
+    "export": "Exporteren",
+    "order": "Bestelling"
+  },
+  "restaurants": {
+    "title": "Restaurant Partners",
+    "subtitle": "Beheer al je restaurant partners en hun prestaties",
+    "newRestaurant": "Nieuw Restaurant",
+    "addNewRestaurant": "Nieuw Restaurant",
+    "notFound": "Restaurant niet gevonden",
+    "backToProfile": "Terug naar Restaurant Profiel",
+    "backToList": "Terug naar Restaurants",
+    "stats": {
+      "totalPartners": "TOTAAL PARTNERS",
+      "setupRequired": "SETUP VEREIST",
+      "archived": "GEARCHIVEERD"
+    },
+    "tabs": {
+      "all": "Alle restaurants",
+      "onboarding": "In onboarding",
+      "deleted": "Gearchiveerd"
+    },
+    "search": "Zoek restaurants, locaties...",
+    "filterByLocation": "Filter op locatie",
+    "table": {
+      "restaurant": "Restaurant",
+      "location": "Locatie",
+      "status": "Status",
+      "transactions": "Transacties",
+      "rating": "Beoordeling",
+      "actions": "Acties"
+    },
+    "status": {
+      "active": "Actief",
+      "onboarding": "Onboarding",
+      "inactive": "Inactief",
+      "deleted": "Verwijderd",
+      "archived": "Gearchiveerd",
+      "setupRequired": "Setup Vereist",
+      "onboardingIncomplete": "Onboarding Incompleet"
+    },
+    "onboardingProgress": "Onboarding Voortgang",
+    "steps": {
+      "businessInfo": "Bedrijfsinfo",
+      "posIntegration": "POS Integratie",
+      "payments": "Betalingen",
+      "complete": "Voltooid"
+    },
+    "deleteModal": {
+      "title": "Permanent verwijderen",
+      "warning": "Je staat op het punt om permanent te verwijderen",
+      "cautionTitle": "⚠️ Let op: Deze actie kan niet ongedaan worden gemaakt",
+      "cautionText": "Als je dit restaurant nu verwijdert:",
+      "consequences": [
+        "Alle restaurantgegevens worden permanent verwijderd",
+        "Alle transactiegeschiedenis gaat verloren",
+        "Alle gebruikersaccounts worden verwijderd",
+        "Deze actie kan niet teruggedraaid worden"
+      ],
+      "confirmLabel": "Type de naam van het restaurant om te bevestigen:",
+      "confirmPlaceholder": "Vul de restaurantnaam in",
+      "confirmButton": "Permanent verwijderen",
+      "cancelButton": "Annuleren"
+    },
+    "actions": {
+      "view": "Bekijken",
+      "edit": "Bewerken",
+      "delete": "Verwijderen",
+      "restore": "Herstellen",
+      "continueOnboarding": "Ga verder met onboarding",
+      "archive": "Archiveren",
+      "unarchive": "Dearchiveren",
+      "deleteAction": "Verwijderen"
+    },
+    "emptyState": {
+      "noArchived": "Geen gearchiveerde restaurants",
+      "noFound": "Geen restaurants gevonden",
+      "archivedDescription": "Gearchiveerde restaurants verschijnen hier",
+      "foundDescription": "Begin met het toevoegen van je eerste restaurant partner.",
+      "addFirst": "Voeg Restaurant Toe"
+    },
+    "profile": {
+      "title": "Restaurant Profiel",
+      "information": "Restaurant Informatie",
+      "details": "Details",
+      "contactPerson": "Contactpersoon",
+      "businessInfo": "Bedrijfsinformatie",
+      "technicalConfig": "Technische Configuratie",
+      "performance": "Prestaties",
+      "activeStaff": "Actieve Medewerkers",
+      "manageStaff": "Beheer Medewerkers",
+      "editRestaurant": "Restaurant Bewerken",
+      "viewDetails": "Bekijk Details",
+      "posStatus": "POS Status",
+      "stripeStatus": "Stripe Status",
+      "connected": "Verbonden",
+      "notConnected": "Niet Verbonden",
+      "configure": "Configureren",
+      "totalRevenue": "Totale Omzet",
+      "totalTransactions": "Totaal Transacties",
+      "averageOrderValue": "Gemiddelde Bestelwaarde",
+      "rating": "Beoordeling",
+      "thisMonth": "deze maand",
+      "allTime": "totaal",
+      "lastMonth": "Vorige maand",
+      "growth": "groei",
+      "backToProfile": "Terug naar Restaurant Profiel"
+    },
+    "edit": {
+      "title": "Restaurant Bewerken",
+      "subtitle": "Pas de restaurant gegevens aan",
+      "basicInfo": "Basis Informatie",
+      "contactInfo": "Contact Informatie",
+      "addressInfo": "Adres Informatie",
+      "generalInfo": "Algemene Informatie",
+      "restaurantName": "Restaurant Naam",
+      "restaurantLogo": "Restaurant Logo",
+      "restaurantBanner": "Restaurant Banner",
+      "namePlaceholder": "Bijv. Restaurant Amsterdam",
+      "changeLogo": "Logo Wijzigen",
+      "uploadLogo": "Logo Uploaden",
+      "changeBanner": "Banner Wijzigen",
+      "uploadBanner": "Banner Uploaden",
+      "imageRequirements": "PNG, JPG tot 5MB",
+      "bannerRequirements": "Aanbevolen: 1920x400px, PNG of JPG tot 5MB",
+      "emailPlaceholder": "info@restaurant.nl",
+      "streetAndNumber": "Straat & Huisnummer",
+      "address": "Adres",
+      "city": "Stad",
+      "postalCode": "Postcode",
+      "country": "Land",
+      "countries": {
+        "netherlands": "Nederland",
+        "belgium": "België",
+        "germany": "Duitsland",
+        "france": "Frankrijk"
+      },
+      "phone": "Telefoon",
+      "email": "E-mail",
+      "website": "Website",
+      "contactPerson": "Contactpersoon",
+      "contactName": "Contact Naam",
+      "contactEmail": "Contact E-mail",
+      "contactPhone": "Contact Telefoon",
+      "technicalSettings": "Technische Instellingen",
+      "posSystem": "POS Systeem",
+      "apiEndpoint": "API Endpoint",
+      "apiKey": "API Sleutel",
+      "stripeAccount": "Stripe Account ID",
+      "saveChanges": "Wijzigingen Opslaan",
+      "cancel": "Annuleren",
+      "saving": "Opslaan...",
+      "updateSuccess": "Restaurant succesvol bijgewerkt!",
+      "updateError": "Fout bij bijwerken van restaurant",
+      "validation": {
+        "nameRequired": "Restaurant naam is verplicht",
+        "emailRequired": "Email is verplicht",
+        "invalidEmail": "Ongeldig email adres",
+        "phoneRequired": "Telefoonnummer is verplicht",
+        "streetRequired": "Straat is verplicht",
+        "postalCodeRequired": "Postcode is verplicht",
+        "cityRequired": "Stad is verplicht"
+      }
+    },
+    "staff": {
+      "title": "Personeel Beheer",
+      "subtitle": "Beheer personeel voor {{name}}",
+      "backToRestaurant": "Terug naar {{name}}",
+      "addStaff": "Personeel Toevoegen",
+      "searchPlaceholder": "Zoek op naam of email...",
+      "stats": {
+        "total": "Totaal",
+        "members": "Personeelsleden",
+        "admins": "Admins",
+        "staff": "Staff",
+        "active": "Actief"
+      },
+      "filters": {
+        "allRoles": "Alle Rollen"
+      },
+      "empty": {
+        "title": "Nog geen personeel",
+        "description": "Dit restaurant heeft nog geen personeel toegevoegd",
+        "addFirst": "Eerste personeelslid toevoegen"
+      },
+      "table": {
+        "user": "Gebruiker",
+        "role": "Rol",
+        "lastActivity": "Laatste Activiteit",
+        "usersFound": "gebruikers gevonden"
+      },
+      "roles": {
+        "restaurantAdmin": "Restaurant Admin",
+        "restaurantStaff": "Restaurant Staff",
+        "adminDescription": "Volledige toegang en beheer",
+        "staffDescription": "Beperkte toegang"
+      },
+      "permissions": {
+        "admin": {
+          "fullAccess": "Volledige toegang tot restaurant instellingen",
+          "manageStaff": "Personeel beheren en rollen toewijzen",
+          "viewAnalytics": "Analytics en rapportages bekijken",
+          "configureIntegrations": "Integraties en betalingen configureren"
+        },
+        "staff": {
+          "viewOrders": "Bestellingen bekijken en beheren",
+          "updateProfile": "Eigen profiel bijwerken",
+          "viewBasicStats": "Basis statistieken bekijken"
+        }
+      },
+      "modal": {
+        "editTitle": "Personeelslid Bewerken",
+        "editSubtitle": "Bewerk gegevens voor {{name}}",
+        "addTitle": "Restaurant Team",
+        "addSubtitle": "Voeg nieuwe teamleden toe aan {{name}}",
+        "addNewUser": "Nieuwe gebruiker toevoegen",
+        "firstName": "Voornaam",
+        "lastName": "Achternaam",
+        "email": "Email",
+        "phone": "Telefoon (optioneel)",
+        "password": "Wachtwoord",
+        "confirmPassword": "Bevestig Wachtwoord",
+        "passwordPlaceholder": "Minimaal 8 karakters",
+        "confirmPasswordPlaceholder": "Herhaal wachtwoord",
+        "firstNamePlaceholder": "Jan",
+        "lastNamePlaceholder": "Jansen",
+        "emailPlaceholder": "jan@restaurant.nl",
+        "phonePlaceholder": "+31 6 12345678",
+        "role": "Rol",
+        "staff": "Personeel",
+        "manager": "Manager",
+        "basicAccess": "Basis toegang",
+        "fullAccess": "Volledige toegang",
+        "addUser": "Gebruiker Toevoegen",
+        "tip": "Tip:",
+        "tipMessage": "Voeg minimaal één manager toe. Je kunt later altijd meer gebruikers toevoegen via het gebruikersbeheer."
+      }
+    },
+    "new": {
+      "title": "Nieuw Restaurant Toevoegen",
+      "subtitle": "Onboard een nieuwe restaurant partner bij Splitty",
+      "steps": {
+        "businessInfo": "Bedrijfsinformatie",
+        "contactPerson": "Contactpersoon",
+        "technicalSetup": "Technische Setup",
+        "review": "Controleren"
+      },
+      "businessInfo": {
+        "title": "Bedrijfsinformatie",
+        "restaurantName": "Restaurant Naam",
+        "legalName": "Juridische Bedrijfsnaam",
+        "registrationNumber": "KvK Nummer",
+        "vatNumber": "BTW Nummer",
+        "address": "Straatnaam en Nummer",
+        "city": "Stad",
+        "postalCode": "Postcode",
+        "country": "Land",
+        "phone": "Zakelijk Telefoonnummer",
+        "email": "Zakelijk E-mailadres",
+        "website": "Website (optioneel)",
+        "cuisine": "Type Keuken",
+        "seatingCapacity": "Aantal Zitplaatsen"
+      },
+      "contactPerson": {
+        "title": "Contactpersoon",
+        "description": "Primaire contactpersoon voor dit restaurant",
+        "firstName": "Voornaam",
+        "lastName": "Achternaam",
+        "role": "Functie/Titel",
+        "email": "E-mail",
+        "phone": "Telefoon",
+        "preferredLanguage": "Voorkeurstaal"
+      },
+      "technicalSetup": {
+        "title": "Technische Setup",
+        "posSystem": "POS Systeem",
+        "selectPos": "Selecteer POS Systeem",
+        "apiCredentials": "API Gegevens",
+        "apiEndpoint": "API Endpoint",
+        "apiKey": "API Sleutel",
+        "apiSecret": "API Secret (indien van toepassing)",
+        "testConnection": "Test Verbinding",
+        "connectionSuccess": "Verbinding succesvol!",
+        "connectionFailed": "Verbinding mislukt. Controleer de gegevens.",
+        "stripeSetup": "Stripe Setup",
+        "stripeAccountId": "Stripe Account ID",
+        "createStripeAccount": "Maak Stripe Account",
+        "linkExistingAccount": "Koppel Bestaand Account"
+      },
+      "review": {
+        "title": "Controleren & Bevestigen",
+        "checkDetails": "Controleer alle gegevens voordat je het restaurant aanmaakt",
+        "editSection": "Bewerken"
+      },
+      "navigation": {
+        "back": "Terug",
+        "next": "Volgende",
+        "cancel": "Annuleren",
+        "previous": "Vorige",
+        "create": "Restaurant Aanmaken",
+        "creating": "Aanmaken...",
+        "createAndStartOnboarding": "Maak aan & Start Onboarding"
+      },
+      "contactAndFees": {
+        "title": "Contact & Kosten",
+        "description": "Stel contactinformatie en betaalopties in",
+        "contactInfo": {
+          "title": "Contactinformatie",
+          "contactEmail": "Contact Email",
+          "contactPhone": "Contact Telefoon",
+          "phonePlaceholder": "+31 6 12345678"
+        },
+        "serviceFees": {
+          "title": "Service Kosten",
+          "feeType": "Kosten Type",
+          "feeAmount": "Kosten Bedrag",
+          "flatFee": "Vast Bedrag",
+          "percentageFee": "Percentage"
+        }
+      },
+      "mediaAndBranding": {
+        "title": "Media & Branding",
+        "description": "Upload logo en banner afbeeldingen",
+        "requiredImagesError": "Beide afbeeldingen zijn verplicht om een restaurant toe te voegen",
+        "logoLabel": "Restaurant Logo",
+        "bannerLabel": "Restaurant Banner",
+        "uploadFile": "Upload bestand",
+        "dragAndDrop": "of sleep en laat vallen",
+        "fileFormats": "PNG, JPG tot 10MB",
+        "nextStepsTitle": "Wat gebeurt er hierna?",
+        "onlyPngJpgAllowed": "Alleen PNG, JPG en GIF bestanden zijn toegestaan",
+        "fileTooLarge": "Bestand moet kleiner zijn dan 10MB"
+      },
+      "form": {
+        "subtitle": "Vul de gegevens in om een restaurant toe te voegen",
+        "basicInfoTitle": "Basisinformatie",
+        "restaurantNameLabel": "Restaurant Naam",
+        "restaurantNamePlaceholder": "Bijv. Restaurant De Gouden Lepel",
+        "addressPlaceholder": "Straatnaam 123",
+        "cityLabel": "Stad",
+        "cityPlaceholder": "Amsterdam",
+        "postalCodeLabel": "Postcode",
+        "postalCodePlaceholder": "1234 AB",
+        "countryLabel": "Land",
+        "countries": {
+          "netherlands": "Nederland",
+          "belgium": "België",
+          "germany": "Duitsland",
+          "france": "Frankrijk"
+        }
+      },
+      "success": {
+        "title": "Restaurant Succesvol Toegevoegd!",
+        "message": "Na het aanmaken van het restaurant word je direct naar de onboarding pagina gestuurd. Daar kun je personeel toevoegen, Stripe koppelen en het POS systeem configureren.",
+        "nextSteps": "Volgende Stappen:",
+        "step1": "Voltooi Stripe onboarding",
+        "step2": "Configureer POS integratie",
+        "step3": "Voeg medewerkers toe",
+        "step4": "Test de betaalstroom",
+        "viewRestaurant": "Bekijk Restaurant",
+        "addAnother": "Nog Een Restaurant Toevoegen"
+      },
+      "contactAndFees": {
+        "title": "Contact & Kosten",
+        "description": "Stel contactinformatie en betaalopties in",
+        "contactInfo": {
+          "title": "Contactinformatie",
+          "contactEmail": "Contact Email",
+          "contactPhone": "Contact Telefoon",
+          "phonePlaceholder": "+31 6 12345678"
+        },
+        "serviceFees": {
+          "title": "Service Kosten",
+          "feeType": "Kosten Type",
+          "feeAmount": "Kosten Bedrag",
+          "flatFee": "Vast Bedrag",
+          "percentageFee": "Percentage"
+        }
+      },
+      "mediaAndBranding": {
+        "title": "Media & Branding",
+        "description": "Upload logo en banner afbeeldingen",
+        "logoLabel": "Restaurant Logo",
+        "bannerLabel": "Restaurant Banner",
+        "uploadFile": "Upload bestand",
+        "dragAndDrop": "of sleep en laat vallen",
+        "fileFormats": "PNG, JPG tot 10MB",
+        "onlyPngJpgAllowed": "Alleen PNG, JPG en GIF bestanden zijn toegestaan",
+        "fileTooLarge": "Bestand moet kleiner zijn dan 10MB",
+        "requiredImagesError": "Beide afbeeldingen zijn verplicht om een restaurant toe te voegen",
+        "nextStepsTitle": "Wat gebeurt er hierna?"
+      },
+      "form": {
+        "basicInfoTitle": "Basisinformatie",
+        "subtitle": "Vul de gegevens in om een restaurant toe te voegen",
+        "restaurantNameLabel": "Restaurant Naam",
+        "restaurantNamePlaceholder": "Bijv. Restaurant De Gouden Lepel",
+        "addressPlaceholder": "Straatnaam 123",
+        "cityLabel": "Stad",
+        "cityPlaceholder": "Amsterdam",
+        "postalCodeLabel": "Postcode",
+        "postalCodePlaceholder": "1234 AB",
+        "countryLabel": "Land",
+        "countries": {
+          "netherlands": "Nederland",
+          "belgium": "België",
+          "germany": "Duitsland",
+          "france": "Frankrijk"
+        }
+      },
+      "navigation": {
+        "cancel": "Annuleren",
+        "previous": "Vorige",
+        "next": "Volgende",
+        "createAndStartOnboarding": "Maak aan & Start Onboarding"
+      }
+    },
+    "googleReviews": {
+      "title": "Google Reviews",
+      "subtitle": "Configureer Google Reviews link voor {{name}}",
+      "restaurant": "Restaurant",
+      "copyRestaurantInfo": "Kopieer restaurant informatie",
+      "setupTitle": "Google Review link instellen voor {{name}}",
+      "step1Title": "Zoek {{name}} op Google",
+      "openPlaceIdFinder": "Open Google Place ID Finder",
+      "step2Title": "Zoek onder \"Find the ID of a particular place\"",
+      "step2Description": "Typ \"{{name}}\" en selecteer het juiste resultaat",
+      "step3Title": "Kopieer de Place ID",
+      "step3Description": "Deze verschijnt onder de kaart (bijv: ChIJN1t_tDeuEmsRU...)",
+      "step4Title": "Plak de Place ID hieronder",
+      "step4Description": "Vervang alleen \"PLACE_ID\" met de gekopieerde ID van {{name}}",
+      "googleReviewLink": "Google Review Link",
+      "placeIdPlaceholder": "PLACE_ID",
+      "canChangeLabel": "Het restaurant kan dit later altijd wijzigen",
+      "cancel": "Annuleren",
+      "saveLink": "Link Opslaan",
+      "successMessage": "Review link toegevoegd! Klanten van {{name}} ontvangen na betaling een review verzoek."
+    },
+    "posModal": {
+      "title": "Stap 3: POS Systeem Koppeling",
+      "subtitle": "Configureer het kassasysteem van {{name}} voor automatische synchronisatie",
+      "restaurant": "Restaurant",
+      "posSystem": "POS Systeem",
+      "selectPosPlaceholder": "Selecteer het POS systeem van het restaurant",
+      "posUsername": "POS Gebruikersnaam",
+      "posPassword": "POS Wachtwoord",
+      "posUsernamePlaceholder": "POS account gebruikersnaam",
+      "posPasswordPlaceholder": "POS account wachtwoord",
+      "apiUrl": "API URL",
+      "apiUrlPlaceholder": "https://restaurant-pos-server.com",
+      "environment": "Omgeving",
+      "production": "Productie",
+      "staging": "Staging",
+      "development": "Development",
+      "test": "Test",
+      "activate": "Activeren",
+      "activateDescription": "Schakel deze POS integratie in voor {{name}}",
+      "testConnection": "Verbinding Testen",
+      "connectionSuccess": "Verbinding succesvol! POS is geconfigureerd.",
+      "fillRequiredFields": "Vul alle verplichte velden in voordat je de verbinding test.",
+      "providers": {
+        "untill": "Untill",
+        "lightspeed": "Lightspeed",
+        "epos": "EPOS Now",
+        "other": "Other"
+      }
+    },
+    "onboarding": {
+      "backToRestaurants": "Terug naar restaurants",
+      "restaurantOnboarding": "Restaurant Onboarding",
+      "progress": "Voortgang",
+      "step": "Stap",
+      "of": "van",
+      "sidebar": {
+        "steps": {
+          "personnel": {
+            "name": "Personeel",
+            "description": "Restaurant gebruikers toevoegen"
+          },
+          "stripe": {
+            "name": "Stripe",
+            "description": "Betaalaccount koppelen"
+          },
+          "posApi": {
+            "name": "POS API",
+            "description": "Kassasysteem integreren"
+          },
+          "qrHolders": {
+            "name": "QR houders",
+            "description": "Tafel QR codes configureren"
+          },
+          "googleReviews": {
+            "name": "Google Reviews",
+            "description": "Review link toevoegen"
+          }
+        },
+        "optionalLater": "Kun je ook later doen",
+        "guide": {
+          "title": "Onboarding handleiding",
+          "description": "Vergeten hoe onboarding werkt? Bekijk de stap-voor-stap guide.",
+          "viewGuide": "Bekijk handleiding"
+        },
+        "deleteRestaurant": "Restaurant Verwijderen",
+        "mobileTitle": "Onboarding Stappen"
+      },
+      "welcome": {
+        "title": "Welkom bij Splitty Onboarding!",
+        "subtitle": "Laten we {{restaurantName}} klaar maken voor de toekomst van restaurant betalingen",
+        "features": {
+          "personnel": {
+            "title": "Personeel",
+            "description": "Configureer toegang voor het restaurant team"
+          },
+          "payments": {
+            "title": "Betalingen",
+            "description": "Stel Stripe in voor het restaurant"
+          },
+          "posSystem": {
+            "title": "POS Systeem",
+            "description": "Koppel het kassasysteem"
+          },
+          "reviews": {
+            "title": "Reviews",
+            "description": "Configureer klantfeedback"
+          },
+          "qrStands": {
+            "title": "QR Stands",
+            "description": "Tafel QR codes en indeling"
+          }
+        },
+        "info": {
+          "estimatedTime": "10-15 minuten",
+          "estimatedTimeDesc": "Geschatte tijd",
+          "autoSaved": "Automatisch opgeslagen",
+          "autoSavedDesc": "Ga later verder",
+          "instantActive": "Direct actief",
+          "instantActiveDesc": "Na voltooiing"
+        },
+        "startButton": "Laten we beginnen"
+      },
+      "steps": {
+        "personnel": {
+          "title": "Stap 1: Restaurant Team",
+          "subtitle": "Voeg minimaal één manager toe om door te kunnen gaan",
+          "usersAdded": "{{count}} gebruikers toegevoegd",
+          "addNewUser": "Nieuwe gebruiker toevoegen",
+          "form": {
+            "firstName": "Voornaam",
+            "lastName": "Achternaam",
+            "email": "Email",
+            "phone": "Telefoon (optioneel)",
+            "password": "Wachtwoord",
+            "confirmPassword": "Bevestig Wachtwoord",
+            "passwordPlaceholder": "Minimaal 8 karakters",
+            "confirmPasswordPlaceholder": "Herhaal wachtwoord",
+            "firstNamePlaceholder": "Jan",
+            "lastNamePlaceholder": "Jansen",
+            "emailPlaceholder": "jan@restaurant.nl",
+            "phonePlaceholder": "+31 6 12345678",
+            "role": "Rol",
+            "staff": "Personeel",
+            "manager": "Manager",
+            "basicAccess": "Basis toegang",
+            "fullAccess": "Volledige toegang",
+            "addUser": "Gebruiker Toevoegen",
+            "roleLabel": "Rol"
+          },
+          "tip": "Tip:",
+          "tipMessage": "Voeg minimaal één manager toe. Je kunt later altijd meer gebruikers toevoegen via het gebruikersbeheer.",
+          "addNewUserForm": "Nieuwe gebruiker toevoegen"
+        },
+        "stripe": {
+          "title": "Stap 2: Stripe Connect",
+          "subtitle": "Configureer betalingsverwerking voor het restaurant",
+          "connected": "Gekoppeld",
+          "restaurant": "Restaurant",
+          "integration": {
+            "title": "Stripe Connect Integratie",
+            "description": "Stripe Connect stelt het restaurant in staat om veilig betalingen te ontvangen. Het restaurant beheert zijn eigen Stripe account en ontvangt uitbetalingen direct.",
+            "features": {
+              "secure": "Veilige Betalingen",
+              "secureDesc": "Volledig geïntegreerd en PCI compliant",
+              "direct": "Directe Uitbetalingen",
+              "directDesc": "Geld gaat direct naar restaurant",
+              "dashboard": "Real-time Dashboard",
+              "dashboardDesc": "Volg alle transacties",
+              "pciCompliant": "PCI Compliant",
+              "dailyPayout": "Dagelijkse uitbetaling",
+              "realTimeInsight": "Real-time inzicht"
+            },
+            "connectButton": "Verbind met Stripe",
+            "connectDescription": "Het restaurant zal zijn eigen Stripe account instellen"
+          },
+          "success": {
+            "title": "Stripe Succesvol Gekoppeld!",
+            "description": "Betalingsverwerking is nu geconfigureerd voor {{restaurantName}}",
+            "accountId": "Account ID",
+            "connectedAt": "Gekoppeld op",
+            "status": "Status",
+            "active": "Actief",
+            "testConnection": "Test Verbinding",
+            "disconnect": "Ontkoppelen"
+          },
+          "tip": "Tip:",
+          "tipConnected": "Stripe is verbonden en klaar. Je kunt doorgaan naar de volgende stap.",
+          "tipNotConnected": "Verbind Stripe om betalingsverwerking voor dit restaurant in te schakelen."
+        },
+        "pos": {
+          "title": "Stap 3: POS Systeem Koppeling",
+          "subtitle": "Configureer het kassasysteem van {{restaurantName}} voor automatische synchronisatie",
+          "restaurant": "Restaurant",
+          "posSystem": "POS Systeem",
+          "selectPos": "Selecteer het POS systeem van het restaurant",
+          "posUsername": "POS Gebruikersnaam",
+          "posPassword": "POS Wachtwoord",
+          "posUsernamePlaceholder": "POS account gebruikersnaam",
+          "posPasswordPlaceholder": "POS account wachtwoord",
+          "apiUrl": "API URL",
+          "apiUrlPlaceholder": "https://restaurant-pos-server.com",
+          "environment": "Omgeving",
+          "production": "Productie",
+          "staging": "Staging",
+          "development": "Development",
+          "test": "Test",
+          "activate": "Activeren",
+          "activateDescription": "Schakel deze POS integratie in voor {{restaurantName}}",
+          "testConnection": "Verbinding Testen"
+        },
+        "qrHolders": {
+          "title": "Stap 4: QR houders",
+          "subtitle": "Configureer QR stands en tafelindeling voor {{restaurantName}}",
+          "selectDesign": "Selecteer QR Stand Design",
+          "tablesPerSection": "Aantal Tafels per Sectie",
+          "sections": {
+            "bar": "Bar",
+            "inside": "Binnen",
+            "terrace": "Terras",
+            "lounge": "Lounge"
+          },
+          "totalTables": "Totaal aantal tafels",
+          "totalTablesDesc": "Automatisch berekend op basis van alle secties",
+          "floorPlan": {
+            "title": "Plattegrond Upload (Optioneel)",
+            "uploadText": "Sleep bestanden hier of klik om te uploaden",
+            "fileTypes": "PNG, JPG, PDF - Max 5MB per bestand - Meerdere bestanden toegestaan",
+            "description": "Upload plattegronden, foto's of documenten van het restaurant (meerdere bestanden mogelijk)"
+          }
+        },
+        "googleReviews": {
+          "title": "Stap 5: Google Reviews",
+          "subtitle": "Configureer Google Reviews link voor {{restaurantName}}",
+          "restaurant": "Restaurant",
+          "copyInfo": "Kopieer restaurant informatie",
+          "setupTitle": "Google Review link instellen voor {{restaurantName}}",
+          "step1": "Zoek {{restaurantName}} op Google",
+          "openFinder": "Open Google Place ID Finder",
+          "step2": "Zoek onder \"Find the ID of a particular place\"",
+          "step2Desc": "Typ \"{{restaurantName}}\" en selecteer het juiste resultaat",
+          "step3": "Kopieer de Place ID",
+          "step3Desc": "Deze verschijnt onder de kaart (bijv: ChIJN1t_tDeuEmsRU...)",
+          "step4": "Plak de Place ID hieronder",
+          "step4Desc": "Vervang alleen \"PLACE_ID\" met de gekopieerde ID van {{restaurantName}}",
+          "reviewLink": "Google Review Link",
+          "placeIdPlaceholder": "PLACE_ID",
+          "canChangeLabel": "Het restaurant kan dit later altijd wijzigen"
+        },
+        "navigation": {
+          "previous": "Vorige",
+          "next": "Volgende Stap",
+          "complete": "Onboarding Afronden"
+        }
+      }
+    }
+  },
+  "users": {
+    "title": "Splitty Team",
+    "subtitle": "Beheer teamleden en hun rechten",
+    "newUser": "Teamlid Toevoegen",
+    "stats": {
+      "totalUsers": "TOTAAL GEBRUIKERS",
+      "activeUsers": "ACTIEVE GEBRUIKERS",
+      "adminUsers": "BEHEERDERS"
+    },
+    "search": "Zoek teamleden...",
+    "table": {
+      "name": "Naam",
+      "email": "E-mail",
+      "role": "Rol",
+      "status": "Status",
+      "lastLogin": "Laatst Ingelogd",
+      "actions": "Acties"
+    },
+    "roles": {
+      "ceo": "CEO & Founder",
+      "admin": "Beheerder",
+      "accountManager": "Account Manager",
+      "support": "Support",
+      "developer": "Ontwikkelaar"
+    },
+    "status": {
+      "active": "Actief",
+      "inactive": "Inactief",
+      "pending": "In behandeling"
+    },
+    "foundResults": "gebruikers gevonden",
+    "noResults": "Geen gebruikers gevonden",
+    "adjustFilters": "Probeer je zoekfilters aan te passen",
+    "stats": {
+      "totalUsers": "TOTAAL GEBRUIKERS",
+      "activeUsers": "ACTIEVE GEBRUIKERS",
+      "adminUsers": "BEHEERDERS",
+      "supportTeam": "SUPPORT TEAM"
+    }
+  },
+  "orders": {
+    "title": "Alle Splitty's",
+    "subtitle": "Bekijk en beheer alle gesplitste betalingstransacties",
+    "splittyTransactions": "Splitty Transacties",
+    "backToRestaurant": "Terug naar {{name}}",
+    "viewAllOrdersPayments": "Bekijk alle bestellingen en betalingen voor {{name}}",
+    "searchPlaceholder": "Zoek order nummer of tafel...",
+    "table": "Tafel",
+    "tableNumber": "Tafel {{number}}",
+    "amounts": "Bedragen",
+    "paymentMethod": "Betaalmethode",
+    "noPaymentsFound": "Geen betalingen gevonden",
+    "tryAdjustingFilters": "Probeer je filters aan te passen",
+    "pagination": {
+      "showing": "Toont {{start}} tot {{end}} van {{total}} betalingen"
+    },
+    "stats": {
+      "totalOrders": "TOTAAL BESTELLINGEN",
+      "todayOrders": "VANDAAG BESTELLINGEN",
+      "totalVolume": "TOTAAL VOLUME",
+      "totalPayments": "Totaal Betalingen",
+      "totalAmount": "Totaal Bedrag",
+      "allTransactions": "Alle transacties",
+      "completed": "Voltooid",
+      "successfullyPaid": "Succesvol betaald",
+      "paid": "betaald"
+    },
+    "search": "Zoek bestellingen...",
+    "filters": {
+      "all": "Alle transacties",
+      "today": "Vandaag",
+      "week": "Deze Week",
+      "thisWeek": "Deze Week",
+      "month": "Deze Maand",
+      "thisMonth": "Deze Maand",
+      "allStatus": "Alle Status",
+      "allPayments": "Alle Betalingen",
+      "creditCard": "Creditcard",
+      "cash": "Contant",
+      "active": "Actief",
+      "completed": "Voltooid",
+      "allRestaurants": "Alle Restaurants"
+    },
+    "table": {
+      "orderId": "Bestelling ID",
+      "restaurant": "Restaurant",
+      "table": "Tafel",
+      "amount": "Bedrag",
+      "guests": "Gasten",
+      "status": "Status",
+      "date": "Datum",
+      "actions": "Acties"
+    },
+    "status": {
+      "completed": "Voltooid",
+      "pending": "In behandeling",
+      "partial": "Gedeeltelijk", 
+      "cancelled": "Geannuleerd",
+      "paid": "Betaald",
+      "inProgress": "In Progress"
+    },
+    "extra": {
+      "activeOrders": "ACTIEVE BESTELLINGEN",
+      "transactionRevenue": "TRANSACTIE OMZET"
+    },
+    "details": {
+      "backButton": "Terug",
+      "refresh": "Vernieuwen",
+      "orderDetails": "Bestel Details",
+      "subtitle": "Bestel details en betaling informatie",
+      "createdAt": "Aangemaakt op {{date}}",
+      "restaurantId": "Restaurant ID",
+      "posTransactionId": "POS Transactie ID",
+      "tableInfo": "Tafel Informatie",
+      "customer": "Klant",
+      "totalAmount": "Totaal Bedrag",
+      "paidAmount": "Betaald Bedrag",
+      "remainingAmount": "Resterend Bedrag",
+      "status": "Status",
+      "splitMode": "Split Modus",
+      "orderItems": "Bestel Items",
+      "itemsInOrder": "{{count}} items in deze bestelling",
+      "item": "Artikel",
+      "quantity": "Aantal",
+      "unitPrice": "Stukprijs",
+      "total": "Totaal",
+      "paymentStatus": "Betaalstatus",
+      "paid": "Betaald",
+      "payments": "Betalingen",
+      "paymentsForOrder": "{{count}} betaling(en) voor deze bestelling",
+      "id": "ID",
+      "method": "Methode",
+      "tip": "Fooi",
+      "date": "Datum",
+      "completedOn": "Voltooid op {{date}}",
+      "betaald": "Betaald"
+    },
+    "foundResults": "Splitty transacties gevonden",
+    "noResults": "Geen Splitty transacties gevonden",
+    "adjustFilters": "Probeer je filters aan te passen of selecteer een ander restaurant"
+  },
+  "payments": {
+    "title": "Betalingen",
+    "subtitle": "Volg alle betalingstransacties",
+    "details": {
+      "paymentDetails": "Betaling Details",
+      "transactionInfo": "Betaling details en transactie informatie",
+      "refresh": "Vernieuwen",
+      "payForItems": "Betaal voor Items",
+      "subtitle": "Betaling details en transactie informatie",
+      "orderId": "Bestel ID",
+      "restaurant": "Restaurant",
+      "tableNumber": "Tafelnummer",
+      "splitMode": "Split Modus",
+      "payForItems": "Betaal voor Items",
+      "status": "Status",
+      "completedOn": "Voltooid op",
+      "customerInfo": "Klant Informatie",
+      "name": "Naam",
+      "email": "Email",
+      "phone": "Telefoon",
+      "notProvided": "Niet opgegeven",
+      "paymentInfo": "Betaling Informatie",
+      "paymentMethod": "Betaalmethode",
+      "amount": "Bedrag",
+      "tip": "Fooi",
+      "processingFees": "Verwerkingskosten",
+      "netAmount": "Netto Bedrag",
+      "technicalDetails": "Technische Details",
+      "stripePaymentId": "Stripe Betaling ID",
+      "stripeChargeId": "Stripe Kosten ID",
+      "posTransactionId": "POS Transactie ID",
+      "paidItems": "Betaalde Items",
+      "ipAddress": "IP Adres"
+    },
+    "filters": {
+      "allStatuses": "Alle Statussen",
+      "succeeded": "Geslaagd",
+      "failed": "Mislukt",
+      "pending": "In Behandeling"
+    },
+    "table": {
+      "paymentId": "Betaling ID",
+      "order": "Bestelling",
+      "restaurant": "Restaurant",
+      "amount": "Bedrag",
+      "method": "Methode",
+      "status": "Status",
+      "date": "Datum",
+      "view": "Bekijk"
+    },
+    "stats": {
+      "totalPayments": "TOTAAL BETALINGEN",
+      "succeeded": "GESLAAGD",
+      "totalAmount": "TOTAAL BEDRAG", 
+      "failed": "MISLUKT"
+    },
+    "breadcrumb": "Betalingen",
+    "subtitle": "Beheer alle betalingstransacties", 
+    "viewPayouts": "Bekijk Uitbetalingen",
+    "export": "Exporteer",
+    "searchPlaceholder": "Zoek op betaling ID, bestelling ID, of restaurant...",
+    "dateFilters": {
+      "today": "Vandaag",
+      "last7days": "Afgelopen 7 Dagen",
+      "last30days": "Afgelopen 30 Dagen", 
+      "allTime": "Alle Tijd"
+    },
+    "tableFooter": {
+      "showing": "Toont {{count}} betalingen"
+    },
+    "emptyState": {
+      "message": "Geen betalingen gevonden die voldoen aan je criteria."
+    },
+    "payouts": {
+      "title": "Uitbetalingen",
+      "subtitle": "Beheer restaurant uitbetalingen en afrekeningen",
+      "stats": {
+        "totalPayouts": "TOTAAL UITBETALINGEN",
+        "paidOut": "UITBETAALD",
+        "processing": "IN BEHANDELING",
+        "restaurants": "RESTAURANTS"
+      },
+      "searchPlaceholder": "Zoek op uitbetaling ID of restaurant...",
+      "filters": {
+        "allStatuses": "Alle Statussen"
+      },
+      "status": {
+        "paid": "Uitbetaald",
+        "pending": "In Behandeling"
+      },
+      "amount": "Bedrag",
+      "period": "Periode",
+      "orders": "Bestellingen",
+      "bankAccount": "Bankrekening",
+      "created": "Aangemaakt",
+      "expected": "Verwacht",
+      "details": "Details",
+      "noResults": "Geen uitbetalingen gevonden die voldoen aan je criteria."
+    }
+  },
+  "pos": {
+    "title": "POS Connecties",
+    "subtitle": "Beheer Point of Sale integraties",
+    "stats": {
+      "connected": "VERBONDEN",
+      "pending": "SETUP BENODIGD",
+      "issues": "MET PROBLEMEN",
+      "totalRestaurants": "TOTAAL RESTAURANTS",
+      "active": "ACTIEF",
+      "notConnected": "NIET VERBONDEN"
+    },
+    "providers": {
+      "lightspeed": "Lightspeed",
+      "square": "Square",
+      "clover": "Clover",
+      "toast": "Toast",
+      "other": "Anders"
+    },
+    "refreshing": "Vernieuwen...",
+    "refreshStatus": "Ververs Status",
+    "attentionRequired": "Aandacht vereist",
+    "configure": "Configureer",
+    "details": "Details",
+    "restaurantStatus": "Restaurant POS Status",
+    "status": {
+      "active": "Actief",
+      "inactive": "Inactief",
+      "notConnected": "Niet verbonden"
+    },
+    "notifications": {
+      "connectionLost": "POS Verbinding Verloren",
+      "systemNotReachable": "POS systeem is niet bereikbaar",
+      "inactive": "POS Inactief",
+      "systemInactive": "POS systeem is inactief",
+      "notConfigured": "POS Niet Geconfigureerd",
+      "integrationSetup": "POS integratie moet nog worden ingesteld"
+    },
+    "noActiveRestaurants": "Geen actieve restaurants",
+    "addFirstRestaurant": "Begin met het toevoegen van je eerste restaurant partner.",
+    "addRestaurant": "Voeg Restaurant Toe"
+  },
+  "settings": {
+    "title": "Instellingen",
+    "subtitle": "Beheer je accountinstellingen en voorkeuren",
+    "tabs": {
+      "general": "Algemeen",
+      "profile": "Profiel",
+      "notifications": "Notificaties",
+      "security": "Beveiliging",
+      "billing": "Facturering",
+      "integrations": "Integraties"
+    },
+    "general": {
+      "title": "Algemene Instellingen",
+      "language": "Taal",
+      "timezone": "Tijdzone",
+      "currency": "Valuta",
+      "dateFormat": "Datumformaat"
+    },
+    "profile": {
+      "title": "Profiel Instellingen",
+      "personalInfo": "Persoonlijke Informatie",
+      "changePassword": "Wachtwoord Wijzigen",
+      "twoFactor": "Twee-Factor Authenticatie",
+      "profilePhoto": "Profielfoto",
+      "removePhoto": "Verwijder profielfoto",
+      "clickToUpload": "Klik om te uploaden",
+      "orDragHere": "of sleep hierheen",
+      "fileFormats": "PNG, JPG, GIF • Max 5MB",
+      "firstName": "Voornaam",
+      "lastName": "Achternaam",
+      "role": "Functie",
+      "bio": "Bio",
+      "bioPlaceholder": "Vertel iets over jezelf...",
+      "invalidFileType": "Alleen PNG, JPG en GIF bestanden zijn toegestaan",
+      "fileTooLarge": "Bestand is te groot. Maximaal 5MB toegestaan."
+    },
+    "notifications": {
+      "title": "Notificatie Voorkeuren",
+      "emailNotifications": "E-mail Notificaties",
+      "pushNotifications": "Push Notificaties",
+      "smsNotifications": "SMS Notificaties"
+    },
+    "security": {
+      "title": "Beveiligingsinstellingen",
+      "incorrectPassword": "Huidig wachtwoord is onjuist",
+      "passwordMismatch": "Nieuwe wachtwoorden komen niet overeen"
+    },
+    "billing": {
+      "title": "Betaalmethoden"
+    },
+    "integrations": {
+      "title": "Integraties & Webhooks"
+    },
+    "legal": {
+      "title": "Juridisch",
+      "description": "Documenten & compliance"
+    },
+    "changesSaved": "Wijzigingen opgeslagen!",
+    "saved": "Opgeslagen",
+    "saveChanges": "Wijzigingen Opslaan"
+  },
+  "support": {
+    "title": "Support",
+    "subtitle": "Chat met restaurants en behandel support tickets",
+    "tabs": {
+      "activeChats": "Actieve Chats",
+      "tickets": "Support Tickets",
+      "knowledge": "Kennisbank"
+    },
+    "searchRestaurants": "Zoek restaurants...",
+    "newMessages": "nieuwe berichten",
+    "restaurants": "restaurants",
+    "noConversations": "Geen support gesprekken",
+    "conversation": "Support gesprek",
+    "restaurant": "Restaurant",
+    "support": "Support",
+    "messageInput": "Type je bericht...",
+    "sendMessage": "Verstuur",
+    "time": {
+      "now": "Nu",
+      "minAgo": "min geleden",
+      "hoursAgo": "uur geleden",
+      "daysAgo": "dagen geleden"
+    },
+    "status": {
+      "active": "Actief"
+    }
+  },
+  "knowledgeBase": {
+    "title": "Kennisbank",
+    "subtitle": "Documentatie en bronnen voor het team",
+    "search": "Zoek artikelen...",
+    "categories": {
+      "gettingStarted": "Aan de Slag",
+      "restaurants": "Restaurant Onboarding",
+      "payments": "Betalingen",
+      "support": "Support",
+      "integrations": "Integraties",
+      "troubleshooting": "Probleemoplossing",
+      "posSystems": "POS Systemen",
+      "supportProcedures": "Support Procedures",
+      "faqTips": "FAQ & Tips"
+    },
+    "articles": {
+      "welcome": "Welkom bij Splitty",
+      "firstRestaurant": "Je Eerste Restaurant",
+      "teamRoles": "Team Rollen & Permissies",
+      "onboardGuide": "Complete Onboarding Guide",
+      "personnelSetup": "Personeel Toevoegen",
+      "stripeSetup": "Stripe Connect Setup",
+      "posIntegration": "POS Integratie",
+      "untillSetup": "Untill API Setup",
+      "lightspeedSetup": "Lightspeed Integratie",
+      "posTroubleshooting": "POS Troubleshooting",
+      "paymentFlow": "Payment Flow Uitleg",
+      "stripeDashboard": "Stripe Dashboard Guide",
+      "refunds": "Refunds & Chargebacks",
+      "ticketSystem": "Ticket Systeem",
+      "escalation": "Escalatie Procedures",
+      "commonIssues": "Veelvoorkomende Issues",
+      "restaurantFaq": "Restaurant FAQ",
+      "technicalFaq": "Technische FAQ",
+      "bestPractices": "Best Practices"
+    },
+    "quickStats": {
+      "title": "Quick Stats",
+      "totalArticles": "Totale Artikelen",
+      "categories": "Categorieën",
+      "lastUpdate": "Laatste Update",
+      "today": "Vandaag"
+    },
+    "readingTime": "10 min leestijd",
+    "lastUpdated": "Laatst bijgewerkt: Vandaag",
+    "wasUseful": "Was dit artikel nuttig?",
+    "yes": "Ja",
+    "no": "Nee",
+    "relatedArticles": "Gerelateerde Artikelen",
+    "readMore": "Lees meer over dit onderwerp"
+  },
+  "testOrder": {
+    "title": "Test Bestelling",
+    "subtitle": "Maak een test bestelling voor debugging en testen",
+    "form": {
+      "selectRestaurant": "Selecteer Restaurant",
+      "tableNumber": "Tafelnummer",
+      "guestCount": "Aantal Gasten",
+      "orderAmount": "Bestelbedrag",
+      "createOrder": "Maak Test Bestelling",
+      "chooseRestaurant": "Kies een restaurant...",
+      "tableNumberPlaceholder": "bijv. 12, A3, Terras-5"
+    },
+    "menu": {
+      "starters": "Voorgerechten",
+      "mains": "Hoofdgerechten",
+      "desserts": "Desserts",
+      "drinks": "Dranken"
+    },
+    "actions": {
+      "add": "Toevoegen",
+      "clearCart": "Leeg maken"
+    },
+    "cart": {
+      "title": "Winkelwagen",
+      "items": "items",
+      "selectItems": "Selecteer items uit het menu",
+      "perItem": "per stuk"
+    },
+    "orderSummary": {
+      "subtotal": "Subtotaal",
+      "serviceFee": "Service fee (3%)",
+      "total": "Totaal"
+    },
+    "validation": {
+      "fillAllFields": "Selecteer een restaurant, voer een tafelnummer in en voeg items toe aan de winkelwagen",
+      "orderSent": "Testbestelling succesvol verstuurd!",
+      "selectRestaurant": "Selecteer eerst een restaurant",
+      "enterTableNumber": "Voer een tafelnummer in"
+    },
+    "testModeActive": "Test Modus Actief",
+    "testModeInfo": {
+      "title": "Test Modus Info",
+      "description": "Deze bestelling wordt alleen gesimuleerd. Er worden geen echte transacties uitgevoerd."
+    }
+  },
+  "tables": {
+    "title": "Actieve Tafels",
+    "breadcrumb": "Actieve Tafels",
+    "subtitle": "Overzicht van alle actieve tafels per restaurant",
+    "refresh": "Ververs",
+    "search": "Zoeken",
+    "searchPlaceholder": "Zoek op restaurant, tafel nummer, of bestelling ID...",
+    "stats": {
+      "activeTables": "ACTIEVE TAFELS",
+      "totalGuests": "TOTAAL GASTEN",
+      "totalAmount": "TOTAAL BEDRAG",
+      "remaining": "NOG TE BETALEN"
+    },
+    "restaurantProfile": "Restaurant Profiel",
+    "activeTablesCount": "{{count}} actieve tafels",
+    "table": {
+      "table": "Tafel",
+      "orderNumber": "Bestelling #",
+      "guests": "Gasten",
+      "amount": "Bedrag",
+      "remaining": "Resterend",
+      "duration": "Duur",
+      "viewOrder": "Bekijk Bestelling"
+    },
+    "status": {
+      "unpaid": "Onbetaald",
+      "partial": "Gedeeltelijk"
+    },
+    "emptyState": {
+      "message": "Geen actieve tafels gevonden die voldoen aan je criteria.",
+      "noTables": "Geen tafels gevonden",
+      "adjustSearch": "Probeer je zoekopdracht aan te passen"
+    },
+    "restaurant": {
+      "breadcrumb": "Tafel Overzicht",
+      "backTo": "Terug naar {{restaurant}}",
+      "title": "Tafel Overzicht",
+      "subtitle": "Monitor alle tafels in {{restaurant}}",
+      "stats": {
+        "totalTables": "Totaal Tafels",
+        "empty": "Leeg",
+        "occupied": "Bezet"
+      },
+      "searchPlaceholder": "Zoek tafel nummer...",
+      "filters": {
+        "all": "Alle",
+        "empty": "Leeg",
+        "occupied": "Bezet"
+      },
+      "sections": {
+        "occupied": "Bezette Tafels",
+        "occupiedDesc": "Tafels met actieve bestellingen",
+        "empty": "Lege Tafels",
+        "emptyDesc": "Beschikbare tafels voor nieuwe gasten"
+      },
+      "card": {
+        "table": "Tafel",
+        "guests": "gasten",
+        "available": "Beschikbaar",
+        "empty": "Leeg",
+        "occupied": "Bezet",
+        "order": "Order #",
+        "amount": "Bedrag",
+        "paid": "Betaald",
+        "duration": "Duur",
+        "viewDetails": "Bekijk Details",
+        "openLink": "Open Link",
+        "readyForGuests": "Klaar voor gasten",
+        "waitingForOrder": "Wacht op nieuwe bestelling"
+      }
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Hier zijn de inzichten van vandaag",
+    "greeting": {
+      "morning": "Goedemorgen",
+      "afternoon": "Goedemiddag",
+      "evening": "Goedenavond"
+    },
+    "filters": {
+      "allStores": "Alle vestigingen",
+      "allRestaurants": "Alle Restaurants",
+      "today": "Vandaag",
+      "yesterday": "Gisteren",
+      "last7days": "Afgelopen 7 dagen",
+      "last30days": "Afgelopen 30 dagen",
+      "last90days": "Afgelopen 90 dagen",
+      "last365days": "Afgelopen 365 dagen",
+      "lastWeek": "Afgelopen week",
+      "lastMonth": "Afgelopen maand",
+      "lastQuarter": "Afgelopen kwartaal",
+      "lastYear": "Afgelopen jaar",
+      "weekToDate": "Week tot nu",
+      "monthToDate": "Maand tot nu",
+      "quarterToDate": "Kwartaal tot nu",
+      "yearToDate": "Jaar tot nu",
+      "thisMonth": "Deze maand",
+      "previousMonth": "Vorige maand",
+      "custom": "Aangepast",
+      "compareWithPrevious": "Vergelijk met vorige periode",
+      "compare": "Vergelijk",
+      "from": "Van",
+      "to": "Tot",
+      "cancel": "Annuleren",
+      "apply": "Toepassen"
+    },
+    "stats": {
+      "splittyRevenue": {
+        "title": "Splitty Omzet",
+        "description": "Totale inkomsten vandaag"
+      },
+      "processedPayments": {
+        "title": "Verwerkte Betalingen",
+        "description": "Totaal transactievolume"
+      },
+      "totalTransactions": {
+        "title": "Aantal Transacties",
+        "description": "Totaal aantal betalingen"
+      },
+      "averageAmount": {
+        "title": "Gemiddeld Bedrag",
+        "description": "Per transactie"
+      },
+      "activeRestaurants": {
+        "title": "Actieve Restaurants",
+        "description": "Live op Splitty"
+      },
+      "tableSize": {
+        "title": "Tafelgrootte",
+        "description": "Gemiddeld per tafel",
+        "unit": "personen"
+      },
+      "peak": "Piek",
+      "revenue": {
+        "title": "Omzet"
+      },
+      "transactions": {
+        "title": "Transacties"
+      }
+    },
+    "analytics": {
+      "title": "Analytics",
+      "views": {
+        "total": "Totaal",
+        "restaurant": "Restaurant",
+        "region": "Regio"
+      },
+      "metrics": {
+        "stripeCosts": "Stripe Kosten",
+        "netProfit": "Nettowinst",
+        "margin": "marge",
+        "perTransaction": "per transactie",
+        "ofRevenue": "van omzet",
+        "ofVolume": "van volume"
+      },
+      "regions": {
+        "northHolland": "Noord-Holland",
+        "southHolland": "Zuid-Holland",
+        "utrecht": "Utrecht"
+      }
+    },
+    "sections": {
+      "financialOverview": {
+        "title": "Financieel Overzicht",
+        "stripeCosts": "Stripe Kosten",
+        "netProfit": "Nettowinst",
+        "profit": "Winst",
+        "loss": "Verlies",
+        "perTransaction": "per transactie",
+        "transactionCosts": "Transactiekosten alle betaalmethoden"
+      },
+      "openQuotations": {
+        "title": "Open Offertes",
+        "viewAll": "Bekijk alles",
+        "status": {
+          "urgent": "Urgent",
+          "pending": "In behandeling"
+        },
+        "time": {
+          "hoursAgo": "uur geleden",
+          "dayAgo": "dag geleden"
+        }
+      },
+      "bestPerforming": {
+        "title": "Best Presterende Restaurants",
+        "subtitle": "Op basis van omzet",
+        "liveRankings": "Live Rankings",
+        "exportCSV": "Exporteer CSV",
+        "inRevenue": "in omzet",
+        "columns": {
+          "restaurant": "Restaurant",
+          "revenue": "Omzet",
+          "transactions": "Transacties",
+          "rating": "Beoordeling"
+        },
+        "splittyFee": "Splitty Kosten"
+      },
+      "partners": {
+        "title": "Partners & Integraties",
+        "types": {
+          "paymentProvider": "Betaalprovider",
+          "posIntegration": "POS Integratie"
+        },
+        "status": {
+          "active": "Actief",
+          "pending": "In behandeling"
+        }
+      }
+    },
+    "chart": {
+      "title": "Analytics Dashboard",
+      "allMetrics": "Alle Statistieken",
+      "perHour": "Per uur",
+      "perDay": "Per dag",
+      "metrics": {
+        "all": "Alle statistieken",
+        "revenue": "Omzet",
+        "payments": "Betalingen",
+        "tips": "Fooien"
+      },
+      "labels": {
+        "revenue": "Splitty Omzet",
+        "payments": "Verwerkte Betalingen",
+        "transactions": "Totaal Transacties",
+        "averageAmount": "Gemiddeld Bedrag",
+        "tableSize": "Gem. Tafelgrootte"
+      },
+      "noData": "Geen data beschikbaar"
+    },
+    "quickActions": {
+      "title": "Snelle Acties",
+      "addRestaurant": "Restaurant Toevoegen",
+      "viewReports": "Rapporten Bekijken",
+      "manageUsers": "Gebruikers Beheren",
+      "settings": "Instellingen"
+    }
+  },
+  "settings": {
+    "title": "Instellingen",
+    "subtitle": "Beheer je accountinstellingen en voorkeuren",
+    "saveChanges": "Wijzigingen Opslaan",
+    "saved": "Opgeslagen",
+    "tabs": {
+      "profile": "Profiel",
+      "general": "Algemeen",
+      "notifications": "Notificaties",
+      "billing": "Facturering & Betaling",
+      "security": "Beveiliging",
+      "integrations": "API & Integraties"
+    },
+    "profile": {
+      "title": "Persoonlijke Profielinstellingen",
+      "personalInfo": "Beheer je persoonlijke informatie en voorkeuren",
+      "profilePhoto": "Profielfoto",
+      "removePhoto": "Foto verwijderen",
+      "clickToUpload": "Klik om te uploaden",
+      "orDragHere": "of sleep hierheen",
+      "fileFormats": "SVG, PNG, JPG of GIF (max. 5MB)",
+      "firstName": "Voornaam",
+      "lastName": "Achternaam",
+      "role": "Rol",
+      "bio": "Bio",
+      "bioPlaceholder": "Vertel ons iets over jezelf",
+      "invalidFileType": "Upload een afbeeldingsbestand (JPG, PNG, GIF, SVG)",
+      "fileTooLarge": "Bestandsgrootte moet minder dan 5MB zijn"
+    },
+    "general": {
+      "title": "Algemene Instellingen",
+      "companyInfo": "Bedrijfsinformatie",
+      "companyInfoDesc": "Deze informatie wordt weergegeven op je publieke profiel",
+      "companyName": "Bedrijfsnaam",
+      "contactEmail": "Contact E-mail",
+      "phone": "Telefoonnummer",
+      "website": "Website",
+      "kvkNumber": "KVK Nummer",
+      "vatNumber": "BTW Nummer",
+      "address": "Adres",
+      "streetAddress": "Straat en huisnummer",
+      "postalCode": "Postcode",
+      "city": "Stad",
+      "country": "Land",
+      "countries": {
+        "netherlands": "Nederland",
+        "belgium": "België",
+        "germany": "Duitsland",
+        "france": "Frankrijk"
+      },
+      "timezone": "Tijdzone"
+    },
+    "notifications": {
+      "title": "Notificatie Instellingen",
+      "emailNotifications": "E-mail Notificaties",
+      "emailNotificationsDesc": "Beheer welke e-mails je wilt ontvangen",
+      "newOrders": "Nieuwe Bestellingen",
+      "newOrdersDesc": "Ontvang melding bij nieuwe bestellingen",
+      "paymentReceived": "Betaling Ontvangen",
+      "paymentReceivedDesc": "Notificatie voor succesvolle betalingen",
+      "payoutSent": "Uitbetaling Verstuurd",
+      "payoutSentDesc": "Updates wanneer uitbetalingen worden verwerkt",
+      "lowInventory": "Lage Voorraad",
+      "lowInventoryDesc": "Waarschuwing wanneer items bijna op zijn",
+      "newReviews": "Nieuwe Reviews",
+      "newReviewsDesc": "Klantbeoordelingen en ratings",
+      "marketingUpdates": "Marketing Updates",
+      "marketingUpdatesDesc": "Product updates en aankondigingen",
+      "pushNotifications": "Push Notificaties",
+      "pushNotificationsDesc": "Beheer mobiele app notificaties",
+      "orderUpdates": "Bestelling Updates",
+      "orderUpdatesDesc": "Real-time updates over bestellingen",
+      "paymentAlerts": "Betaling Alerts",
+      "paymentAlertsDesc": "Directe notificaties bij betalingen",
+      "staffMessages": "Personeel Berichten",
+      "staffMessagesDesc": "Communicatie van teamleden",
+      "labels": {
+        "important": "Belangrijk",
+        "recommended": "Aanbevolen"
+      }
+    },
+    "billing": {
+      "title": "Facturering & Betaling Instellingen",
+      "paymentMethods": "Betaalmethoden",
+      "paymentMethodsDesc": "Configureer je betalingsverwerkingsopties",
+      "stripeTitle": "Stripe",
+      "stripeDesc": "Verwerk betalingen met Stripe",
+      "connected": "Verbonden",
+      "publishableKey": "Publishable Key",
+      "payoutSettings": "Uitbetalingsinstellingen",
+      "payoutSettingsDesc": "Configureer automatische uitbetalingen aan restaurants",
+      "payoutFrequency": "Uitbetalingsfrequentie",
+      "minimumPayout": "Minimum Uitbetalingsbedrag",
+      "frequencies": {
+        "daily": "Dagelijks",
+        "weekly": "Wekelijks",
+        "biweekly": "Tweewekelijks",
+        "monthly": "Maandelijks"
+      }
+    },
+    "security": {
+      "title": "Beveiligingsinstellingen",
+      "securitySettings": "Beveiligingsinstellingen",
+      "securitySettingsDesc": "Beheer je account beveiligingsvoorkeuren",
+      "currentPassword": "Huidig Wachtwoord",
+      "newPassword": "Nieuw Wachtwoord",
+      "confirmPassword": "Bevestig Nieuw Wachtwoord",
+      "twoFactorAuth": "Twee-Factor Authenticatie",
+      "twoFactorAuthDesc": "Voeg een extra beveiligingslaag toe aan je account",
+      "twoFactorEnabled": "Twee-Factor Authenticatie is ingeschakeld",
+      "twoFactorEnabledDesc": "Je account is beveiligd met 2FA",
+      "disable": "Uitschakelen",
+      "loginSessions": "Login Sessies",
+      "loginSessionsDesc": "Beheer je actieve login sessies",
+      "currentSession": "Huidige sessie",
+      "revoke": "Intrekken"
+    },
+    "integrations": {
+      "title": "API & Integraties"
+    },
+    "legal": {
+      "title": "Juridisch & Privacy",
+      "description": "Juridische documenten en privacy-instellingen"
+    }
+  },
+  "login": {
+    "welcomeBack": "Welkom terug!",
+    "subtitle": "Log in op je Splitty Super Admin account",
+    "email": "E-mailadres",
+    "emailPlaceholder": "je@email.nl",
+    "password": "Wachtwoord",
+    "passwordPlaceholder": "••••••••",
+    "rememberMe": "Onthoud mij",
+    "forgotPassword": "Wachtwoord vergeten?",
+    "signIn": "Inloggen",
+    "signingIn": "Inloggen...",
+    "noAccount": "Nog geen account?",
+    "contactUs": "Neem contact op",
+    "invalidCredentials": "Ongeldige e-mail of wachtwoord",
+    "copyright": "© 2025 Splitty B.V. Alle rechten voorbehouden."
+  },
+  "team": {
+    "new": {
+      "backToTeam": "Terug naar team overzicht",
+      "addNewEmployee": "Nieuwe Medewerker Toevoegen",
+      "personalInfo": "Persoonlijke Gegevens",
+      "firstName": "Voornaam",
+      "lastName": "Achternaam",
+      "email": "E-mailadres",
+      "phone": "Telefoonnummer",
+      "security": "Beveiliging",
+      "password": "Wachtwoord",
+      "confirmPassword": "Bevestig Wachtwoord",
+      "passwordStrength": "Wachtwoord sterkte",
+      "passwordStrengthLevels": {
+        "veryWeak": "Zeer zwak",
+        "weak": "Zwak",
+        "fair": "Matig",
+        "strong": "Sterk",
+        "veryStrong": "Zeer sterk"
+      },
+      "passwordsMatch": "Wachtwoorden komen overeen",
+      "passwordsNoMatch": "Wachtwoorden komen niet overeen",
+      "roleAccess": "Rol & Toegang",
+      "selectRole": "Selecteer Rol",
+      "roles": {
+        "ceo": {
+          "label": "CEO",
+          "description": "Volledige toegang tot alle functies"
+        },
+        "admin": {
+          "label": "Administrator",
+          "description": "Systeem beheer en configuratie"
+        },
+        "accountManager": {
+          "label": "Account Manager",
+          "description": "Restaurant relaties beheren"
+        },
+        "support": {
+          "label": "Support",
+          "description": "Klantondersteuning"
+        },
+        "developer": {
+          "label": "Developer",
+          "description": "Technische ontwikkeling"
+        }
+      },
+      "department": "Afdeling",
+      "selectDepartment": "Selecteer een afdeling",
+      "activeEmployee": "Actieve medewerker",
+      "inactiveEmployeeNote": "Inactieve medewerkers kunnen niet inloggen",
+      "cancel": "Annuleren",
+      "addEmployee": "Medewerker Toevoegen",
+      "passwordValidationError": "Wachtwoorden komen niet overeen",
+      "placeholders": {
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "john.doe@example.com",
+        "phone": "+31 6 12345678",
+        "password": "••••••••"
+      }
+    }
+  }
+}

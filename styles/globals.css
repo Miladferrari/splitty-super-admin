@@ -1,0 +1,181 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Import Inter font */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+  
+  /* Prevent overscroll bounce on all elements */
+  html {
+    overscroll-behavior: none;
+    overflow: hidden;
+    height: 100%;
+  }
+  
+  body {
+    @apply bg-gray-50 text-gray-900;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    overscroll-behavior: none;
+    overflow: hidden;
+    height: 100%;
+    position: fixed;
+    width: 100%;
+  }
+  
+  /* Ensure the app container handles scrolling */
+  #__next {
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  /* Additional mobile-specific overscroll prevention */
+  * {
+    -webkit-overflow-scrolling: touch;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Prevent pull-to-refresh on mobile */
+  @supports (-webkit-touch-callout: none) {
+    body {
+      /* iOS specific */
+      -webkit-touch-callout: none;
+    }
+  }
+  
+  /* Scrollable areas should not bounce */
+  .overflow-y-auto {
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .overflow-x-auto {
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@layer components {
+  /* Clean modern stats card */
+  .stats-card {
+    @apply bg-white rounded-xl overflow-hidden transition-all duration-300;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  }
+  
+  .stats-card:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+  }
+
+  
+  /* Custom Scrollbar */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db #f3f4f6;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: #f3f4f6;
+    border-radius: 4px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 4px;
+    border: 1px solid #f3f4f6;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:active {
+    background: #6b7280;
+  }
+  
+  /* Clean modern card */
+  .card {
+    @apply bg-white rounded-xl;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    padding: 24px;
+  }
+
+  
+  /* Clean modern form input */
+  .form-input {
+    @apply block w-full rounded-lg border border-gray-200 bg-white text-gray-900 
+    focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20
+    px-4 py-2.5 text-sm placeholder-gray-400
+    transition-all duration-200 hover:border-gray-300;
+  }
+
+  
+  .form-select {
+    @apply block w-full rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm 
+    focus:border-splitty focus:ring-2 focus:ring-splitty focus:ring-opacity-50
+    px-3 py-2 text-sm appearance-none cursor-pointer
+    transition-all duration-200 hover:border-gray-400;
+  }
+  
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 mb-2;
+  }
+  
+  .form-checkbox {
+    @apply h-4 w-4 rounded border border-gray-300 bg-white text-splitty 
+    focus:ring-2 focus:ring-splitty focus:ring-opacity-50
+    transition-all duration-200;
+  }
+}
+
+/* Pulsing border animation for onboarding cards */
+@keyframes pulse-border {
+  0%, 100% {
+    border-color: rgba(52, 211, 153, 0.5);
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.4);
+  }
+  50% {
+    border-color: rgba(52, 211, 153, 0.8);
+    box-shadow: 0 0 0 8px rgba(52, 211, 153, 0);
+  }
+}
+
+.animate-pulse-border {
+  animation: pulse-border 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Loading screen animations */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes progress {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 70%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-progress {
+  animation: progress 2.5s ease-in-out infinite;
+}
+

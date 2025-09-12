@@ -1,0 +1,336 @@
+// Sendbird Service for managing chat functionality
+import SendBird from 'sendbird'
+
+class SendbirdService {
+  constructor() {
+    this.appId = '4690CBA2-7C41-454C-951B-886F72A250F1'
+    this.apiToken = 'd79b714c68fc109b3ab2c18ad9ad216d38990c28'
+    this.apiUrl = `https://api-${this.appId}.sendbird.com/v3`
+    this.sb = null
+    this.currentUser = null
+    this.currentChannel = null
+  }
+
+  // Initialize Sendbird SDK
+  init(): any {
+    if (!this.sb) {
+      this.sb = new SendBird({ 
+        appId: this.appId,
+        localCacheEnabled: true,
+        connectionTimeout: 30000,
+        websocketResponseTimeout: 30000
+      })
+    }
+    return this.sb
+  }
+
+  // Connect user to Sendbird
+  async connect(userId: string, nickname: string, profileUrl: string = ''): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (!this.sb) this.init()
+      
+      // Add retry logic for connection
+      const attemptConnection = (retryCount = 0) => {
+        if (retryCount > 3) {
+          reject(new Error('Max connection attempts reached'))
+          return
+        }
+        
+        // Ensure clean state before connection
+        if (this.sb.getConnectionState() !== 'CLOSED' && retryCount > 0) {
+          this.sb.disconnect(() => {
+            setTimeout(() => attemptConnection(retryCount), 500)
+          })
+          return
+        }
+        
+        this.sb.connect(userId, null, (user, error) => {
+          if (error) {
+            // Retry on timeout or network errors
+            if (error.code === 800000 || error.code === 800170 || error.message?.includes('no ack')) {
+              console.log(`Connection attempt ${retryCount + 1} failed, retrying...`)
+              const backoffDelay = Math.min(1000 * Math.pow(2, retryCount), 10000)
+              setTimeout(() => attemptConnection(retryCount + 1), backoffDelay)
+            } else {
+              reject(error)
+            }
+            return
+          }
+          
+          // Update user profile if needed
+          if (nickname || profileUrl) {
+            this.sb.updateCurrentUserInfo(nickname, profileUrl, (response, error) => {
+              if (error) {
+                console.error('Error updating user info:', error)
+              }
+            })
+          }
+          
+          this.currentUser = user
+          resolve(user)
+        })
+      }
+      
+      attemptConnection()
+    })
+  }
+
+  // Disconnect user
+  disconnect(): Promise<void> {
+    return new Promise((resolve) => {
+      if (this.sb) {
+        this.sb.disconnect(() => {
+          this.currentUser = null
+          this.currentChannel = null
+          resolve()
+        })
+      } else {
+        resolve()
+      }
+    })
+  }
+
+  // Create or get support channel for restaurant
+  async getOrCreateChannel(restaurantId: string | number, restaurantName: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const channelUrl = `support_${restaurantId}`
+      
+      // Try to get existing channel first
+      this.sb.GroupChannel.getChannel(channelUrl, (channel, error) => {
+        if (!error && channel) {
+          this.currentChannel = channel
+          resolve(channel)
+        } else {
+          // Create new channel
+          const params = new this.sb.GroupChannelParams()
+          params.isPublic = false
+          params.isEphemeral = false
+          params.isDistinct = false
+          params.channelUrl = channelUrl
+          params.name = `Support - ${restaurantName}`
+          params.addUserIds([this.currentUser.userId])
+          params.customType = 'SUPPORT'
+          params.data = JSON.stringify({
+            restaurantId: restaurantId,
+            restaurantName: restaurantName
+          })
+
+          this.sb.GroupChannel.createChannel(params, (channel, error) => {
+            if (error) {
+              reject(error)
+              return
+            }
+            this.currentChannel = channel
+            resolve(channel)
+          })
+        }
+      })
+    })
+  }
+
+  // Send message
+  sendMessage(message: string, customType: string = 'TEXT'): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (!this.currentChannel) {
+        reject(new Error('No channel selected'))
+        return
+      }
+
+      const params = new this.sb.UserMessageParams()
+      params.message = message
+      params.customType = customType
+      params.data = JSON.stringify({
+        timestamp: new Date().toISOString(),
+        senderId: this.currentUser.userId
+      })
+
+      this.currentChannel.sendUserMessage(params, (message, error) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(message)
+      })
+    })
+  }
+
+  // Load previous messages
+  loadPreviousMessages(limit: number = 30): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (!this.currentChannel) {
+        reject(new Error('No channel selected'))
+        return
+      }
+
+      const messageListQuery = this.currentChannel.createPreviousMessageListQuery()
+      messageListQuery.limit = limit
+      messageListQuery.reverse = false
+
+      messageListQuery.load((messages, error) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(messages)
+      })
+    })
+  }
+
+  // Set up message handler
+  setupMessageHandler(onMessageReceived: Function): void {
+    const channelHandler = new this.sb.ChannelHandler()
+    
+    channelHandler.onMessageReceived = (channel, message) => {
+      if (channel.url === this.currentChannel?.url) {
+        onMessageReceived(message)
+      }
+    }
+
+    channelHandler.onTypingStatusUpdated = (channel) => {
+      // Handle typing indicators if needed
+    }
+
+    this.sb.addChannelHandler('SUPPORT_HANDLER', channelHandler)
+  }
+
+  // Remove message handler
+  removeMessageHandler(): void {
+    if (this.sb) {
+      this.sb.removeChannelHandler('SUPPORT_HANDLER')
+    }
+  }
+
+  // Get all support channels (for super admin)
+  async getAllSupportChannels(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const query = this.sb.GroupChannel.createMyGroupChannelListQuery()
+      query.customTypesFilter = ['SUPPORT']
+      query.limit = 100
+
+      query.next((channels, error) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(channels)
+      })
+    })
+  }
+
+  // Mark messages as read
+  markAsRead(): void {
+    if (this.currentChannel) {
+      this.currentChannel.markAsRead()
+    }
+  }
+
+  // Start typing indicator
+  startTyping(): void {
+    if (this.currentChannel) {
+      this.currentChannel.startTyping()
+    }
+  }
+
+  // End typing indicator
+  endTyping(): void {
+    if (this.currentChannel) {
+      this.currentChannel.endTyping()
+    }
+  }
+
+  // Get unread message count
+  getUnreadCount(): number {
+    if (this.currentChannel) {
+      return this.currentChannel.unreadMessageCount
+    }
+    return 0
+  }
+
+  // Create user via API (for server-side operations)
+  async createUserViaAPI(userId: string, nickname: string, profileUrl: string = ''): Promise<any> {
+    const response = await fetch(`${this.apiUrl}/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Api-Token': this.apiToken
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        nickname: nickname,
+        profile_url: profileUrl,
+        issue_access_token: false
+      })
+    })
+
+    if (!response.ok) {
+      const error = await response.json()
+      // If user already exists, that's okay
+      if (error.code !== 400202) {
+        throw new Error(`Failed to create user: ${error.message}`)
+      }
+    }
+
+    return await response.json()
+  }
+
+  // Delete user via API (for server-side operations)
+  async deleteUserViaAPI(userId: string): Promise<boolean> {
+    const response = await fetch(`${this.apiUrl}/users/${userId}`, {
+      method: 'DELETE',
+      headers: {
+        'Api-Token': this.apiToken
+      }
+    })
+
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(`Failed to delete user: ${error.message}`)
+    }
+
+    return true
+  }
+
+  // Update user via API
+  async updateUserViaAPI(userId: string, updates: any): Promise<any> {
+    const response = await fetch(`${this.apiUrl}/users/${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Api-Token': this.apiToken
+      },
+      body: JSON.stringify(updates)
+    })
+
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(`Failed to update user: ${error.message}`)
+    }
+
+    return await response.json()
+  }
+
+  // Add users to channel via API
+  async addUsersToChannel(channelUrl: string, userIds: string[]): Promise<any> {
+    const response = await fetch(`${this.apiUrl}/group_channels/${channelUrl}/invite`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Api-Token': this.apiToken
+      },
+      body: JSON.stringify({
+        user_ids: userIds
+      })
+    })
+
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(`Failed to add users to channel: ${error.message}`)
+    }
+
+    return await response.json()
+  }
+}
+
+// Export singleton instance
+const sendbirdService = new SendbirdService()
+export default sendbirdService

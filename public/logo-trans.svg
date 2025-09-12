@@ -1,0 +1,6 @@
+<svg width="130" height="130" viewBox="0 0 130 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="65" cy="65" r="50" fill="#FF6B6B"/>
+  <path d="M45 50 L45 80 L85 80 L85 50 Z" fill="white" opacity="0.9"/>
+  <path d="M55 60 L55 70 L75 70 L75 60 Z" fill="#FF6B6B"/>
+  <text x="65" y="95" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">SPLITTY</text>
+</svg>
