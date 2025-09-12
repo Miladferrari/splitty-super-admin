@@ -34,6 +34,7 @@
     "export": "Exporteren",
     "import": "Importeren",
     "save": "Opslaan",
+    "copied": "Gekopieerd!",
     "cancel": "Annuleren",
     "delete": "Verwijderen",
     "edit": "Bewerken",
@@ -715,6 +716,8 @@
         "qrHolders": {
           "title": "Stap 4: QR houders",
           "subtitle": "Configureer QR stands en tafelindeling voor {{restaurantName}}",
+          "availableDesigns": "Beschikbare QR Houder Designs",
+          "selectPerSection": "Kies hieronder per sectie welk design je wilt gebruiken",
           "selectDesign": "Selecteer QR Stand Design",
           "tablesPerSection": "Aantal Tafels per Sectie",
           "sections": {
@@ -723,13 +726,27 @@
             "terrace": "Terras",
             "lounge": "Lounge"
           },
+          "design": "Design",
           "totalTables": "Totaal aantal tafels",
           "totalTablesDesc": "Automatisch berekend op basis van alle secties",
+          "configurationOverview": "Configuratie Overzicht",
+          "qrPerSection": "QR houders per sectie",
+          "total": "Totaal",
+          "table": "tafel",
+          "tables": "tafels",
+          "files": "Bestanden",
+          "file": "bestand",
           "floorPlan": {
             "title": "Plattegrond Upload (Optioneel)",
             "uploadText": "Sleep bestanden hier of klik om te uploaden",
             "fileTypes": "PNG, JPG, PDF - Max 5MB per bestand - Meerdere bestanden toegestaan",
-            "description": "Upload plattegronden, foto's of documenten van het restaurant (meerdere bestanden mogelijk)"
+            "description": "Upload plattegronden, foto's of documenten van het restaurant (meerdere bestanden mogelijk)",
+            "filesSkipped": "{{count}} bestand(en) overgeslagen (groter dan 5MB)"
+          },
+          "notes": {
+            "label": "Notities (Optioneel)",
+            "placeholder": "Voeg hier eventuele opmerkingen of speciale instructies toe...",
+            "helpText": "Bijvoorbeeld: speciale wensen voor QR houders, afwijkende tafelindelingen, seizoensgebonden terrassen, etc."
           }
         },
         "googleReviews": {
@@ -748,7 +765,8 @@
           "step4Desc": "Vervang alleen \"PLACE_ID\" met de gekopieerde ID van {{restaurantName}}",
           "reviewLink": "Google Review Link",
           "placeIdPlaceholder": "PLACE_ID",
-          "canChangeLabel": "Het restaurant kan dit later altijd wijzigen"
+          "canChangeLabel": "Het restaurant kan dit later altijd wijzigen",
+          "successMessage": "Review link toegevoegd! Klanten van {{restaurantName}} ontvangen na betaling een review verzoek"
         },
         "navigation": {
           "previous": "Vorige",

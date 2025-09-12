@@ -34,6 +34,7 @@
     "export": "Export",
     "import": "Import",
     "save": "Save",
+    "copied": "Copied!",
     "cancel": "Cancel",
     "delete": "Delete",
     "edit": "Edit",
@@ -715,6 +716,8 @@
         "qrHolders": {
           "title": "Step 4: QR holders",
           "subtitle": "Configure QR stands and table layout for {{restaurantName}}",
+          "availableDesigns": "Available QR Holder Designs",
+          "selectPerSection": "Choose a design for each section below",
           "selectDesign": "Select QR Stand Design",
           "tablesPerSection": "Tables per Section",
           "sections": {
@@ -723,13 +726,27 @@
             "terrace": "Terrace",
             "lounge": "Lounge"
           },
+          "design": "Design",
           "totalTables": "Total tables",
           "totalTablesDesc": "Automatically calculated based on all sections",
+          "configurationOverview": "Configuration Overview",
+          "qrPerSection": "QR holders per section",
+          "total": "Total",
+          "table": "table",
+          "tables": "tables",
+          "files": "Files",
+          "file": "file",
           "floorPlan": {
             "title": "Floor Plan Upload (Optional)",
             "uploadText": "Drag files here or click to upload",
             "fileTypes": "PNG, JPG, PDF - Max 5MB per file - Multiple files allowed",
-            "description": "Upload floor plans, photos or documents of the restaurant (multiple files allowed)"
+            "description": "Upload floor plans, photos or documents of the restaurant (multiple files allowed)",
+            "filesSkipped": "{{count}} file(s) skipped (larger than 5MB)"
+          },
+          "notes": {
+            "label": "Notes (Optional)",
+            "placeholder": "Add any comments or special instructions here...",
+            "helpText": "For example: special QR holder requests, unusual table layouts, seasonal terraces, etc."
           }
         },
         "googleReviews": {
@@ -748,7 +765,8 @@
           "step4Desc": "Replace only \"PLACE_ID\" with the copied ID from {{restaurantName}}",
           "reviewLink": "Google Review Link",
           "placeIdPlaceholder": "PLACE_ID",
-          "canChangeLabel": "The restaurant can always change this later"
+          "canChangeLabel": "The restaurant can always change this later",
+          "successMessage": "Review link added! Customers of {{restaurantName}} will receive a review request after payment"
         },
         "navigation": {
           "previous": "Previous",

@@ -38,7 +38,7 @@ const RestaurantOnboarding: NextPage = () => {
   const { getRestaurant, updateRestaurant, restoreRestaurant } = useRestaurants()
   const { updateRestaurantUsersFromOnboarding } = useUsers()
   const [restaurant, setRestaurant] = useState(null)
-  const [currentStep, setCurrentStep] = useState(1)
+  const [currentStep, setCurrentStep] = useState(0)
   const [completedSteps, setCompletedSteps] = useState([])
   const [showWelcome, setShowWelcome] = useState(true)
   const [isLocked, setIsLocked] = useState(false)
@@ -88,7 +88,7 @@ const RestaurantOnboarding: NextPage = () => {
     phone: '',
     password: '',
     passwordConfirm: '',
-    role: 'staff'
+    role: 'manager'
   })
 
   useEffect(() => {
@@ -170,7 +170,7 @@ const RestaurantOnboarding: NextPage = () => {
           // Only set to next uncompleted step on initial page load
           if (!hasInitialized) {
             // Determine the next uncompleted step
-            let nextStep = 1;
+            let nextStep = 0; // Start with welcome by default
             if (validCompletedSteps.includes(1) && !validCompletedSteps.includes(2)) {
               nextStep = 2;
             } else if (validCompletedSteps.includes(1) && validCompletedSteps.includes(2) && !validCompletedSteps.includes(3)) {
@@ -182,6 +182,9 @@ const RestaurantOnboarding: NextPage = () => {
             } else if (validCompletedSteps.length === 5) {
               // All steps completed, show the last step
               nextStep = 5;
+            } else if (validCompletedSteps.length > 0 || (parsed.personnelData && parsed.personnelData.length > 0)) {
+              // If there's any progress, go to the first incomplete step
+              nextStep = 1;
             }
             
             setCurrentStep(nextStep);
@@ -194,9 +197,9 @@ const RestaurantOnboarding: NextPage = () => {
             setShowWelcome(false)
           }
         } else {
-          // No saved data, start at step 1
+          // No saved data, start at welcome (step 0)
           if (!hasInitialized) {
-            setCurrentStep(1);
+            setCurrentStep(0);
             setHasInitialized(true);
           }
         }
@@ -235,11 +238,18 @@ const RestaurantOnboarding: NextPage = () => {
   }
 
   const handleStepChange = (step) => {
-    // Allow navigation even when locked, but just for viewing
-    setCurrentStep(step)
+    // If going to welcome screen (step 0)
+    if (step === 0) {
+      setShowWelcome(true)
+      setCurrentStep(0)
+    } else {
+      // Going to any other step, hide welcome
+      setShowWelcome(false)
+      setCurrentStep(step)
+    }
     
-    // Only save progress if not locked
-    if (!isLocked) {
+    // Only save progress if not locked and not welcome screen
+    if (!isLocked && step !== 0) {
       saveProgress({
         personnelData,
         stripeData,
@@ -315,7 +325,7 @@ const RestaurantOnboarding: NextPage = () => {
         phone: '',
         password: '',
         passwordConfirm: '',
-        role: 'staff'
+        role: 'manager'
       });
       setShowPersonForm(false);
       setEmailError('');
@@ -405,16 +415,18 @@ const RestaurantOnboarding: NextPage = () => {
         return (
           <div className="space-y-6">
             {/* Main Content Card */}
-            <div className="bg-white rounded-xl p-8 border border-gray-200">
+            <div className="bg-white rounded-lg p-6 border border-gray-200">
               {/* Header */}
-              <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('restaurants.onboarding.steps.personnel.title')}</h3>
-                  <p className="text-gray-600">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-1">{t('restaurants.onboarding.steps.personnel.title')}</h3>
+                  <p className="text-sm text-gray-500">
                     {t('restaurants.onboarding.steps.personnel.subtitle')} • {t('restaurants.onboarding.steps.personnel.usersAdded', { count: personnelData.length })}
                   </p>
                 </div>
-                <UserGroupIcon className="h-12 w-12 text-gray-600 opacity-20" />
+                <div className="p-3 bg-gray-50 rounded-lg">
+                  <UserGroupIcon className="h-6 w-6 text-gray-400" />
+                </div>
               </div>
 
               {/* Personnel List */}
@@ -456,9 +468,9 @@ const RestaurantOnboarding: NextPage = () => {
 
               {/* Add Person Form */}
               {showPersonForm ? (
-                <div className="bg-gray-50 rounded-xl p-6 border border-green-200">
-                  <div className="flex items-center justify-between mb-6">
-                    <h4 className="text-lg font-semibold text-gray-900">{t('restaurants.onboarding.steps.personnel.addNewUserForm')}</h4>
+                <div className="bg-gray-50 rounded-lg p-5 border border-gray-200">
+                  <div className="flex items-center justify-between mb-5">
+                    <h4 className="text-base font-medium text-gray-900">{t('restaurants.onboarding.steps.personnel.addNewUserForm')}</h4>
                     <button
                       onClick={() => {
                         setShowPersonForm(false);
@@ -469,7 +481,7 @@ const RestaurantOnboarding: NextPage = () => {
                           phone: '',
                           password: '',
                           passwordConfirm: '',
-                          role: 'staff'
+                          role: 'manager'
                         });
                         setEmailError('');
                         setPhoneError('');
@@ -477,9 +489,9 @@ const RestaurantOnboarding: NextPage = () => {
                         setShowPassword(false);
                         setShowPasswordConfirm(false);
                       }}
-                      className="text-gray-600 hover:text-gray-900 transition p-2"
+                      className="text-gray-500 hover:text-gray-700 transition p-1.5 hover:bg-white rounded-lg"
                     >
-                      <XMarkIcon className="h-5 w-5" />
+                      <XMarkIcon className="h-4 w-4" />
                     </button>
                   </div>
 
@@ -603,29 +615,37 @@ const RestaurantOnboarding: NextPage = () => {
                       <div className="grid grid-cols-2 gap-3">
                         <button
                           type="button"
-                          onClick={() => setNewPerson({...newPerson, role: 'staff'})}
-                          className={`p-4 rounded-lg border-2 transition-all ${
-                            newPerson.role === 'staff'
-                              ? 'bg-blue-50 border-blue-400 text-gray-900'
-                              : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-blue-400/50'
+                          onClick={() => setNewPerson({...newPerson, role: 'manager'})}
+                          className={`p-3 rounded-lg border transition-all ${
+                            newPerson.role === 'manager'
+                              ? 'bg-white border-[#2BE89A] shadow-sm'
+                              : 'bg-white border-gray-200 hover:border-gray-300'
                           }`}
                         >
-                          <UserGroupIcon className="h-6 w-6 mx-auto mb-2" />
-                          <p className="font-medium">{t('restaurants.onboarding.steps.personnel.form.staff')}</p>
-                          <p className="text-xs mt-1 opacity-75">{t('restaurants.onboarding.steps.personnel.form.basicAccess')}</p>
+                          <ShieldCheckIcon className={`h-5 w-5 mx-auto mb-2 ${
+                            newPerson.role === 'manager' ? 'text-[#2BE89A]' : 'text-gray-400'
+                          }`} />
+                          <p className={`text-sm font-medium ${
+                            newPerson.role === 'manager' ? 'text-gray-900' : 'text-gray-600'
+                          }`}>{t('restaurants.onboarding.steps.personnel.form.manager')}</p>
+                          <p className="text-xs mt-0.5 text-gray-500">{t('restaurants.onboarding.steps.personnel.form.fullAccess')}</p>
                         </button>
                         <button
                           type="button"
-                          onClick={() => setNewPerson({...newPerson, role: 'manager'})}
-                          className={`p-4 rounded-lg border-2 transition-all ${
-                            newPerson.role === 'manager'
-                              ? 'bg-green-50 border-green-400 text-gray-900'
-                              : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-green-300'
+                          onClick={() => setNewPerson({...newPerson, role: 'staff'})}
+                          className={`p-3 rounded-lg border transition-all ${
+                            newPerson.role === 'staff'
+                              ? 'bg-white border-[#2BE89A] shadow-sm'
+                              : 'bg-white border-gray-200 hover:border-gray-300'
                           }`}
                         >
-                          <ShieldCheckIcon className="h-6 w-6 mx-auto mb-2" />
-                          <p className="font-medium">{t('restaurants.onboarding.steps.personnel.form.manager')}</p>
-                          <p className="text-xs mt-1 opacity-75">{t('restaurants.onboarding.steps.personnel.form.fullAccess')}</p>
+                          <UserGroupIcon className={`h-5 w-5 mx-auto mb-2 ${
+                            newPerson.role === 'staff' ? 'text-[#2BE89A]' : 'text-gray-400'
+                          }`} />
+                          <p className={`text-sm font-medium ${
+                            newPerson.role === 'staff' ? 'text-gray-900' : 'text-gray-600'
+                          }`}>{t('restaurants.onboarding.steps.personnel.form.staff')}</p>
+                          <p className="text-xs mt-0.5 text-gray-500">{t('restaurants.onboarding.steps.personnel.form.basicAccess')}</p>
                         </button>
                       </div>
                     </div>
@@ -633,7 +653,7 @@ const RestaurantOnboarding: NextPage = () => {
                     <button
                       onClick={handleAddPerson}
                       disabled={!newPerson.firstName || !newPerson.lastName || !newPerson.email || !newPerson.password || !newPerson.passwordConfirm}
-                      className="w-full px-6 py-3 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black font-semibold rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full px-4 py-2.5 bg-[#2BE89A] text-black font-medium rounded-lg hover:bg-[#2BE89A]/90 transition disabled:opacity-50 disabled:cursor-not-allowed text-sm"
                     >
                       {t('restaurants.onboarding.steps.personnel.form.addUser')}
                     </button>
@@ -642,17 +662,17 @@ const RestaurantOnboarding: NextPage = () => {
               ) : (
                 <button
                   onClick={() => setShowPersonForm(true)}
-                  className="w-full px-6 py-4 bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl text-gray-600 hover:border-green-300 hover:bg-gray-50 transition-all group"
+                  className="w-full px-5 py-4 bg-white border-2 border-dashed border-gray-300 rounded-lg text-gray-600 hover:border-[#2BE89A] hover:bg-gray-50 transition-all group"
                 >
-                  <UserGroupIcon className="h-8 w-8 mx-auto mb-2 group-hover:text-green-500 transition" />
-                  <p className="font-medium group-hover:text-gray-900 transition">{t('restaurants.onboarding.steps.personnel.addNewUser')}</p>
+                  <UserGroupIcon className="h-6 w-6 mx-auto mb-2 text-gray-400 group-hover:text-[#2BE89A] transition" />
+                  <p className="text-sm font-medium group-hover:text-gray-900 transition">{t('restaurants.onboarding.steps.personnel.addNewUser')}</p>
                 </button>
               )}
 
               {/* Info Box */}
-              <div className="mt-8 bg-gray-50 rounded-lg p-4 border border-gray-200">
-                <p className="text-sm text-gray-600">
-                  <span className="text-green-500 font-medium">{t('restaurants.onboarding.steps.personnel.tip')}</span> {t('restaurants.onboarding.steps.personnel.tipMessage')}
+              <div className="mt-6 bg-[#2BE89A]/5 rounded-lg p-3.5 border border-[#2BE89A]/20">
+                <p className="text-xs text-gray-600">
+                  <span className="text-[#2BE89A] font-medium">{t('restaurants.onboarding.steps.personnel.tip')}</span> {t('restaurants.onboarding.steps.personnel.tipMessage')}
                 </p>
               </div>
             </div>
@@ -663,49 +683,41 @@ const RestaurantOnboarding: NextPage = () => {
         return (
           <div className="space-y-6">
             {/* Main Content Card */}
-            <div className="bg-white rounded-xl p-8 border border-gray-200">
-              <div className="flex items-center justify-between mb-8">
+            <div className="bg-white rounded-lg p-6 border border-gray-200">
+              <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('restaurants.onboarding.steps.stripe.title')}</h3>
-                  <p className="text-gray-600">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-1">{t('restaurants.onboarding.steps.stripe.title')}</h3>
+                  <p className="text-sm text-gray-500">
                     {t('restaurants.onboarding.steps.stripe.subtitle')} {stripeData.connected && `• ✓ ${t('restaurants.onboarding.steps.stripe.connected')}`}
                   </p>
                 </div>
-                <CreditCardIcon className="h-12 w-12 text-gray-600 opacity-20" />
+                <div className="p-3 bg-gray-50 rounded-lg">
+                  <CreditCardIcon className="h-6 w-6 text-gray-400" />
+                </div>
               </div>
 
               <div className="space-y-6">
                 {!stripeData.connected ? (
                   <>
-                    {/* Restaurant Info - Disabled */}
-                    <div className="opacity-50 cursor-not-allowed">
-                      <label className="block text-sm font-medium text-gray-600 mb-2">
-                        {t('restaurants.onboarding.steps.stripe.restaurant')}
-                      </label>
-                      <div className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900">
-                        {restaurant?.name}
-                      </div>
-                    </div>
-
                     {/* Stripe Connect Info */}
-                    <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                      <h4 className="text-base font-medium text-gray-900 mb-4">{t('restaurants.onboarding.steps.stripe.integration.title')}</h4>
-                      <p className="text-sm text-gray-600 mb-6">
+                    <div className="bg-gray-50 rounded-lg p-5 border border-gray-200">
+                      <h4 className="text-base font-medium text-gray-900 mb-3">{t('restaurants.onboarding.steps.stripe.integration.title')}</h4>
+                      <p className="text-sm text-gray-600 mb-4">
                         {t('restaurants.onboarding.steps.stripe.integration.description')}
                       </p>
                       
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                        <div className="text-center">
-                          <ShieldCheckIcon className="h-8 w-8 text-gray-600 mx-auto mb-2" />
-                          <p className="text-xs text-gray-600">{t('restaurants.onboarding.steps.stripe.integration.features.pciCompliant')}</p>
+                      <div className="grid grid-cols-3 gap-3 mb-4">
+                        <div className="bg-white rounded-lg p-3 border border-gray-200">
+                          <ShieldCheckIcon className="h-5 w-5 text-[#2BE89A] mx-auto mb-2" />
+                          <p className="text-xs text-gray-600 text-center">{t('restaurants.onboarding.steps.stripe.integration.features.pciCompliant')}</p>
                         </div>
-                        <div className="text-center">
-                          <ClockIcon className="h-8 w-8 text-gray-600 mx-auto mb-2" />
-                          <p className="text-xs text-gray-600">{t('restaurants.onboarding.steps.stripe.integration.features.dailyPayout')}</p>
+                        <div className="bg-white rounded-lg p-3 border border-gray-200">
+                          <ClockIcon className="h-5 w-5 text-[#2BE89A] mx-auto mb-2" />
+                          <p className="text-xs text-gray-600 text-center">{t('restaurants.onboarding.steps.stripe.integration.features.dailyPayout')}</p>
                         </div>
-                        <div className="text-center">
-                          <SparklesIcon className="h-8 w-8 text-gray-600 mx-auto mb-2" />
-                          <p className="text-xs text-gray-600">{t('restaurants.onboarding.steps.stripe.integration.features.realTimeInsight')}</p>
+                        <div className="bg-white rounded-lg p-3 border border-gray-200">
+                          <SparklesIcon className="h-5 w-5 text-[#2BE89A] mx-auto mb-2" />
+                          <p className="text-xs text-gray-600 text-center">{t('restaurants.onboarding.steps.stripe.integration.features.realTimeInsight')}</p>
                         </div>
                       </div>
                     </div>
@@ -716,45 +728,51 @@ const RestaurantOnboarding: NextPage = () => {
                         // TODO: Implement Stripe Connect OAuth flow
                         alert('Stripe Connect integratie komt binnenkort beschikbaar. Neem contact op met het Splitty team voor handmatige setup.');
                       }}
-                      className="w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-lg opacity-75 cursor-not-allowed transition-all shadow-lg flex items-center justify-center"
-                      disabled
+                      className="w-full px-4 py-3 bg-gradient-to-r from-[#635BFF] via-[#4F46E5] to-[#0073E6] text-white font-medium rounded-lg hover:opacity-90 flex items-center justify-center text-sm shadow-md hover:shadow-lg transition-all"
                     >
-                      <svg className="w-20 h-6 mr-3" viewBox="0 0 60 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M59.64 14.28C59.64 8.46 56.37 5.43 51.54 5.43C46.68 5.43 43.08 8.49 43.08 14.34C43.08 21.27 47.61 23.7 52.74 23.7C55.26 23.7 57.18 23.13 58.59 22.26V18.42C57.18 19.2 55.5 19.65 53.28 19.65C51.24 19.65 49.44 18.96 49.05 16.26H59.55C59.55 15.99 59.64 14.91 59.64 14.28ZM49.02 12.72C49.02 10.11 50.61 9.21 51.51 9.21C52.38 9.21 53.88 10.11 53.88 12.72H49.02ZM40.68 14.28C40.68 8.52 37.77 5.43 33.15 5.43C28.53 5.43 25.32 8.52 25.32 14.28C25.32 20.04 28.53 23.13 33.15 23.13C37.77 23.13 40.68 20.04 40.68 14.28ZM34.65 14.28C34.65 10.5 33.72 9.48 33.15 9.48C32.58 9.48 31.65 10.5 31.65 14.28C31.65 18.06 32.58 19.08 33.15 19.08C33.72 19.08 34.65 18.06 34.65 14.28ZM23.4 11.61C23.4 9.75 22.56 5.7 16.56 5.7C14.07 5.7 12.15 6.45 10.83 7.41L12.24 10.86C13.38 10.05 14.88 9.48 16.23 9.48C17.58 9.48 17.7 10.38 17.7 10.89V11.16C12.84 11.16 9.36 12.87 9.36 17.07C9.36 20.4 11.73 23.13 15.12 23.13C17.01 23.13 18.24 22.32 19.02 21.21H19.14C19.14 21.21 19.83 24.42 24.84 22.77C23.82 21.3 23.4 18.78 23.4 16.59V11.61ZM17.91 16.56C17.91 16.89 17.88 17.25 17.79 17.58C17.58 18.39 16.89 19.26 15.75 19.26C14.88 19.26 14.31 18.66 14.31 17.46C14.31 15.51 16.17 14.94 17.91 14.94V16.56ZM7.68 2.31L0 22.77H6.18L9.15 14.16L10.74 9.21H10.86L11.73 14.16L13.2 22.77H19.71L18.42 2.31H7.68Z" fill="currentColor"/>
-                      </svg>
-                      <span className="text-base">{t('restaurants.onboarding.steps.stripe.integration.connectButton')}</span>
-                      <ArrowRightIcon className="h-5 w-5 ml-2" />
+                      <span>Start Stripe onboarding</span>
+                      <ArrowRightIcon className="h-4 w-4 ml-2" />
                     </button>
+                    
+                    {/* Info message */}
+                    <div className="bg-[#2BE89A]/5 rounded-lg p-3.5 border border-[#2BE89A]/20">
+                      <p className="text-xs text-gray-600">
+                        <span className="text-[#2BE89A] font-medium">Let op:</span> Stripe Connect integratie komt binnenkort beschikbaar. Neem contact op met het Splitty team voor handmatige setup.
+                      </p>
+                    </div>
                   </>
                 ) : (
                   <div className="space-y-4">
                     {/* Success State */}
-                    <div className="bg-gray-50 rounded-lg p-6 border border-green-200">
+                    <div className="bg-gray-50 rounded-lg p-5 border border-gray-200">
                       <div className="flex items-center mb-4">
-                        <CheckCircleIcon className="h-6 w-6 text-green-500 mr-3" />
+                        <div className="p-2 bg-[#2BE89A]/10 rounded-lg mr-3">
+                          <CheckCircleIcon className="h-5 w-5 text-[#2BE89A]" />
+                        </div>
                         <h4 className="text-base font-medium text-gray-900">{t('restaurants.onboarding.steps.stripe.success.title')}</h4>
                       </div>
-                      <div className="space-y-3">
+                      <div className="space-y-2.5 pl-11">
                         <div className="flex justify-between items-center">
                           <span className="text-sm text-gray-600">{t('restaurants.onboarding.steps.stripe.success.accountId')}</span>
-                          <span className="text-sm text-gray-900 font-mono">{stripeData.accountId || 'acct_demo_123456'}</span>
+                          <span className="text-sm text-gray-900 font-mono bg-white px-2 py-1 rounded border border-gray-200">{stripeData.accountId || 'acct_demo_123456'}</span>
                         </div>
                         <div className="flex justify-between items-center">
                           <span className="text-sm text-gray-600">{t('restaurants.onboarding.steps.stripe.success.status')}</span>
-                          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-500">
+                          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-[#2BE89A]/10 text-[#2BE89A] border border-[#2BE89A]/20">
                             {t('restaurants.onboarding.steps.stripe.success.active')}
                           </span>
                         </div>
                         <div className="flex justify-between items-center">
                           <span className="text-sm text-gray-600">Uitbetaling frequentie</span>
-                          <span className="text-sm text-gray-900">Dagelijks</span>
+                          <span className="text-sm text-gray-700">Dagelijks</span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="bg-gray-50 rounded-lg p-5 border border-gray-200">
-                      <p className="text-sm text-gray-600">
-                        ✓ Het restaurant kan nu split betalingen ontvangen. Uitbetalingen gebeuren automatisch naar de gekoppelde bankrekening.
+                    <div className="bg-[#2BE89A]/5 rounded-lg p-3.5 border border-[#2BE89A]/20">
+                      <p className="text-xs text-gray-600">
+                        <CheckCircleIcon className="h-3.5 w-3.5 text-[#2BE89A] inline mr-1" />
+                        Het restaurant kan nu split betalingen ontvangen. Uitbetalingen gebeuren automatisch naar de gekoppelde bankrekening.
                       </p>
                     </div>
                   </div>
@@ -768,131 +786,134 @@ const RestaurantOnboarding: NextPage = () => {
         return (
           <div className="space-y-6">
             {/* Main Content Card */}
-            <div className="bg-white rounded-xl p-8 border border-gray-200">
-              <div className="flex items-center justify-between mb-8">
+            <div className="bg-white rounded-lg p-6 border border-gray-200">
+              <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('restaurants.onboarding.steps.pos.title')}</h3>
-                  <p className="text-gray-600">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-1">{t('restaurants.onboarding.steps.pos.title')}</h3>
+                  <p className="text-sm text-gray-500">
                     {t('restaurants.onboarding.steps.pos.subtitle', { restaurantName: restaurant?.name })}
                   </p>
                 </div>
-                <WifiIcon className="h-12 w-12 text-gray-600 opacity-20" />
+                <div className="p-3 bg-gray-50 rounded-lg">
+                  <WifiIcon className="h-6 w-6 text-gray-400" />
+                </div>
               </div>
 
-              <div className="space-y-6">
-                {/* Restaurant Selection - Disabled in onboarding as we already know the restaurant */}
-                <div className="opacity-50 cursor-not-allowed">
-                  <label className="block text-sm font-medium text-gray-600 mb-2">
-                    {t('restaurants.onboarding.steps.pos.restaurant')} <span className="text-red-500">*</span>
-                  </label>
-                  <div className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg">
-                    <span className="text-gray-900 font-medium">{restaurant?.name}</span>
-                    <span className="text-gray-600 ml-3">
-                      • {restaurant?.address 
-                          ? `${restaurant.address.street || ''} ${restaurant.address.postalCode || ''} ${restaurant.address.city || ''}`
-                          : restaurant?.location}
-                    </span>
-                  </div>
-                </div>
-
-                {/* POS Type */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-2">
-                    {t('restaurants.onboarding.steps.pos.posSystem')} <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    value={posData.posType}
-                    onChange={(e) => setPosData({...posData, posType: e.target.value})}
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    required
-                  >
-                    <option value="">{t('restaurants.onboarding.steps.pos.selectPos')}</option>
-                    <option value="untill">Untill</option>
-                    <option value="lightspeed">Lightspeed</option>
-                    <option value="epos">EPOS Now</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-
-                {/* Username and Password Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                {/* Form Container */}
+                <div className="bg-gray-50 rounded-lg p-6 border border-gray-200 space-y-5">
+                  {/* POS Type */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-2">
-                      {t('restaurants.onboarding.steps.pos.posUsername')} <span className="text-red-500">*</span>
+                    <label className="block text-xs font-medium text-gray-700 mb-2 uppercase tracking-wider">
+                      {t('restaurants.onboarding.steps.pos.posSystem')} <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      value={posData.posType}
+                      onChange={(e) => setPosData({...posData, posType: e.target.value})}
+                      className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-md text-gray-900 text-sm focus:outline-none focus:border-[#2BE89A] focus:ring-1 focus:ring-[#2BE89A] transition-colors"
+                      required
+                    >
+                      <option value="">{t('restaurants.onboarding.steps.pos.selectPos')}</option>
+                      <option value="untill">Untill</option>
+                      <option value="lightspeed">Lightspeed</option>
+                      <option value="epos">EPOS Now</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+
+                  {/* Username and Password Grid */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-2 uppercase tracking-wider">
+                        {t('restaurants.onboarding.steps.pos.posUsername')} <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={posData.username}
+                        onChange={(e) => setPosData({...posData, username: e.target.value})}
+                        className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:border-[#2BE89A] focus:ring-1 focus:ring-[#2BE89A] transition-colors"
+                        placeholder={t('restaurants.onboarding.steps.pos.posUsernamePlaceholder')}
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-2 uppercase tracking-wider">
+                        {t('restaurants.onboarding.steps.pos.posPassword')} <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="password"
+                        value={posData.password}
+                        onChange={(e) => setPosData({...posData, password: e.target.value})}
+                        className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:border-[#2BE89A] focus:ring-1 focus:ring-[#2BE89A] transition-colors"
+                        placeholder={t('restaurants.onboarding.steps.pos.posPasswordPlaceholder')}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  {/* Base URL */}
+                  <div>
+                    <label className="block text-xs font-medium text-gray-700 mb-2 uppercase tracking-wider">
+                      {t('restaurants.onboarding.steps.pos.apiUrl')} <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
-                      value={posData.username}
-                      onChange={(e) => setPosData({...posData, username: e.target.value})}
-                      className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                      placeholder={t('restaurants.onboarding.steps.pos.posUsernamePlaceholder')}
+                      placeholder={t('restaurants.onboarding.steps.pos.apiUrlPlaceholder')}
+                      value={posData.baseUrl}
+                      onChange={(e) => setPosData({...posData, baseUrl: e.target.value})}
+                      className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-md text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:border-[#2BE89A] focus:ring-1 focus:ring-[#2BE89A] transition-colors"
                       required
                     />
                   </div>
 
+                  {/* Environment */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-2">
-                      {t('restaurants.onboarding.steps.pos.posPassword')} <span className="text-red-500">*</span>
+                    <label className="block text-xs font-medium text-gray-700 mb-2 uppercase tracking-wider">
+                      {t('restaurants.onboarding.steps.pos.environment')}
                     </label>
-                    <input
-                      type="password"
-                      value={posData.password}
-                      onChange={(e) => setPosData({...posData, password: e.target.value})}
-                      className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                      placeholder={t('restaurants.onboarding.steps.pos.posPasswordPlaceholder')}
-                      required
-                    />
+                    <select
+                      value={posData.environment}
+                      onChange={(e) => setPosData({...posData, environment: e.target.value})}
+                      className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-md text-gray-900 text-sm focus:outline-none focus:border-[#2BE89A] focus:ring-1 focus:ring-[#2BE89A] transition-colors"
+                    >
+                      <option value="production">{t('restaurants.onboarding.steps.pos.production')}</option>
+                      <option value="staging">{t('restaurants.onboarding.steps.pos.staging')}</option>
+                      <option value="development">{t('restaurants.onboarding.steps.pos.development')}</option>
+                      <option value="test">{t('restaurants.onboarding.steps.pos.test')}</option>
+                    </select>
                   </div>
-                </div>
 
-                {/* Base URL */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-2">
-                    {t('restaurants.onboarding.steps.pos.apiUrl')} <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder={t('restaurants.onboarding.steps.pos.apiUrlPlaceholder')}
-                    value={posData.baseUrl}
-                    onChange={(e) => setPosData({...posData, baseUrl: e.target.value})}
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    required
-                  />
-                </div>
-
-                {/* Environment */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-2">
-                    {t('restaurants.onboarding.steps.pos.environment')}
-                  </label>
-                  <select
-                    value={posData.environment}
-                    onChange={(e) => setPosData({...posData, environment: e.target.value})}
-                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                  >
-                    <option value="production">{t('restaurants.onboarding.steps.pos.production')}</option>
-                    <option value="staging">{t('restaurants.onboarding.steps.pos.staging')}</option>
-                    <option value="development">{t('restaurants.onboarding.steps.pos.development')}</option>
-                    <option value="test">{t('restaurants.onboarding.steps.pos.test')}</option>
-                  </select>
-                </div>
-
-                {/* Active Checkbox */}
-                <div className="flex items-start">
-                  <div className="flex items-center h-5">
-                    <input
-                      id="is-active"
-                      type="checkbox"
-                      checked={posData.isActive}
-                      onChange={(e) => setPosData({...posData, isActive: e.target.checked})}
-                      className="h-4 w-4 rounded border-gray-200 bg-gray-50 text-green-500 focus:ring-green-500 focus:ring-offset-0 focus:ring-offset-[#0F1117]"
-                    />
-                  </div>
-                  <div className="ml-3">
-                    <label htmlFor="is-active" className="text-sm font-medium text-gray-900">
-                      {t('restaurants.onboarding.steps.pos.activate')}
-                    </label>
-                    <p className="text-sm text-gray-600">{t('restaurants.onboarding.steps.pos.activateDescription', { restaurantName: restaurant?.name })}</p>
+                  {/* Active Toggle */}
+                  <div className="pt-3 border-t border-gray-200">
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <label htmlFor="is-active" className="text-sm font-medium text-gray-900 cursor-pointer">
+                          {t('restaurants.onboarding.steps.pos.activate')}
+                        </label>
+                        <p className="text-xs text-gray-500 mt-1">{t('restaurants.onboarding.steps.pos.activateDescription', { restaurantName: restaurant?.name })}</p>
+                      </div>
+                      <button
+                        type="button"
+                        role="switch"
+                        aria-checked={posData.isActive}
+                        onClick={() => setPosData({...posData, isActive: !posData.isActive})}
+                        className={`
+                          relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent 
+                          transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#2BE89A] focus:ring-offset-2
+                          ${posData.isActive ? 'bg-[#2BE89A]' : 'bg-gray-200'}
+                        `}
+                      >
+                        <span className="sr-only">Activeer POS integratie</span>
+                        <span
+                          className={`
+                            pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 
+                            transition duration-200 ease-in-out
+                            ${posData.isActive ? 'translate-x-5' : 'translate-x-0'}
+                          `}
+                        />
+                      </button>
+                    </div>
                   </div>
                 </div>
 
@@ -924,10 +945,17 @@ const RestaurantOnboarding: NextPage = () => {
                       alert('Vul alle verplichte velden in voordat je de verbinding test.');
                     }
                   }}
-                  className="w-full px-6 py-3 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black font-semibold rounded-lg hover:opacity-90 transition-all shadow-lg"
+                  className="w-full px-4 py-2.5 bg-[#2BE89A] text-black font-medium rounded-lg hover:bg-[#2BE89A]/90 transition text-sm"
                 >
                   {t('restaurants.onboarding.steps.pos.testConnection')}
                 </button>
+                
+                {/* Info Box */}
+                <div className="bg-[#2BE89A]/5 rounded-lg p-3.5 border border-[#2BE89A]/20">
+                  <p className="text-xs text-gray-600">
+                    <span className="text-[#2BE89A] font-medium">Tip:</span> Zorg dat je de juiste API credentials hebt van het POS systeem voordat je de verbinding test.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -937,139 +965,228 @@ const RestaurantOnboarding: NextPage = () => {
         return (
           <div className="space-y-6">
             {/* Main Content Card */}
-            <div className="bg-white rounded-xl p-8 border border-gray-200">
-              <div className="flex items-center justify-between mb-8">
+            <div className="bg-white rounded-lg p-6 border border-gray-200">
+              <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('restaurants.onboarding.steps.qrHolders.title')}</h3>
-                  <p className="text-gray-600">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-1">{t('restaurants.onboarding.steps.qrHolders.title')}</h3>
+                  <p className="text-sm text-gray-500">
                     {t('restaurants.onboarding.steps.qrHolders.subtitle', { restaurantName: restaurant?.name })}
                   </p>
                 </div>
-                <QrCodeIcon className="h-12 w-12 text-gray-600 opacity-20" />
+                <div className="p-3 bg-gray-50 rounded-lg">
+                  <QrCodeIcon className="h-6 w-6 text-gray-400" />
+                </div>
               </div>
 
-              <div className="space-y-8">
-                {/* QR Stand Design Selection */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-4">
-                    {t('restaurants.onboarding.steps.qrHolders.selectDesign')}
+              <div className="space-y-6">
+                {/* QR Stand Design Showcase */}
+                <div className="bg-gray-50 rounded-lg p-5 border border-gray-200">
+                  <label className="block text-xs font-medium text-gray-700 mb-4 uppercase tracking-wider">
+                    {t('restaurants.onboarding.steps.qrHolders.availableDesigns')}
                   </label>
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                     {[
-                      { id: 'houder1', name: 'HOUDER#1', color: 'from-[#2BE89A] to-[#4FFFB0]' },
-                      { id: 'houder2', name: 'HOUDER#2', color: 'from-[#635BFF] to-[#7C3AED]' },
-                      { id: 'houder3', name: 'HOUDER#3', color: 'from-[#BBBECC] to-[#ffffff]' },
-                      { id: 'houder4', name: 'HOUDER#4', color: 'from-[#FF6B6B] to-[#FF8E53]' }
-                    ].map((design) => (
-                      <button
+                      { id: 'houder1', name: `${t('restaurants.onboarding.steps.qrHolders.design')} 1`, color: 'from-[#2BE89A] to-[#4FFFB0]' },
+                      { id: 'houder2', name: `${t('restaurants.onboarding.steps.qrHolders.design')} 2`, color: 'from-[#635BFF] to-[#7C3AED]' },
+                      { id: 'houder3', name: `${t('restaurants.onboarding.steps.qrHolders.design')} 3`, color: 'from-gray-300 to-gray-100' },
+                      { id: 'houder4', name: `${t('restaurants.onboarding.steps.qrHolders.design')} 4`, color: 'from-orange-400 to-pink-400' }
+                    ].map((design, index) => (
+                      <div
                         key={design.id}
-                        type="button"
-                        onClick={() => setQrStandData({...qrStandData, selectedDesign: design.id, isConfigured: true})}
-                        className={`p-6 rounded-xl border-2 transition-all group ${
-                          qrStandData.selectedDesign === design.id
-                            ? 'border-green-400 bg-green-50'
-                            : 'border-gray-200 bg-gray-50 hover:border-green-300'
-                        }`}
+                        className="p-4 rounded-lg border border-gray-200 bg-white"
                       >
-                        <div className={`w-16 h-16 mx-auto mb-4 rounded-xl bg-gradient-to-br ${design.color} flex items-center justify-center`}>
-                          <QrCodeIcon className="h-8 w-8 text-black" />
+                        <div className={`w-12 h-12 mx-auto mb-3 rounded-lg bg-gradient-to-br ${design.color} flex items-center justify-center shadow-sm`}>
+                          <QrCodeIcon className="h-6 w-6 text-white" />
                         </div>
-                        <p className="text-gray-900 font-medium text-sm">{design.name}</p>
-                        <div className="mt-2 w-full h-1 bg-gray-200 rounded-full">
-                          <div className={`h-1 rounded-full bg-gradient-to-r ${design.color} transition-all duration-300 ${
-                            qrStandData.selectedDesign === design.id ? 'w-full' : 'w-0'
-                          }`} />
-                        </div>
-                      </button>
+                        <p className="text-xs font-medium text-gray-700 text-center">{design.name}</p>
+                      </div>
                     ))}
                   </div>
+                  <p className="text-xs text-gray-500 mt-3 text-center">
+                    {t('restaurants.onboarding.steps.qrHolders.selectPerSection')}
+                  </p>
                 </div>
 
-                {/* Table Count by Section */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-600 mb-4">
+                {/* Table Count by Section with Design Selection */}
+                <div className="bg-gray-50 rounded-lg p-5 border border-gray-200">
+                  <label className="block text-xs font-medium text-gray-700 mb-4 uppercase tracking-wider">
                     {t('restaurants.onboarding.steps.qrHolders.tablesPerSection')}
                   </label>
-                  <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div className="space-y-6">
                     {/* Bar */}
-                    <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-2">{t('restaurants.onboarding.steps.qrHolders.sections.bar')}</label>
-                      <input
-                        type="number"
-                        value={qrStandData.tableSections?.bar || ''}
-                        onChange={(e) => {
-                          const newSections = {...qrStandData.tableSections, bar: e.target.value};
-                          const total = Object.values(newSections).reduce((sum, val) => sum + (parseInt(val) || 0), 0);
-                          setQrStandData({...qrStandData, tableSections: newSections, tableCount: total.toString(), isConfigured: true});
-                        }}
-                        className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                        placeholder="0"
-                        min="0"
-                        max="50"
-                      />
+                    <div className="space-y-3">
+                      <div>
+                        <label className="block text-xs text-gray-600 mb-1.5">{t('restaurants.onboarding.steps.qrHolders.sections.bar')}</label>
+                        <input
+                          type="number"
+                          value={qrStandData.tableSections?.bar || ''}
+                          onChange={(e) => {
+                            const newSections = {...qrStandData.tableSections, bar: e.target.value};
+                            const total = Object.values(newSections).reduce((sum, val) => sum + (parseInt(val) || 0), 0);
+                            setQrStandData({...qrStandData, tableSections: newSections, tableCount: total.toString(), isConfigured: true});
+                          }}
+                          className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:border-[#2BE89A] focus:ring-1 focus:ring-[#2BE89A] transition-colors"
+                          placeholder="0"
+                          min="0"
+                          max="50"
+                        />
+                      </div>
+                      {qrStandData.tableSections?.bar > 0 && (
+                        <div className="flex gap-2">
+                          {[1, 2, 3, 4].map((num) => (
+                            <button
+                              key={num}
+                              type="button"
+                              onClick={() => {
+                                const newDesigns = {...(qrStandData.sectionDesigns || {}), bar: num};
+                                setQrStandData({...qrStandData, sectionDesigns: newDesigns});
+                              }}
+                              className={`flex-1 px-3 py-2 rounded-md border transition-all text-xs font-medium ${
+                                qrStandData.sectionDesigns?.bar === num
+                                  ? 'border-[#2BE89A] bg-[#2BE89A]/10 text-[#2BE89A]'
+                                  : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
+                              }`}
+                            >
+                              {t('restaurants.onboarding.steps.qrHolders.design')} {num}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
+                    
                     {/* Binnen */}
-                    <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-2">{t('restaurants.onboarding.steps.qrHolders.sections.inside')}</label>
-                      <input
-                        type="number"
-                        value={qrStandData.tableSections?.binnen || ''}
-                        onChange={(e) => {
-                          const newSections = {...qrStandData.tableSections, binnen: e.target.value};
-                          const total = Object.values(newSections).reduce((sum, val) => sum + (parseInt(val) || 0), 0);
-                          setQrStandData({...qrStandData, tableSections: newSections, tableCount: total.toString(), isConfigured: true});
-                        }}
-                        className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                        placeholder="0"
-                        min="0"
-                        max="50"
-                      />
+                    <div className="space-y-3">
+                      <div>
+                        <label className="block text-xs text-gray-600 mb-1.5">{t('restaurants.onboarding.steps.qrHolders.sections.inside')}</label>
+                        <input
+                          type="number"
+                          value={qrStandData.tableSections?.binnen || ''}
+                          onChange={(e) => {
+                            const newSections = {...qrStandData.tableSections, binnen: e.target.value};
+                            const total = Object.values(newSections).reduce((sum, val) => sum + (parseInt(val) || 0), 0);
+                            setQrStandData({...qrStandData, tableSections: newSections, tableCount: total.toString(), isConfigured: true});
+                          }}
+                          className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:border-[#2BE89A] focus:ring-1 focus:ring-[#2BE89A] transition-colors"
+                          placeholder="0"
+                          min="0"
+                          max="50"
+                        />
+                      </div>
+                      {qrStandData.tableSections?.binnen > 0 && (
+                        <div className="flex gap-2">
+                          {[1, 2, 3, 4].map((num) => (
+                            <button
+                              key={num}
+                              type="button"
+                              onClick={() => {
+                                const newDesigns = {...(qrStandData.sectionDesigns || {}), binnen: num};
+                                setQrStandData({...qrStandData, sectionDesigns: newDesigns});
+                              }}
+                              className={`flex-1 px-3 py-2 rounded-md border transition-all text-xs font-medium ${
+                                qrStandData.sectionDesigns?.binnen === num
+                                  ? 'border-[#2BE89A] bg-[#2BE89A]/10 text-[#2BE89A]'
+                                  : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
+                              }`}
+                            >
+                              {t('restaurants.onboarding.steps.qrHolders.design')} {num}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
+                    
                     {/* Terras */}
-                    <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-2">{t('restaurants.onboarding.steps.qrHolders.sections.terrace')}</label>
-                      <input
-                        type="number"
-                        value={qrStandData.tableSections?.terras || ''}
-                        onChange={(e) => {
-                          const newSections = {...qrStandData.tableSections, terras: e.target.value};
-                          const total = Object.values(newSections).reduce((sum, val) => sum + (parseInt(val) || 0), 0);
-                          setQrStandData({...qrStandData, tableSections: newSections, tableCount: total.toString(), isConfigured: true});
-                        }}
-                        className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                        placeholder="0"
-                        min="0"
-                        max="50"
-                      />
+                    <div className="space-y-3">
+                      <div>
+                        <label className="block text-xs text-gray-600 mb-1.5">{t('restaurants.onboarding.steps.qrHolders.sections.terrace')}</label>
+                        <input
+                          type="number"
+                          value={qrStandData.tableSections?.terras || ''}
+                          onChange={(e) => {
+                            const newSections = {...qrStandData.tableSections, terras: e.target.value};
+                            const total = Object.values(newSections).reduce((sum, val) => sum + (parseInt(val) || 0), 0);
+                            setQrStandData({...qrStandData, tableSections: newSections, tableCount: total.toString(), isConfigured: true});
+                          }}
+                          className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:border-[#2BE89A] focus:ring-1 focus:ring-[#2BE89A] transition-colors"
+                          placeholder="0"
+                          min="0"
+                          max="50"
+                        />
+                      </div>
+                      {qrStandData.tableSections?.terras > 0 && (
+                        <div className="flex gap-2">
+                          {[1, 2, 3, 4].map((num) => (
+                            <button
+                              key={num}
+                              type="button"
+                              onClick={() => {
+                                const newDesigns = {...(qrStandData.sectionDesigns || {}), terras: num};
+                                setQrStandData({...qrStandData, sectionDesigns: newDesigns});
+                              }}
+                              className={`flex-1 px-3 py-2 rounded-md border transition-all text-xs font-medium ${
+                                qrStandData.sectionDesigns?.terras === num
+                                  ? 'border-[#2BE89A] bg-[#2BE89A]/10 text-[#2BE89A]'
+                                  : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
+                              }`}
+                            >
+                              {t('restaurants.onboarding.steps.qrHolders.design')} {num}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
+                    
                     {/* Lounge */}
-                    <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-2">{t('restaurants.onboarding.steps.qrHolders.sections.lounge')}</label>
-                      <input
-                        type="number"
-                        value={qrStandData.tableSections?.lounge || ''}
-                        onChange={(e) => {
-                          const newSections = {...qrStandData.tableSections, lounge: e.target.value};
-                          const total = Object.values(newSections).reduce((sum, val) => sum + (parseInt(val) || 0), 0);
-                          setQrStandData({...qrStandData, tableSections: newSections, tableCount: total.toString(), isConfigured: true});
-                        }}
-                        className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                        placeholder="0"
-                        min="0"
-                        max="50"
-                      />
+                    <div className="space-y-3">
+                      <div>
+                        <label className="block text-xs text-gray-600 mb-1.5">{t('restaurants.onboarding.steps.qrHolders.sections.lounge')}</label>
+                        <input
+                          type="number"
+                          value={qrStandData.tableSections?.lounge || ''}
+                          onChange={(e) => {
+                            const newSections = {...qrStandData.tableSections, lounge: e.target.value};
+                            const total = Object.values(newSections).reduce((sum, val) => sum + (parseInt(val) || 0), 0);
+                            setQrStandData({...qrStandData, tableSections: newSections, tableCount: total.toString(), isConfigured: true});
+                          }}
+                          className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:border-[#2BE89A] focus:ring-1 focus:ring-[#2BE89A] transition-colors"
+                          placeholder="0"
+                          min="0"
+                          max="50"
+                        />
+                      </div>
+                      {qrStandData.tableSections?.lounge > 0 && (
+                        <div className="flex gap-2">
+                          {[1, 2, 3, 4].map((num) => (
+                            <button
+                              key={num}
+                              type="button"
+                              onClick={() => {
+                                const newDesigns = {...(qrStandData.sectionDesigns || {}), lounge: num};
+                                setQrStandData({...qrStandData, sectionDesigns: newDesigns});
+                              }}
+                              className={`flex-1 px-3 py-2 rounded-md border transition-all text-xs font-medium ${
+                                qrStandData.sectionDesigns?.lounge === num
+                                  ? 'border-[#2BE89A] bg-[#2BE89A]/10 text-[#2BE89A]'
+                                  : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
+                              }`}
+                            >
+                              {t('restaurants.onboarding.steps.qrHolders.design')} {num}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                   
                   {/* Total Calculator */}
-                  <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <div className="bg-white rounded-md p-3 border border-gray-200">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-600">{t('restaurants.onboarding.steps.qrHolders.totalTables')}</span>
-                      <span className="text-xl font-bold text-green-500">
+                      <span className="text-sm font-medium text-gray-700">{t('restaurants.onboarding.steps.qrHolders.totalTables')}</span>
+                      <span className="text-lg font-bold text-[#2BE89A]">
                         {qrStandData.tableCount || '0'}
                       </span>
                     </div>
-                    <p className="text-xs text-gray-600 mt-2">
+                    <p className="text-xs text-gray-500 mt-1">
                       {t('restaurants.onboarding.steps.qrHolders.totalTablesDesc')}
                     </p>
                   </div>
@@ -1084,35 +1201,74 @@ const RestaurantOnboarding: NextPage = () => {
                   {/* Display uploaded files */}
                   {qrStandData.floorPlans && qrStandData.floorPlans.length > 0 && (
                     <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
-                      {qrStandData.floorPlans.map((file, index) => (
-                        <div key={index} className="bg-white border border-gray-200 rounded-lg p-3">
-                          <div className="flex items-start justify-between">
-                            <div className="flex items-center space-x-2">
-                              <div className="p-2 bg-green-100 rounded">
-                                <svg className="h-4 w-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
+                      {qrStandData.floorPlans.map((file, index) => {
+                        const isImage = file.type && file.type.startsWith('image/');
+                        const imageUrl = isImage ? URL.createObjectURL(file) : null;
+                        
+                        return (
+                          <div key={index} className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                            {isImage && imageUrl ? (
+                              <div className="relative h-32 bg-gray-100">
+                                <img 
+                                  src={imageUrl} 
+                                  alt={file.name}
+                                  className="w-full h-full object-cover"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    const newFiles = qrStandData.floorPlans.filter((_, i) => i !== index);
+                                    setQrStandData({...qrStandData, floorPlans: newFiles});
+                                  }}
+                                  className="absolute top-2 right-2 p-1 bg-white rounded-full shadow-md hover:bg-red-100 transition"
+                                >
+                                  <svg className="h-4 w-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                  </svg>
+                                </button>
                               </div>
-                              <div className="flex-1 min-w-0">
-                                <p className="text-xs text-gray-900 font-medium truncate">{file.name}</p>
-                                <p className="text-xs text-gray-600">{(file.size / 1024).toFixed(1)} KB</p>
+                            ) : (
+                              <div className="p-3">
+                                <div className="flex items-start justify-between">
+                                  <div className="flex items-center space-x-2">
+                                    <div className="p-2 bg-green-100 rounded">
+                                      <svg className="h-4 w-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                      </svg>
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                      <p className="text-xs text-gray-900 font-medium truncate">{file.name}</p>
+                                      <p className="text-xs text-gray-600">
+                                        {file.size < 1024 * 1024 
+                                          ? `${(file.size / 1024).toFixed(1)} KB`
+                                          : `${(file.size / (1024 * 1024)).toFixed(1)} MB`
+                                        }
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      const newFiles = qrStandData.floorPlans.filter((_, i) => i !== index);
+                                      setQrStandData({...qrStandData, floorPlans: newFiles});
+                                    }}
+                                    className="p-1 hover:bg-red-100 rounded transition"
+                                  >
+                                    <svg className="h-4 w-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                  </button>
+                                </div>
                               </div>
-                            </div>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const newFiles = qrStandData.floorPlans.filter((_, i) => i !== index);
-                                setQrStandData({...qrStandData, floorPlans: newFiles});
-                              }}
-                              className="p-1 hover:bg-red-100 rounded transition"
-                            >
-                              <svg className="h-4 w-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                              </svg>
-                            </button>
+                            )}
+                            {isImage && (
+                              <div className="px-3 py-2 bg-gray-50 border-t border-gray-200">
+                                <p className="text-xs text-gray-600 truncate">{file.name}</p>
+                              </div>
+                            )}
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   )}
                   
@@ -1133,13 +1289,18 @@ const RestaurantOnboarding: NextPage = () => {
                       </div>
                       <input
                         type="file"
-                        accept=".png,.jpg,.jpeg,.pdf"
+                        accept=".png,.jpg,.jpeg,.pdf,.webp,.svg"
                         multiple
                         onChange={(e) => {
                           const files = Array.from(e.target.files);
                           if (files.length > 0) {
+                            // Check file sizes (max 5MB per file)
+                            const validFiles = files.filter(file => file.size <= 5 * 1024 * 1024);
+                            if (validFiles.length < files.length) {
+                              alert(t('restaurants.onboarding.steps.qrHolders.floorPlan.filesSkipped', { count: files.length - validFiles.length }));
+                            }
                             const currentFiles = qrStandData.floorPlans || [];
-                            setQrStandData({...qrStandData, floorPlans: [...currentFiles, ...files], isConfigured: true});
+                            setQrStandData({...qrStandData, floorPlans: [...currentFiles, ...validFiles], isConfigured: true});
                           }
                         }}
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
@@ -1150,66 +1311,103 @@ const RestaurantOnboarding: NextPage = () => {
                     {t('restaurants.onboarding.steps.qrHolders.floorPlan.description')}
                   </p>
                 </div>
+                
+                {/* Notes Field */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-2">
+                    {t('restaurants.onboarding.steps.qrHolders.notes.label')}
+                  </label>
+                  <textarea
+                    value={qrStandData.notes || ''}
+                    onChange={(e) => setQrStandData({...qrStandData, notes: e.target.value})}
+                    placeholder={t('restaurants.onboarding.steps.qrHolders.notes.placeholder')}
+                    className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 text-sm placeholder-gray-400 focus:outline-none focus:border-[#2BE89A] focus:ring-1 focus:ring-[#2BE89A] transition-colors resize-none"
+                    rows={4}
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    {t('restaurants.onboarding.steps.qrHolders.notes.helpText')}
+                  </p>
+                </div>
 
                 {/* Configuration Summary */}
                 {qrStandData.isConfigured && (
-                  <div className="bg-gray-50 rounded-lg p-6 border border-green-200">
-                    <div className="flex items-center mb-4">
-                      <CheckCircleIcon className="h-6 w-6 text-green-500 mr-3" />
-                      <h4 className="text-base font-medium text-gray-900">QR Stand Configuratie</h4>
+                  <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+                    <div className="flex items-start justify-between mb-5">
+                      <div>
+                        <h4 className="text-sm font-semibold text-gray-900 mb-1">{t('restaurants.onboarding.steps.qrHolders.configurationOverview')}</h4>
+                        <p className="text-xs text-gray-500">{t('restaurants.onboarding.steps.qrHolders.qrPerSection')}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-bold text-[#2BE89A]">{qrStandData.tableCount || '0'}</p>
+                        <p className="text-xs text-gray-500">{t('restaurants.onboarding.steps.qrHolders.total')}</p>
+                      </div>
                     </div>
-                    <div className="space-y-3">
-                      {qrStandData.selectedDesign && (
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm text-gray-600">Design</span>
-                          <span className="text-sm text-gray-900 font-medium uppercase">
-                            {qrStandData.selectedDesign.replace('houder', 'HOUDER#')}
-                          </span>
-                        </div>
-                      )}
-                      {qrStandData.tableCount && (
-                        <>
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-gray-600">Totaal aantal tafels</span>
-                            <span className="text-sm text-gray-900 font-medium">{qrStandData.tableCount}</span>
-                          </div>
-                          {qrStandData.tableSections && (qrStandData.tableSections.bar || qrStandData.tableSections.binnen || qrStandData.tableSections.terras || qrStandData.tableSections.lounge) && (
-                            <div className="pl-4 space-y-1">
-                              {qrStandData.tableSections.bar > 0 && (
-                                <div className="flex justify-between items-center">
-                                  <span className="text-xs text-gray-600">• Bar</span>
-                                  <span className="text-xs text-gray-900">{qrStandData.tableSections.bar}</span>
-                                </div>
-                              )}
-                              {qrStandData.tableSections.binnen > 0 && (
-                                <div className="flex justify-between items-center">
-                                  <span className="text-xs text-gray-600">• Binnen</span>
-                                  <span className="text-xs text-gray-900">{qrStandData.tableSections.binnen}</span>
-                                </div>
-                              )}
-                              {qrStandData.tableSections.terras > 0 && (
-                                <div className="flex justify-between items-center">
-                                  <span className="text-xs text-gray-600">• Terras</span>
-                                  <span className="text-xs text-gray-900">{qrStandData.tableSections.terras}</span>
-                                </div>
-                              )}
-                              {qrStandData.tableSections.lounge > 0 && (
-                                <div className="flex justify-between items-center">
-                                  <span className="text-xs text-gray-600">• Lounge</span>
-                                  <span className="text-xs text-gray-900">{qrStandData.tableSections.lounge}</span>
-                                </div>
+                    
+                    {qrStandData.tableSections && (qrStandData.tableSections.bar || qrStandData.tableSections.binnen || qrStandData.tableSections.terras || qrStandData.tableSections.lounge) && (
+                      <div className="grid grid-cols-2 gap-3">
+                        {qrStandData.tableSections.bar > 0 && (
+                          <div className="bg-gray-50 rounded-lg p-3">
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="text-xs font-medium text-gray-700">{t('restaurants.onboarding.steps.qrHolders.sections.bar')}</span>
+                              {qrStandData.sectionDesigns?.bar && (
+                                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-900 text-white">
+                                  D{qrStandData.sectionDesigns.bar}
+                                </span>
                               )}
                             </div>
-                          )}
-                        </>
-                      )}
-                      {qrStandData.floorPlans && qrStandData.floorPlans.length > 0 && (
+                            <p className="text-lg font-semibold text-gray-900">{qrStandData.tableSections.bar}</p>
+                          </div>
+                        )}
+                        {qrStandData.tableSections.binnen > 0 && (
+                          <div className="bg-gray-50 rounded-lg p-3">
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="text-xs font-medium text-gray-700">{t('restaurants.onboarding.steps.qrHolders.sections.inside')}</span>
+                              {qrStandData.sectionDesigns?.binnen && (
+                                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-900 text-white">
+                                  D{qrStandData.sectionDesigns.binnen}
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-lg font-semibold text-gray-900">{qrStandData.tableSections.binnen}</p>
+                          </div>
+                        )}
+                        {qrStandData.tableSections.terras > 0 && (
+                          <div className="bg-gray-50 rounded-lg p-3">
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="text-xs font-medium text-gray-700">{t('restaurants.onboarding.steps.qrHolders.sections.terrace')}</span>
+                              {qrStandData.sectionDesigns?.terras && (
+                                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-900 text-white">
+                                  D{qrStandData.sectionDesigns.terras}
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-lg font-semibold text-gray-900">{qrStandData.tableSections.terras}</p>
+                          </div>
+                        )}
+                        {qrStandData.tableSections.lounge > 0 && (
+                          <div className="bg-gray-50 rounded-lg p-3">
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="text-xs font-medium text-gray-700">{t('restaurants.onboarding.steps.qrHolders.sections.lounge')}</span>
+                              {qrStandData.sectionDesigns?.lounge && (
+                                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-900 text-white">
+                                  D{qrStandData.sectionDesigns.lounge}
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-lg font-semibold text-gray-900">{qrStandData.tableSections.lounge}</p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    
+                    {qrStandData.floorPlans && qrStandData.floorPlans.length > 0 && (
+                      <div className="mt-4 pt-4 border-t border-gray-200">
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-gray-600">Bestanden</span>
-                          <span className="text-sm text-gray-900 font-medium">{qrStandData.floorPlans.length} bestand{qrStandData.floorPlans.length > 1 ? 'en' : ''}</span>
+                          <span className="text-sm text-gray-600">{t('restaurants.onboarding.steps.qrHolders.files')}</span>
+                          <span className="text-sm text-gray-900 font-medium">{qrStandData.floorPlans.length} {qrStandData.floorPlans.length > 1 ? t('restaurants.onboarding.steps.qrHolders.files').toLowerCase() : t('restaurants.onboarding.steps.qrHolders.file')}</span>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -1221,15 +1419,17 @@ const RestaurantOnboarding: NextPage = () => {
         return (
           <div className="space-y-6">
             {/* Main Content Card */}
-            <div className="bg-white rounded-xl p-8 border border-gray-200">
-              <div className="flex items-center justify-between mb-8">
+            <div className="bg-white rounded-lg p-6 border border-gray-200">
+              <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('restaurants.onboarding.steps.googleReviews.title')}</h3>
-                  <p className="text-gray-600">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-1">{t('restaurants.onboarding.steps.googleReviews.title')}</h3>
+                  <p className="text-sm text-gray-500">
                     {t('restaurants.onboarding.steps.googleReviews.subtitle', { restaurantName: restaurant?.name })}
                   </p>
                 </div>
-                <StarIcon className="h-12 w-12 text-gray-600 opacity-20" />
+                <div className="p-3 bg-gray-50 rounded-lg">
+                  <StarIcon className="h-6 w-6 text-gray-400" />
+                </div>
               </div>
 
               <div className="space-y-6">
@@ -1260,7 +1460,7 @@ const RestaurantOnboarding: NextPage = () => {
                       title={t('restaurants.onboarding.steps.googleReviews.copyInfo')}
                     >
                       {showCopiedMessage ? (
-                        <span className="text-xs text-green-500 font-medium mr-2">Gekopieerd!</span>
+                        <span className="text-xs text-green-500 font-medium mr-2">{t('common.copied') || 'Copied!'}</span>
                       ) : null}
                       <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -1270,20 +1470,20 @@ const RestaurantOnboarding: NextPage = () => {
                 </div>
 
                 {/* Instructions with Steps */}
-                <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                  <h4 className="text-base font-medium text-gray-900 mb-4">{t('restaurants.onboarding.steps.googleReviews.setupTitle', { restaurantName: restaurant?.name })}</h4>
+                <div className="bg-gray-50 rounded-lg p-5 border border-gray-200">
+                  <h4 className="text-sm font-medium text-gray-700 mb-4">{t('restaurants.onboarding.steps.googleReviews.setupTitle', { restaurantName: restaurant?.name })}</h4>
                   
                   {/* Step 1 */}
-                  <div className="mb-6">
-                    <div className="flex items-start mb-3">
-                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-500 text-black text-sm font-bold mr-3 flex-shrink-0">1</span>
+                  <div className="mb-5">
+                    <div className="flex items-start mb-2">
+                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#2BE89A] text-black text-xs font-semibold mr-3 flex-shrink-0">1</span>
                       <div className="flex-1">
                         <p className="text-sm text-gray-900 font-medium mb-2">{t('restaurants.onboarding.steps.googleReviews.step1', { restaurantName: restaurant?.name })}</p>
                         <a 
                           href="https://developers.google.com/maps/documentation/places/web-service/place-id"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black text-sm font-medium rounded-lg hover:opacity-90 transition"
+                          className="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black text-xs font-medium rounded-md hover:opacity-90 transition"
                         >
                           {t('restaurants.onboarding.steps.googleReviews.openFinder')}
                           <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1295,9 +1495,9 @@ const RestaurantOnboarding: NextPage = () => {
                   </div>
 
                   {/* Step 2 */}
-                  <div className="mb-6">
+                  <div className="mb-5">
                     <div className="flex items-start">
-                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-500 text-black text-sm font-bold mr-3 flex-shrink-0">2</span>
+                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#2BE89A] text-black text-xs font-semibold mr-3 flex-shrink-0">2</span>
                       <div className="flex-1">
                         <p className="text-sm text-gray-900 font-medium mb-1">{t('restaurants.onboarding.steps.googleReviews.step2')}</p>
                         <p className="text-xs text-gray-600">{t('restaurants.onboarding.steps.googleReviews.step2Desc', { restaurantName: restaurant?.name })}</p>
@@ -1306,9 +1506,9 @@ const RestaurantOnboarding: NextPage = () => {
                   </div>
 
                   {/* Step 3 */}
-                  <div className="mb-6">
+                  <div className="mb-5">
                     <div className="flex items-start">
-                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-500 text-black text-sm font-bold mr-3 flex-shrink-0">3</span>
+                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#2BE89A] text-black text-xs font-semibold mr-3 flex-shrink-0">3</span>
                       <div className="flex-1">
                         <p className="text-sm text-gray-900 font-medium mb-1">{t('restaurants.onboarding.steps.googleReviews.step3')}</p>
                         <p className="text-xs text-gray-600">{t('restaurants.onboarding.steps.googleReviews.step3Desc')}</p>
@@ -1319,7 +1519,7 @@ const RestaurantOnboarding: NextPage = () => {
                   {/* Step 4 */}
                   <div>
                     <div className="flex items-start">
-                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-500 text-black text-sm font-bold mr-3 flex-shrink-0">4</span>
+                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#2BE89A] text-black text-xs font-semibold mr-3 flex-shrink-0">4</span>
                       <div className="flex-1">
                         <p className="text-sm text-gray-900 font-medium mb-1">{t('restaurants.onboarding.steps.googleReviews.step4')}</p>
                         <p className="text-xs text-gray-600">{t('restaurants.onboarding.steps.googleReviews.step4Desc', { restaurantName: restaurant?.name })}</p>
@@ -1360,10 +1560,10 @@ const RestaurantOnboarding: NextPage = () => {
 
                 {/* Success Message */}
                 {googleReviewData.isConfigured && (
-                  <div className="bg-gray-50 rounded-lg p-5 border border-green-200">
-                    <p className="text-sm text-gray-600 flex items-center">
-                      <CheckCircleIcon className="h-5 w-5 text-green-500 mr-2" />
-                      Review link toegevoegd! Klanten van {restaurant?.name} ontvangen na betaling een review verzoek.
+                  <div className="bg-[#2BE89A]/5 rounded-lg p-4 border border-[#2BE89A]/20">
+                    <p className="text-sm text-gray-700 flex items-center">
+                      <CheckCircleIcon className="h-5 w-5 text-[#2BE89A] mr-2" />
+                      {t('restaurants.onboarding.steps.googleReviews.successMessage', { restaurantName: restaurant?.name })}
                     </p>
                   </div>
                 )}
@@ -1416,94 +1616,106 @@ const RestaurantOnboarding: NextPage = () => {
           )}
 
           {showWelcome && !isLocked ? (
-            // Welcome Screen
-            <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-2xl animate-in fade-in slide-in-from-bottom-5 duration-700">
-              <div className="relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-green-100 via-transparent to-blue-100" />
-                <div className="relative px-8 py-10 lg:py-12 xl:py-14 2xl:py-16 text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] rounded-full mb-4 lg:mb-5 xl:mb-6 animate-pulse">
-                    <RocketLaunchIcon className="h-8 w-8 lg:h-9 lg:w-9 xl:h-10 xl:w-10 text-black" />
+            // Welcome Screen - Cleaner Design
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-xl animate-in fade-in slide-in-from-bottom-5 duration-700">
+              {/* Header Section */}
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#2BE89A]/10 via-transparent to-[#4FFFB0]/10" />
+                <div className="relative px-8 py-12 text-center">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] rounded-2xl mb-6">
+                    <RocketLaunchIcon className="h-8 w-8 text-black" />
                   </div>
-                  <h1 className="text-3xl lg:text-3xl xl:text-4xl font-bold text-gray-900 mb-3 lg:mb-3 xl:mb-4">
+                  <h1 className="text-3xl font-bold text-gray-900 mb-3">
                     {t('restaurants.onboarding.welcome.title')}
                   </h1>
-                  <p className="text-lg lg:text-lg xl:text-xl text-gray-600 mb-0 max-w-3xl mx-auto">
+                  <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                     {t('restaurants.onboarding.welcome.subtitle', { restaurantName: restaurant?.name })}
                   </p>
                 </div>
               </div>
               
-              <div className="p-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-10">
-                  <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-green-300 transition-all group">
-                    <UserGroupIcon className="h-10 w-10 text-green-500 mb-4 group-hover:scale-110 transition-transform" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('restaurants.onboarding.welcome.features.personnel.title')}</h3>
-                    <p className="text-sm text-gray-600">
+              {/* Content Section */}
+              <div className="px-8 pb-8">
+                {/* Feature Cards - Cleaner Grid */}
+                <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+                  <div className="bg-white rounded-lg p-5 border border-gray-200 hover:border-[#2BE89A] hover:shadow-md transition-all">
+                    <UserGroupIcon className="h-8 w-8 text-[#2BE89A] mb-3" />
+                    <h3 className="text-sm font-semibold text-gray-900 mb-1">{t('restaurants.onboarding.welcome.features.personnel.title')}</h3>
+                    <p className="text-xs text-gray-600 leading-relaxed">
                       {t('restaurants.onboarding.welcome.features.personnel.description')}
                     </p>
                   </div>
                   
-                  <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-green-400 transition-all group">
-                    <CreditCardIcon className="h-10 w-10 text-green-400 mb-4 group-hover:scale-110 transition-transform" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('restaurants.onboarding.welcome.features.payments.title')}</h3>
-                    <p className="text-sm text-gray-600">
+                  <div className="bg-white rounded-lg p-5 border border-gray-200 hover:border-[#2BE89A] hover:shadow-md transition-all">
+                    <CreditCardIcon className="h-8 w-8 text-[#2BE89A] mb-3" />
+                    <h3 className="text-sm font-semibold text-gray-900 mb-1">{t('restaurants.onboarding.welcome.features.payments.title')}</h3>
+                    <p className="text-xs text-gray-600 leading-relaxed">
                       {t('restaurants.onboarding.welcome.features.payments.description')}
                     </p>
                   </div>
                   
-                  <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-gray-400 transition-all group">
-                    <WifiIcon className="h-10 w-10 text-gray-600 mb-4 group-hover:text-gray-900 transition-all" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('restaurants.onboarding.welcome.features.posSystem.title')}</h3>
-                    <p className="text-sm text-gray-600">
+                  <div className="bg-white rounded-lg p-5 border border-gray-200 hover:border-[#2BE89A] hover:shadow-md transition-all">
+                    <WifiIcon className="h-8 w-8 text-[#2BE89A] mb-3" />
+                    <h3 className="text-sm font-semibold text-gray-900 mb-1">{t('restaurants.onboarding.welcome.features.posSystem.title')}</h3>
+                    <p className="text-xs text-gray-600 leading-relaxed">
                       {t('restaurants.onboarding.welcome.features.posSystem.description')}
                     </p>
                   </div>
                   
-                  <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-yellow-400 transition-all group">
-                    <StarIcon className="h-10 w-10 text-yellow-500 mb-4 group-hover:scale-110 transition-transform" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('restaurants.onboarding.welcome.features.reviews.title')}</h3>
-                    <p className="text-sm text-gray-600">
+                  <div className="bg-white rounded-lg p-5 border border-gray-200 hover:border-[#2BE89A] hover:shadow-md transition-all">
+                    <StarIcon className="h-8 w-8 text-[#2BE89A] mb-3" />
+                    <h3 className="text-sm font-semibold text-gray-900 mb-1">{t('restaurants.onboarding.welcome.features.reviews.title')}</h3>
+                    <p className="text-xs text-gray-600 leading-relaxed">
                       {t('restaurants.onboarding.welcome.features.reviews.description')}
                     </p>
                   </div>
                   
-                  <div className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-green-300 transition-all group">
-                    <QrCodeIcon className="h-10 w-10 text-green-500 mb-4 group-hover:scale-110 transition-transform" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('restaurants.onboarding.welcome.features.qrStands.title')}</h3>
-                    <p className="text-sm text-gray-600">
+                  <div className="bg-white rounded-lg p-5 border border-gray-200 hover:border-[#2BE89A] hover:shadow-md transition-all">
+                    <QrCodeIcon className="h-8 w-8 text-[#2BE89A] mb-3" />
+                    <h3 className="text-sm font-semibold text-gray-900 mb-1">{t('restaurants.onboarding.welcome.features.qrStands.title')}</h3>
+                    <p className="text-xs text-gray-600 leading-relaxed">
                       {t('restaurants.onboarding.welcome.features.qrStands.description')}
                     </p>
                   </div>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-                    <ClockIcon className="h-6 w-6 text-green-500 mx-auto mb-2" />
-                    <p className="text-sm text-gray-900 font-medium">{t('restaurants.onboarding.welcome.info.estimatedTime')}</p>
-                    <p className="text-xs text-gray-600">{t('restaurants.onboarding.welcome.info.estimatedTimeDesc')}</p>
+                {/* Info Cards - Simplified */}
+                <div className="grid grid-cols-3 gap-4 mb-8">
+                  <div className="text-center">
+                    <div className="inline-flex items-center justify-center w-10 h-10 bg-[#2BE89A]/10 rounded-lg mb-2">
+                      <ClockIcon className="h-5 w-5 text-[#2BE89A]" />
+                    </div>
+                    <p className="text-sm font-medium text-gray-900">{t('restaurants.onboarding.welcome.info.estimatedTime')}</p>
+                    <p className="text-xs text-gray-600 mt-1">{t('restaurants.onboarding.welcome.info.estimatedTimeDesc')}</p>
                   </div>
-                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-center">
-                    <ShieldCheckIcon className="h-6 w-6 text-gray-900 mx-auto mb-2" />
-                    <p className="text-sm text-gray-900 font-medium">{t('restaurants.onboarding.welcome.info.autoSaved')}</p>
-                    <p className="text-xs text-gray-600">{t('restaurants.onboarding.welcome.info.autoSavedDesc')}</p>
+                  <div className="text-center">
+                    <div className="inline-flex items-center justify-center w-10 h-10 bg-[#2BE89A]/10 rounded-lg mb-2">
+                      <ShieldCheckIcon className="h-5 w-5 text-[#2BE89A]" />
+                    </div>
+                    <p className="text-sm font-medium text-gray-900">{t('restaurants.onboarding.welcome.info.autoSaved')}</p>
+                    <p className="text-xs text-gray-600 mt-1">{t('restaurants.onboarding.welcome.info.autoSavedDesc')}</p>
                   </div>
-                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-center">
-                    <SparklesIcon className="h-6 w-6 text-gray-900 mx-auto mb-2" />
-                    <p className="text-sm text-gray-900 font-medium">{t('restaurants.onboarding.welcome.info.instantActive')}</p>
-                    <p className="text-xs text-gray-600">{t('restaurants.onboarding.welcome.info.instantActiveDesc')}</p>
+                  <div className="text-center">
+                    <div className="inline-flex items-center justify-center w-10 h-10 bg-[#2BE89A]/10 rounded-lg mb-2">
+                      <SparklesIcon className="h-5 w-5 text-[#2BE89A]" />
+                    </div>
+                    <p className="text-sm font-medium text-gray-900">{t('restaurants.onboarding.welcome.info.instantActive')}</p>
+                    <p className="text-xs text-gray-600 mt-1">{t('restaurants.onboarding.welcome.info.instantActiveDesc')}</p>
                   </div>
                 </div>
-              </div>
-              
-              <div className="px-8 py-6 bg-gray-50 border-t border-gray-200">
+                
+                {/* CTA Button */}
                 <button
-                  onClick={() => setShowWelcome(false)}
+                  onClick={() => {
+                    setShowWelcome(false)
+                    setCurrentStep(1)
+                  }}
                   disabled={isLocked}
-                  className="w-full px-8 py-5 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black font-bold rounded-xl hover:opacity-90 transition-all text-lg group disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-6 py-4 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black font-semibold rounded-xl hover:shadow-lg transform hover:scale-[1.02] transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span className="flex items-center justify-center">
+                  <span className="flex items-center justify-center text-base">
                     {t('restaurants.onboarding.welcome.startButton')}
-                    <ArrowRightIcon className="h-6 w-6 ml-3 group-hover:translate-x-2 transition-transform" />
+                    <ArrowRightIcon className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </button>
               </div>

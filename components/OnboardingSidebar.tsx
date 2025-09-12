@@ -13,6 +13,7 @@ import {
   ArrowLeftIcon,
   BuildingStorefrontIcon,
   TrashIcon,
+  RocketLaunchIcon,
 } from '@heroicons/react/24/outline'
 import RestaurantDeleteModal from './RestaurantDeleteModal'
 import { useRestaurants } from '../contexts/RestaurantsContext'
@@ -160,41 +161,80 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
             <div className="mb-6">
               <Link
                 href="/restaurants"
-                className="inline-flex items-center px-4 py-2 rounded-lg transition-all text-sm font-medium mb-4 group bg-gray-50 border border-gray-200 text-gray-600 hover:text-gray-700 hover:bg-gray-100 hover:border-green-300"
+                className="inline-flex items-center px-4 py-2 rounded-lg transition-all text-sm font-medium mb-4 group bg-white border border-gray-200 text-gray-600 hover:text-gray-700 hover:shadow-sm hover:border-gray-300"
               >
                 <ArrowLeftIcon className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
                 {t('restaurants.onboarding.backToRestaurants')}
               </Link>
-              <div>
-                <h2 className="text-xl font-bold text-gray-900">{restaurant?.name}</h2>
-                <p className="text-sm text-gray-600">{t('restaurants.onboarding.restaurantOnboarding')}</p>
-              </div>
-            </div>
-
-            {/* Progress Overview */}
-            <div className="mb-6 rounded-xl p-4 border bg-gradient-to-r from-green-50 to-green-100 border-green-200">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-sm font-semibold text-gray-900 flex items-center">
-                  <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
-                  {t('restaurants.onboarding.progress')}
-                </span>
-                <span className="text-xs font-medium text-green-600">
-                  {completedSteps.length}/5
-                </span>
-              </div>
-              <div className="w-full rounded-full h-3 overflow-hidden shadow-inner bg-gray-50">
-                <div
-                  className="bg-gradient-to-r from-green-500 to-green-400 h-3 rounded-full transition-all duration-500 ease-out shadow-lg relative"
-                  style={{ width: `${(completedSteps.filter(step => step <= 3).length / 3) * 100}%` }}
-                >
-                  <div className="absolute inset-0 bg-green-200/30 rounded-full animate-pulse"></div>
+              
+              {/* Restaurant Info & Progress Combined */}
+              <div className="bg-white rounded-lg p-4 border border-gray-200">
+                <div className="mb-3">
+                  <h2 className="text-lg font-bold text-gray-900">{restaurant?.name}</h2>
+                  <p className="text-xs text-gray-500">{t('restaurants.onboarding.restaurantOnboarding')}</p>
+                </div>
+                
+                <div className="pt-3 border-t border-gray-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-medium text-gray-700">
+                      {t('restaurants.onboarding.progress')}
+                    </span>
+                    <span className="text-xs font-semibold text-[#2BE89A]">
+                      {completedSteps.length}/5 voltooid
+                    </span>
+                  </div>
+                  <div className="w-full rounded-full h-2 bg-gray-100">
+                    <div
+                      className="bg-[#2BE89A] h-2 rounded-full transition-all duration-500 ease-out"
+                      style={{ width: `${(completedSteps.filter(step => step <= 3).length / 3) * 100}%` }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Scrollable Steps Section */}
-            <div className="flex-1 overflow-y-auto mb-4 pr-2">
-              <div className="space-y-2">
+            {/* Scrollable Steps Section with Custom Scrollbar */}
+            <div className="flex-1 overflow-y-auto mb-4 pr-1 scrollbar-thin">
+              <div className="space-y-2 pr-1">
+                {/* Welcome Card - Special Design */}
+                <button
+                  onClick={() => onStepChange && onStepChange(0)}
+                  className={`w-full text-left rounded-lg transition-all duration-200 group ${
+                    currentStep === 0
+                      ? 'bg-gradient-to-r from-[#2BE89A]/10 to-[#4FFFB0]/10 border-2 border-[#2BE89A] shadow-sm cursor-pointer'
+                      : 'bg-gradient-to-r from-gray-50 to-gray-50 border border-gray-200 hover:from-[#2BE89A]/5 hover:to-[#4FFFB0]/5 hover:border-[#2BE89A]/50 hover:shadow-sm cursor-pointer'
+                  }`}
+                >
+                  <div className="p-4">
+                    <div className="flex items-center mb-2">
+                      <div className={`p-1.5 rounded-md mr-2 ${
+                        currentStep === 0
+                          ? 'bg-[#2BE89A]'
+                          : 'bg-[#2BE89A]/20'
+                      }`}>
+                        <RocketLaunchIcon className={`h-4 w-4 ${
+                          currentStep === 0 
+                            ? 'text-black' 
+                            : 'text-[#2BE89A]'
+                        }`} />
+                      </div>
+                      <h3 className={`font-semibold text-sm ${
+                        currentStep === 0
+                          ? 'text-gray-900' 
+                          : 'text-gray-700'
+                      }`}>
+                        Welkom bij Onboarding
+                      </h3>
+                    </div>
+                    <p className="text-xs text-gray-500 pl-7">Start hier je restaurant setup</p>
+                  </div>
+                </button>
+                
+                {/* Divider */}
+                <div className="my-3 px-2">
+                  <div className="border-t border-gray-200"></div>
+                </div>
+
                 {/* Required Steps */}
                 {OnboardingSteps.slice(0, 3).map((step) => {
                   const status = getStepStatus(step.id)
@@ -205,25 +245,25 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
                       key={step.id}
                       onClick={() => handleStepClick(step.id)}
                       disabled={!isClickable}
-                      className={`w-full text-left p-4 rounded-xl transition-all duration-200 group ${
+                      className={`w-full text-left p-4 rounded-lg transition-all duration-200 group ${
                         status === 'current'
-                          ? 'bg-gradient-to-r from-green-50 to-green-100 border-2 border-green-400 shadow-lg shadow-green-200 cursor-pointer'
+                          ? 'bg-white border-2 border-[#2BE89A] shadow-sm cursor-pointer'
                           : status === 'completed'
-                          ? 'bg-gray-50 border border-green-300 hover:bg-gray-100 hover:border-green-400 cursor-pointer'
+                          ? 'bg-white border border-gray-200 hover:border-[#2BE89A] hover:shadow-sm cursor-pointer'
                           : status === 'available'
-                          ? 'bg-gray-50 border border-gray-200 hover:bg-gray-100 hover:border-green-300 cursor-pointer'
-                          : 'bg-gray-50/50 border border-gray-200/50 opacity-50 cursor-not-allowed'
+                          ? 'bg-white border border-gray-200 hover:border-gray-300 hover:shadow-sm cursor-pointer'
+                          : 'bg-gray-50 border border-gray-200 opacity-50 cursor-not-allowed'
                       }`}
                     >
                       <div className="flex items-start">
-                        <div className={`p-2.5 rounded-lg mr-3 transition-all ${
+                        <div className={`p-2 rounded-lg mr-3 transition-all ${
                           status === 'current'
-                            ? 'bg-gradient-to-r from-green-500 to-green-400 shadow-md'
+                            ? 'bg-[#2BE89A]'
                             : status === 'completed'
-                            ? 'bg-green-500'
+                            ? 'bg-[#2BE89A]/20'
                             : status === 'available'
-                            ? 'bg-gradient-to-r from-gray-100 to-gray-200 group-hover:from-green-50 group-hover:to-green-100'
-                            : 'bg-white/50'
+                            ? 'bg-gray-100 group-hover:bg-gray-200'
+                            : 'bg-gray-50'
                         }`}>
                           {status === 'completed' ? (
                             <CheckCircleIcon className="h-5 w-5 text-black" />
@@ -231,9 +271,11 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
                             <step.icon className={`h-5 w-5 ${
                               status === 'current' 
                                 ? 'text-black' 
+                                : status === 'completed'
+                                ? 'text-[#2BE89A]'
                                 : status === 'available' 
-                                ? 'text-gray-900 group-hover:text-green-600' 
-                                : 'text-gray-600/50'
+                                ? 'text-gray-600 group-hover:text-gray-700' 
+                                : 'text-gray-400'
                             }`} />
                           )}
                         </div>
@@ -248,15 +290,15 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
                             </h3>
                             <div className={`w-2 h-2 rounded-full ${
                               status === 'completed'
-                                ? 'bg-green-500'
+                                ? 'bg-[#2BE89A]'
                                 : status === 'current'
-                                ? 'bg-blue-400'
+                                ? 'bg-[#2BE89A]'
                                 : status === 'available'
-                                ? 'bg-yellow-400'
+                                ? 'bg-gray-300'
                                 : 'bg-gray-300'
                             }`} />
                           </div>
-                          <p className="text-sm mt-1 text-gray-600">{t(`restaurants.onboarding.sidebar.steps.${step.description}.description`)}</p>
+                          <p className="text-xs mt-1 text-gray-500">{t(`restaurants.onboarding.sidebar.steps.${step.description}.description`)}</p>
                         </div>
                       </div>
                     </button>
@@ -284,25 +326,25 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
                       key={step.id}
                       onClick={() => handleStepClick(step.id)}
                       disabled={!isClickable}
-                      className={`w-full text-left p-4 rounded-xl transition-all duration-200 group ${
+                      className={`w-full text-left p-4 rounded-lg transition-all duration-200 group ${
                         status === 'current'
-                          ? 'bg-gradient-to-r from-green-50 to-green-100 border-2 border-green-400 shadow-lg shadow-green-200 cursor-pointer'
+                          ? 'bg-white border-2 border-[#2BE89A] shadow-sm cursor-pointer'
                           : status === 'completed'
-                          ? 'bg-gray-50 border border-green-300 hover:bg-gray-100 hover:border-green-400 cursor-pointer'
+                          ? 'bg-white border border-gray-200 hover:border-[#2BE89A] hover:shadow-sm cursor-pointer'
                           : status === 'available'
-                          ? 'bg-gray-50 border border-gray-200 hover:bg-gray-100 hover:border-green-300 cursor-pointer'
-                          : 'bg-gray-50/50 border border-gray-200/50 opacity-50 cursor-not-allowed'
+                          ? 'bg-white border border-gray-200 hover:border-gray-300 hover:shadow-sm cursor-pointer'
+                          : 'bg-gray-50 border border-gray-200 opacity-50 cursor-not-allowed'
                       }`}
                     >
                       <div className="flex items-start">
-                        <div className={`p-2.5 rounded-lg mr-3 transition-all ${
+                        <div className={`p-2 rounded-lg mr-3 transition-all ${
                           status === 'current'
-                            ? 'bg-gradient-to-r from-green-500 to-green-400 shadow-md'
+                            ? 'bg-[#2BE89A]'
                             : status === 'completed'
-                            ? 'bg-green-500'
+                            ? 'bg-[#2BE89A]/20'
                             : status === 'available'
-                            ? 'bg-gradient-to-r from-gray-100 to-gray-200 group-hover:from-green-50 group-hover:to-green-100'
-                            : 'bg-white/50'
+                            ? 'bg-gray-100 group-hover:bg-gray-200'
+                            : 'bg-gray-50'
                         }`}>
                           {status === 'completed' ? (
                             <CheckCircleIcon className="h-5 w-5 text-black" />
@@ -310,9 +352,11 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
                             <step.icon className={`h-5 w-5 ${
                               status === 'current' 
                                 ? 'text-black' 
+                                : status === 'completed'
+                                ? 'text-[#2BE89A]'
                                 : status === 'available' 
-                                ? 'text-gray-900 group-hover:text-green-600' 
-                                : 'text-gray-600/50'
+                                ? 'text-gray-600 group-hover:text-gray-700' 
+                                : 'text-gray-400'
                             }`} />
                           )}
                         </div>
@@ -327,15 +371,15 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
                             </h3>
                             <div className={`w-2 h-2 rounded-full ${
                               status === 'completed'
-                                ? 'bg-green-500'
+                                ? 'bg-[#2BE89A]'
                                 : status === 'current'
-                                ? 'bg-blue-400'
+                                ? 'bg-[#2BE89A]'
                                 : status === 'available'
-                                ? 'bg-yellow-400'
+                                ? 'bg-gray-300'
                                 : 'bg-gray-300'
                             }`} />
                           </div>
-                          <p className="text-sm mt-1 text-gray-600">{t(`restaurants.onboarding.sidebar.steps.${step.description}.description`)}</p>
+                          <p className="text-xs mt-1 text-gray-500">{t(`restaurants.onboarding.sidebar.steps.${step.description}.description`)}</p>
                         </div>
                       </div>
                     </button>
@@ -346,21 +390,21 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
 
             {/* Fixed Bottom Section - Help & Delete */}
             <div className="space-y-3 flex-shrink-0">
-              <div className="p-4 rounded-xl border backdrop-blur-sm bg-gradient-to-br from-green-50 via-emerald-50 to-green-50 border-green-200">
+              <div className="p-4 rounded-lg border bg-gray-50 border-gray-200">
                 <div className="flex items-start">
-                  <div className="p-2 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] rounded-lg mr-3 shadow-lg">
-                    <svg className="h-4 w-4 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="p-2 bg-[#2BE89A]/10 rounded-lg mr-3">
+                    <svg className="h-4 w-4 text-[#2BE89A]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-sm font-semibold mb-1 text-gray-900">{t('restaurants.onboarding.sidebar.guide.title')}</h4>
-                    <p className="text-xs mb-3 text-gray-600">
+                    <h4 className="text-sm font-medium mb-1 text-gray-900">{t('restaurants.onboarding.sidebar.guide.title')}</h4>
+                    <p className="text-xs mb-2 text-gray-500">
                       {t('restaurants.onboarding.sidebar.guide.description')}
                     </p>
                     <Link
                       href="/restaurants"
-                      className="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-[#2BE89A] to-[#4FFFB0] text-black text-xs font-medium rounded-lg hover:opacity-90 transition-all group"
+                      className="inline-flex items-center px-3 py-1.5 bg-[#2BE89A] text-black text-xs font-medium rounded-md hover:bg-[#2BE89A]/90 transition-all group"
                     >
                       {t('restaurants.onboarding.sidebar.guide.viewGuide')}
                       <svg className="h-3 w-3 ml-1.5 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -375,7 +419,7 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
               {restaurant && !restaurant.isOnboarded && !restaurant.deleted && (
                 <button
                   onClick={() => setShowDeleteModal(true)}
-                  className="w-full p-2.5 text-xs font-medium rounded-lg transition-colors border flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 border-red-200"
+                  className="w-full p-3 text-xs font-medium rounded-lg transition-all border flex items-center justify-center bg-white text-gray-600 hover:text-red-600 hover:bg-red-50 hover:border-red-200 border-gray-200"
                 >
                   <TrashIcon className="h-4 w-4 mr-2" />
                   {t('restaurants.onboarding.sidebar.deleteRestaurant')}
@@ -465,7 +509,7 @@ const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
                             }`}>
                               {t(`restaurants.onboarding.sidebar.steps.${step.name}.name`)}
                             </h3>
-                            <p className="text-sm mt-1 text-gray-600">{t(`restaurants.onboarding.sidebar.steps.${step.description}.description`)}</p>
+                            <p className="text-xs mt-1 text-gray-500">{t(`restaurants.onboarding.sidebar.steps.${step.description}.description`)}</p>
                           </div>
                         </div>
                       </button>
